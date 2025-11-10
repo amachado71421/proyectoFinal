@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import "../styles/Barra.css";
+import logo from "../Images/LOGO.png"
+import '/src/Styles/Barra.css';
 
 function BarraMenu() {
   const navigate = useNavigate()
