@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Inicio from "../Pages/Inicio";
-import LoginPage from "../Pages/LoginPage";
+import LoginRegister from "../Pages/LoginRegister";
+import Calendario from "../Pages/Calendario";
 
 
 function Routing() {
@@ -8,7 +9,8 @@ function Routing() {
         <Router>
             <Routes>
                 <Route path="/" element={<Inicio/>} />
-                <Route path="/login" element={<LoginPage/>} />
+                <Route path="loginregister" element={<LoginRegister/>}/>
+                <Route path="calendar" element={<Calendario/>}/>
             </Routes>
         </Router>
     )

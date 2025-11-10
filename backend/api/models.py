@@ -26,23 +26,34 @@ class Rol(models.Model):
 
 
 class Perfil(models.Model):
-	id_perfil = models.AutoField(primary_key=True)
-	nombre = models.CharField(max_length=100)
-	email = models.CharField(max_length=255, unique=True)
-	password_hash = models.CharField(max_length=255)
-	estado = models.BooleanField(default=True)
-	creado_en = models.DateTimeField(auto_now_add=True)
-	url_imagen = models.CharField(max_length=255, null=True, blank=True)
-	peso_kg = models.FloatField(null=True, blank=True)
-	altura = models.IntegerField(null=True, blank=True)
-	id_rol = models.ForeignKey(Rol, db_column='id_rol', null=True, blank=True, on_delete=models.RESTRICT)
+    id_perfil = models.AutoField(primary_key=True)
 
-	class Meta:
-		db_table = 'perfil'
-		managed = False
+    # Obligatorios
+    nombre = models.CharField(max_length=100)
+    email = models.CharField(max_length=255, unique=True)
+    password_hash = models.CharField(max_length=255)
 
-	def __str__(self):
-		return f"{self.nombre} <{self.email}>"
+    # Opcionales
+    estado = models.BooleanField(default=True)
+    creado_en = models.DateTimeField(auto_now_add=True)
+    url_imagen = models.CharField(max_length=255, null=True, blank=True)
+    peso_kg = models.FloatField(null=True, blank=True)
+    altura = models.IntegerField(null=True, blank=True)
+    id_rol = models.ForeignKey(
+        Rol,
+        db_column='id_rol',
+        null=True,
+        blank=True,
+        on_delete=models.RESTRICT
+    )
+
+    class Meta:
+        db_table = 'perfil'
+        managed = False
+
+    def __str__(self):
+        return f"{self.nombre} <{self.email}>"
+
 
 
 class Palmares(models.Model):
