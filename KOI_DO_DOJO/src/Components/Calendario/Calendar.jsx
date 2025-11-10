@@ -1,22 +1,16 @@
-// src/Calendar.jsx
+// src/Components/Calendario/Calendar.jsx
 import React, { useState, useEffect } from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid'
 import AddEventForm from './AddEventForm'
+import CalendarViews from './CalendarViews'
 
 const Calendar = () => {
     const [events, setEvents] = useState([])
     const [showForm, setShowForm] = useState(false)
 
-    // 🔹 Simulación de carga desde API
+    // Simulación de carga desde API
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                // Aquí más adelante se pone endpoint real, por ejemplo:
-                // const response = await fetch("http://localhost:8000/api/events");
-                // const data = await response.json();
-
-                // Por ahora se simulan los datos de prueba:
                 const data = [
                     {
                         id: 1,
@@ -36,7 +30,6 @@ const Calendar = () => {
                         location: 'Gimnasio Nacional'
                     }
                 ]
-
                 setEvents(data)
             } catch (error) {
                 console.error('Error cargando eventos:', error)
@@ -47,8 +40,6 @@ const Calendar = () => {
     }, [])
 
     const handleAddEvent = (newEvent) => {
-        //Aquí más adelante se hace un post
-        // await fetch("http://localhost:8000/api/events", { method: "POST", body: JSON.stringify(newEvent) })
         setEvents((prev) => [...prev, newEvent])
     }
 
@@ -70,11 +61,7 @@ const Calendar = () => {
                 </div>
             )}
 
-            <FullCalendar
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
-                events={events}
-            />
+            <CalendarViews events={events} />
         </div>
     )
 }
