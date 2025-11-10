@@ -51,7 +51,7 @@ function BarraMenu() {
           <div class="linea-vertical"></div>
           <li className="menu-item">
             <img className="Icono" src="../src/Images/LOCKOUT.png" alt="IconoLogout" />
-            <span className='Titulo' onClick={() => navigate("/")}>Log Out</span>
+            <span className='Titulo' onClick={() => navigate("/LogOut")}>Log Out</span>
           </li>
         </ul>
       </main>
