@@ -1,0 +1,115 @@
+/* --------------------------- */
+/* 🌟 CONTENEDOR PRINCIPAL */
+/* --------------------------- */
+.Menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  box-shadow: 0  4px 8px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 120px;
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #000000;
+}
+
+.linea-vertical {
+  width: 3px !important;              /* grosor */
+  height: 40px;            /* alto */
+  background-color: #000;  /* color de la línea */
+  margin:2px          /* espacio a los lados */
+}
+
+
+/* --------------------------- */
+/* 🌟 LISTA PRINCIPAL (Antes .menu → ahora .Inicio) */
+/* --------------------------- */
+.Inicio {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+/* --------------------------- */
+/* 🌟 ITEMS DEL MENÚ */
+/* --------------------------- */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover {
+  color: #ec1010;
+}
+
+/* --------------------------- */
+/* 🌟 LOGO E ÍCONOS */
+/* --------------------------- */
+.Logo {
+  height: 130px;
+  margin: 10px;
+}
+
+.Icono {
+  height: 35px;
+  margin: 5px;
+}
+
+/* --------------------------- */
+/* 🌟 NUEVA SECCIÓN: EFECTOS HOVER Y RESPONSIVE */
+/* --------------------------- */
+.Elementos ul {
+  list-style: none;
+  display: flex;           /* Alinear horizontalmente */
+  gap: 30px;               /* Espacio entre elementos */
+  margin: 0;
+  padding: 0;
+}
+
+.Elementos li {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Subrayado animado */
+.Elementos li::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -5px;
+  background: #ec1010;
+  transition: width 0.3s ease;
+}
+
+.Elementos li:hover {
+  color: #ec1010;
+}
+
+.Elementos li:hover::after {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .NavBar {
+    width: 180px;
+    padding: 15px 5px;
+  }
+
+  .Elementos li {
+    font-size: 16px;
+  }
+}
