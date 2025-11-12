@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../Styles/Carrusel.css";
 
 // 🔹 Importamos las imágenes
-import Carrusel1 from "../Images/Carrusel/Carrusel1.jpg";
-import Carrusel2 from "../Images/Carrusel/Carrusel2.jpg";
-import Carrusel3 from "../Images/Carrusel/Carrusel3.jpg";
-import Carrusel4 from "../Images/Carrusel/Carrusel4.jpg";
-import Carrusel5 from "../Images/Carrusel/Carrusel5.jpg";
+import Carrusel1 from "../Images/Carrusel/Carrusel1.png";
+import Carrusel2 from "../Images/Carrusel/Carrusel2.png";
+import Carrusel3 from "../Images/Carrusel/Carrusel3.png";
+import Carrusel4 from "../Images/Carrusel/Carrusel4.png";
+import Carrusel5 from "../Images/Carrusel/Carrusel5.png";
 
 function CarruselInicio() {
   // 🔸 Lista de imágenes + texto correspondiente
