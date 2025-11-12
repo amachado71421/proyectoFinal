@@ -2,6 +2,7 @@ import React from 'react'
 import BarraMenu from '../Components/BarraMenu'
 import Calendar from '../Components/Calendario/Calendar'
 import CrearEtiquetas from '../Components/Calendario/Administrador/CrearEtiquetas'
+import CrearRangoEdad from '../Components/Calendario/Administrador/CrearRangoEdad'
 
 
 function Calendario() {
@@ -9,6 +10,7 @@ function Calendario() {
         <div>
             <BarraMenu/>
             <CrearEtiquetas/>
+            <CrearRangoEdad/>
             <Calendar/>
         </div>
     )

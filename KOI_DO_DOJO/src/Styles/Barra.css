@@ -5,16 +5,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
-  box-shadow: 0  4px 8px rgba(0, 0, 0, 0.4);
-  position: sticky;
+  padding: 8px 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  position: fixed;        /* ✅ Siempre visible al hacer scroll */
   top: 0;
+  left: 0;
+  width: 100%;            /* ✅ Ocupa todo el ancho */
   z-index: 1000;
   height: 120px;
   font-family: 'Segoe UI', sans-serif;
   background: #ffffff;
   color: #000000;
 }
+
 
 .linea-vertical {
   width: 3px !important;              /* grosor */

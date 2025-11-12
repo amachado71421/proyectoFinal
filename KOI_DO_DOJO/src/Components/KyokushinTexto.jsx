@@ -31,7 +31,7 @@ function KyokushinTexto() {
             <section className="fundador seccion">
                 <div className="fundador-contenido">
                     <img
-                        src="../src/Images/KyokushinInicio/oyama.jpg"
+                        src="../src/Images/KyokushinInicio/oyama.png"
                         alt="Masutatsu Oyama"
                         className="fundador-img"
                     />
