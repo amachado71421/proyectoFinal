@@ -16,7 +16,6 @@ function CrearRangoEdad() {
                 // const data = await response.json()
                 // setRangos(data)
 
-                // Por ahora rangos estáticos de prueba:
                 const data = [
                     { nombre: 'Infantil', min: 6, max: 11 },
                     { nombre: 'Juvenil', min: 12, max: 17 }
@@ -65,6 +64,12 @@ function CrearRangoEdad() {
         setEdadMaxima('')
     }
 
+    const handleRemoveRango = (nombre) => {
+        setRangos((prev) => {
+            return prev.filter((rango) => rango.nombre !== nombre)
+        })
+    }
+
     return (
         <div>
             <h2>Rangos de edad para el calendario</h2>
@@ -96,7 +101,14 @@ function CrearRangoEdad() {
                         {rangos.map((rango, index) => {
                             return (
                                 <li key={index}>
-                                    {rango.nombre}: {rango.min} - {rango.max} años
+                                    {rango.nombre}: {rango.min} - {rango.max} años{' '}
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveRango(rango.nombre)}
+                                        style={{ marginLeft: '0.5rem', color: 'red' }}
+                                    >
+                                        ❌
+                                    </button>
                                 </li>
                             )
                         })}
@@ -107,5 +119,4 @@ function CrearRangoEdad() {
     )
 }
 
-//Para tener algo que hacer commit de 
 export default CrearRangoEdad
