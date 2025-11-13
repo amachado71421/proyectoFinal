@@ -4,6 +4,7 @@ import Calendar from '../Components/Calendario/Calendar'
 import CrearEtiquetas from '../Components/Administrador/CrearEtiquetas'
 import CrearRangoEdad from '../Components/Administrador/CrearRangoEdad'
 import CrearLogros from '../Components/Administrador/CrearLogros'
+import CrearEstadosPerfil from '../Components/Administrador/CrearEstadosPerfil'
 
 
 function Calendario() {
@@ -11,6 +12,7 @@ function Calendario() {
         <div>
             <BarraMenu/>
             <CrearRangoEdad/>
+            <CrearEstadosPerfil/>
             <CrearLogros/>
             <CrearEtiquetas/>
             <Calendar/>

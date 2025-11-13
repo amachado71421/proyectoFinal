@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 
 class Resultado(models.Model):
 	id_resultado = models.AutoField(primary_key=True)
@@ -25,17 +25,9 @@ class Rol(models.Model):
 		return self.nombre_rol
 
 
-class Perfil(models.Model):
+class Perfil(AbstractUser):
     id_perfil = models.AutoField(primary_key=True)
-
-    # Obligatorios
-    nombre = models.CharField(max_length=100)
-    email = models.CharField(max_length=255, unique=True)
-    password_hash = models.CharField(max_length=255)
-
-    # Opcionales
-    estado = models.BooleanField(default=True)
-    creado_en = models.DateTimeField(auto_now_add=True)
+    
     url_imagen = models.CharField(max_length=255, null=True, blank=True)
     peso_kg = models.FloatField(null=True, blank=True)
     altura = models.IntegerField(null=True, blank=True)
@@ -52,7 +44,14 @@ class Perfil(models.Model):
         managed = False
 
     def __str__(self):
-        return f"{self.nombre} <{self.email}>"
+        campos = [self.username]
+        if self.email:
+            campos.append(f"<{self.email}>")
+        if self.peso_kg:
+            campos.append(f"{self.peso_kg}kg")
+        if self.altura:
+            campos.append(f"{self.altura}cm")
+        return " ".join(campos)
 
 
 
