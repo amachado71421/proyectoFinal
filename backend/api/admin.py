@@ -1,48 +1,28 @@
 from django.contrib import admin
-from . import models
+from django.contrib.auth.admin import UserAdmin
+from .models import Perfil, Rol, Resultado, Palmares, Logro, PerfilLogro, Categoria, RangoEdad, Evento, Estado, PerfilEvento, EventoCategoria, EventoRangoEdad
 
+@admin.register(Perfil)
+class PerfilAdmin(UserAdmin):
+    model = Perfil
+    list_display = ('username', 'email', 'is_active', 'id_rol')
+    fieldsets = UserAdmin.fieldsets + (
+        ('Datos adicionales', {'fields': ('url_imagen', 'peso_kg', 'altura', 'id_rol')}),
+    )
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Datos adicionales', {'fields': ('url_imagen', 'peso_kg', 'altura', 'id_rol')}),
+    )
 
-@admin.register(models.Resultado)
-class ResultadoAdmin(admin.ModelAdmin):
-	list_display = ('id_resultado', 'estado_resultado')
-
-
-@admin.register(models.Rol)
-class RolAdmin(admin.ModelAdmin):
-	list_display = ('id_rol', 'nombre_rol')
-
-
-@admin.register(models.Perfil)
-class PerfilAdmin(admin.ModelAdmin):
-	list_display = ('id_perfil', 'nombre', 'email', 'estado')
-
-
-@admin.register(models.Palmares)
-class PalmaresAdmin(admin.ModelAdmin):
-	list_display = ('id_palmares', 'id_perfil', 'id_resultado')
-
-
-@admin.register(models.Logro)
-class LogroAdmin(admin.ModelAdmin):
-	list_display = ('id_logro', 'nombre_logro', 'fecha_creacion')
-
-
-@admin.register(models.Categoria)
-class CategoriaAdmin(admin.ModelAdmin):
-	list_display = ('id_categoria', 'nombre_categoria')
-
-
-@admin.register(models.RangoEdad)
-class RangoEdadAdmin(admin.ModelAdmin):
-	list_display = ('id_rango_edad', 'nombre_rango_edad')
-
-
-@admin.register(models.Evento)
-class EventoAdmin(admin.ModelAdmin):
-	list_display = ('id_evento', 'nombre_evento', 'fecha_inicio', 'fecha_final')
-
-
-@admin.register(models.Estado)
-class EstadoAdmin(admin.ModelAdmin):
-	list_display = ('id_estado', 'nombre_estado')
-
+# Registrar otros modelos necesarios
+admin.site.register(Rol)
+admin.site.register(Resultado)
+admin.site.register(Palmares)
+admin.site.register(Logro)
+admin.site.register(PerfilLogro)
+admin.site.register(Categoria)
+admin.site.register(RangoEdad)
+admin.site.register(Evento)
+admin.site.register(Estado)
+admin.site.register(PerfilEvento)
+admin.site.register(EventoCategoria)
+admin.site.register(EventoRangoEdad)

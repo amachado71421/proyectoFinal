@@ -28,20 +28,34 @@ class Rol(models.Model):
 class Perfil(AbstractUser):
     id_perfil = models.AutoField(primary_key=True)
     
+    # Campos adicionales
     url_imagen = models.CharField(max_length=255, null=True, blank=True)
     peso_kg = models.FloatField(null=True, blank=True)
     altura = models.IntegerField(null=True, blank=True)
     id_rol = models.ForeignKey(
-        Rol,
+        'Rol',
         db_column='id_rol',
         null=True,
         blank=True,
         on_delete=models.RESTRICT
     )
 
+    groups = models.ManyToManyField(
+        Group,
+        related_name='perfil_groups',
+        blank=True,
+        verbose_name='groups'
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name='perfil_user_permissions',
+        blank=True,
+        verbose_name='user permissions'
+    )
+
     class Meta:
         db_table = 'perfil'
-        managed = False
+        managed = True
 
     def __str__(self):
         campos = [self.username]
@@ -52,6 +66,7 @@ class Perfil(AbstractUser):
         if self.altura:
             campos.append(f"{self.altura}cm")
         return " ".join(campos)
+
 
 
 

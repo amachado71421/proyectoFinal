@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView
 from . import views
 
 router = DefaultRouter()
@@ -19,4 +20,8 @@ router.register(r'evento-rango', views.EventoRangoEdadViewSet, basename='evento_
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('auth/login/', views.LoginAPIView.as_view(), name='login'),
+    path('auth/register/', views.RegisterAPIView.as_view(), name='register'),
+    path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/me/', views.MeAPIView.as_view(), name='me'),
 ]
