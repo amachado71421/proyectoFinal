@@ -3,23 +3,140 @@ import React, { useState } from 'react';
 function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        password_confirm: '',
+        first_name: '',
+        last_name: ''
+    });
 
     const togglePassword = () => setShowPassword(!showPassword);
     const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        setError('');
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        setSuccess('');
+
+        if (formData.password !== formData.password_confirm) {
+            setError('Las contraseñas no coinciden.');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/auth/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password,
+                    password_confirm: formData.password_confirm,
+                    first_name: formData.first_name,
+                    last_name: formData.last_name
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (data.email) {
+                    setError(data.email[0] || 'Error en el registro');
+                } else if (data.username) {
+                    setError(data.username[0] || 'Error en el registro');
+                } else if (data.password) {
+                    setError(data.password[0] || 'Error en el registro');
+                } else if (data.detail) {
+                    setError(data.detail);
+                } else {
+                    setError('Error en el registro. Intenta de nuevo.');
+                }
+            } else {
+                setSuccess('Registro exitoso. Bienvenido!');
+                localStorage.setItem('access_token', data.access);
+                localStorage.setItem('refresh_token', data.refresh);
+                setFormData({
+                    username: '',
+                    email: '',
+                    password: '',
+                    password_confirm: '',
+                    first_name: '',
+                    last_name: ''
+                });
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            }
+        } catch (err) {
+            setError('Error de conexión. Intenta de nuevo.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div>
             <h2>Registro</h2>
-            <form>
+            {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
+            {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
+            <form onSubmit={handleSubmit}>
                 {/* Nombre */}
                 <div>
-                    <label htmlFor="name">Nombre completo</label>
+                    <label htmlFor="first_name">Nombre</label>
                     <input
                         type="text"
-                        id="name"
-                        name="nombre"
+                        id="first_name"
+                        name="first_name"
                         placeholder="Ingresa tu nombre"
-                        maxLength="100"
+                        maxLength="150"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {/* Apellido */}
+                <div>
+                    <label htmlFor="last_name">Apellido</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        placeholder="Ingresa tu apellido"
+                        maxLength="150"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                {/* Username */}
+                <div>
+                    <label htmlFor="username">Usuario</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Elige un nombre de usuario"
+                        maxLength="150"
+                        value={formData.username}
+                        onChange={handleChange}
                         required
                     />
                 </div>
@@ -32,7 +149,9 @@ function Register() {
                         id="email"
                         name="email"
                         placeholder="Ingresa tu correo"
-                        maxLength="255"
+                        maxLength="254"
+                        value={formData.email}
+                        onChange={handleChange}
                         required
                     />
                 </div>
@@ -44,8 +163,10 @@ function Register() {
                         type={showPassword ? 'text' : 'password'}
                         id="password"
                         name="password"
-                        placeholder="Crea una contraseña"
-                        maxLength="255"
+                        placeholder="Crea una contraseña (mín. 8 caracteres)"
+                        maxLength="128"
+                        value={formData.password}
+                        onChange={handleChange}
                         required
                     />
                     <button type="button" onClick={togglePassword}>
@@ -55,13 +176,15 @@ function Register() {
 
                 {/* Confirmar contraseña */}
                 <div>
-                    <label htmlFor="confirmPassword">Confirmar contraseña</label>
+                    <label htmlFor="password_confirm">Confirmar contraseña</label>
                     <input
                         type={showConfirmPassword ? 'text' : 'password'}
-                        id="confirmPassword"
-                        name="confirmPassword"
+                        id="password_confirm"
+                        name="password_confirm"
                         placeholder="Repite tu contraseña"
-                        maxLength="255"
+                        maxLength="128"
+                        value={formData.password_confirm}
+                        onChange={handleChange}
                         required
                     />
                     <button type="button" onClick={toggleConfirmPassword}>
@@ -69,7 +192,9 @@ function Register() {
                     </button>
                 </div>
 
-                <button type="submit">Registrarse</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Registrando...' : 'Registrarse'}
+                </button>
             </form>
         </div>
     );

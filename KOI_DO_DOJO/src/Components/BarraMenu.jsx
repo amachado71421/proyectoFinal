@@ -4,96 +4,33 @@ import '/src/Styles/Barra.css';
 
 function BarraMenu() {
   const navigate = useNavigate()
+  
+  const menuItems = [
+    { path: "/", label: "Inicio", icon: "../src/Images/INICIO.png" },
+    { path: "/Perfil", label: "Perfil", icon: "../src/Images/PERFIL2.png" },
+    { path: "/QuienesSomos", label: "¿Quienes Somos?", icon: "../src/Images/NOSOTROS.png" },
+    { path: "/Dojo", label: "Dojo", icon: "../src/Images/DOJO.png" },
+    { path: "/Calendario", label: "Calendario", icon: "../src/Images/CALENDARIO.png" },
+    { path: "/Eventos", label: "Eventos", icon: "../src/Images/EVENTOS.png" },
+    { path: "/Ranking", label: "Ranking", icon: "../src/Images/RANKING.png" },
+    { path: "/Contactenos", label: "Contactenos", icon: "../src/Images/CONTACTENOS.png" },
+    { path: "/LogOut", label: "Log Out", icon: "../src/Images/LOCKOUT.png" }
+  ]
+
   return (
     <div>
       <main className='Menu'>
         <img className="Logo" src="../src/Images/LogoFinal2.png" alt="Logo" />
         <ul className="Inicio Elementos">
-<<<<<<< HEAD
-          <li className="menu-item" onClick={() => navigate("/")}>
-            <img className="Icono" src="../src/Images/INICIO.png" alt="IconoInicio" />
-            <span className='Titulo'>Inicio</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/Perfil")}>
-            <img className="Icono" src="../src/Images/PERFIL2.png" alt="IconoPerfil" />
-            <span className='Titulo'>Perfil</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/QuienesSomos")}>
-            <img className="Icono" src="../src/Images/NOSOTROS.png" alt="IconoNosotros" />
-            <span className='Titulo'>¿Quienes Somos?</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item"onClick={() => navigate("/Dojo")}>
-            <img className="Icono" src="../src/Images/DOJO.png" alt="IconoDojo" />
-            <span className='Titulo'>Dojo</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/Calendario")}>
-            <img className="Icono" src="../src/Images/CALENDARIO.png" alt="IconoCalendario" />
-            <span className='Titulo'>Calendario</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/Eventos")}>
-            <img className="Icono" src="../src/Images/EVENTOS.png" alt="IconoEventos" />
-            <span className='Titulo' >Eventos</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/Ranking")}>
-            <img className="Icono" src="../src/Images/RANKING.png" alt="IconoRanking" />
-            <span className='Titulo'>Ranking</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/Contactenos")}>
-            <img className="Icono" src="../src/Images/CONTACTENOS.png" alt="IconoContactenos" />
-            <span className='Titulo'>Contactenos</span>
-=======
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/INICIO.png" alt="IconoInicio" onClick={() => navigate("/")} />
-            <span className='Titulo' onClick={() => navigate("/")}>Inicio</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/PERFIL2.png" alt="IconoPerfil" onClick={() => navigate("/Perfil")} />
-            <span className='Titulo' onClick={() => navigate("/Perfil")}>Perfil</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/NOSOTROS.png" alt="IconoNosotros" onClick={() => navigate("/QuienesSomos")}/>
-            <span className='Titulo' onClick={() => navigate("/QuienesSomos")}>¿Quienes Somos?</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/DOJO.png" alt="IconoDojo" onClick={() => navigate("/Dojo")} />
-            <span className='Titulo' onClick={() => navigate("/Dojo")}>Dojo</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/CALENDARIO.png" alt="IconoCalendario" onClick={() => navigate("/Calendario")}/>
-            <span className='Titulo' onClick={() => navigate("/Calendario")}>Calendario</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/EVENTOS.png" alt="IconoEventos" onClick={() => navigate("/Eventos")} />
-            <span className='Titulo' onClick={() => navigate("/Eventos")}>Eventos</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/RANKING.png" alt="IconoRanking"  onClick={() => navigate("/Ranking")} />
-            <span className='Titulo' onClick={() => navigate("/Ranking")}>Ranking</span>
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item">
-            <img className="Icono" src="../src/Images/CONTACTENOS.png" alt="IconoContactenos" onClick={() => navigate("/Contactenos")}/>
-            <span className='Titulo' onClick={() => navigate("/Contactenos")}>Contactenos</span>
->>>>>>> ad32dd3549b7261f6800ac71cf0e0835f1c85f1d
-          </li>
-          <div class="linea-vertical"></div>
-          <li className="menu-item" onClick={() => navigate("/LogOut")}>
-            <img className="Icono" src="../src/Images/LOCKOUT.png" alt="IconoLogout" />
-            <span className='Titulo'>Log Out</span>
-          </li>
+          {menuItems.map((item, index) => (
+            <React.Fragment key={index}>
+              <li className="menu-item" onClick={() => navigate(item.path)}>
+                <img className="Icono" src={item.icon} alt={item.label} />
+                <span className='Titulo'>{item.label}</span>
+              </li>
+              {index < menuItems.length - 1 && <div className="linea-vertical"></div>}
+            </React.Fragment>
+          ))}
         </ul>
       </main>
     </div>

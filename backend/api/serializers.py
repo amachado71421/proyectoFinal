@@ -41,6 +41,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password', 'password_confirm',
                   'first_name', 'last_name', 'url_imagen', 'peso_kg', 'altura', 'id_rol']
 
+    def validate_email(self, value):
+        if models.Perfil.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Este correo ya está registrado.")
+        return value
+
     def validate(self, data):
         if data.get('password') != data.get('password_confirm'):
             raise serializers.ValidationError(
@@ -59,6 +64,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                 setattr(user, attr, validated_data[attr])
         user.save()
         return user
+
 
 
 class LoginSerializer(serializers.Serializer):
