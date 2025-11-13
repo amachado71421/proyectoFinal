@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Perfil, Rol, Resultado, Palmares, Logro, PerfilLogro, Categoria, RangoEdad, Evento, Estado, PerfilEvento, EventoCategoria, EventoRangoEdad
 
+
 @admin.register(Perfil)
 class PerfilAdmin(UserAdmin):
     model = Perfil

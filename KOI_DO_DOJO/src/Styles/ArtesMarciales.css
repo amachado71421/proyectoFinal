@@ -1,0 +1,45 @@
+.ContenedorEntreno {
+  display: flex;
+  justify-content: center;   /* centra horizontalmente */
+  align-items: center;       /* alinea verticalmente */
+  gap: 40px;                 /* espacio entre imágenes */
+  flex-wrap: wrap;           /* permite que bajen en pantallas pequeñas */
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+.ImgEntreno {
+  width: 300px;
+  height: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* efecto sutil al pasar el mouse */
+.ImgEntreno:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+  .ImgEntreno {
+    width: 80%;
+  }
+}
+
+.TituloMarciales{
+
+  top: 50%;
+  left: 50%;
+  color: #ffffff;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+.ImgEntreno {
+    width: 1250px;
+    display: block;
+    /* ✅ Necesario para que margin auto funcione */
+    margin: 0 auto;
+    /* ✅ Centra horizontalmente */
+}
+
