@@ -28,7 +28,7 @@ function BarraMenu() {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
     setIsAuthenticated(false);
-    navigate('/perfil'); // redirige a la ruta de perfil tras cerrar sesión
+    navigate('/'); // redirige a la ruta de perfil tras cerrar sesión
   };
 
   const menuItems = [
