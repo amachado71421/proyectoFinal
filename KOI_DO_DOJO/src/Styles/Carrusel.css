@@ -1,7 +1,7 @@
 .CarruselInicio {
   position: relative;
   width: 100%;
-  height: 55vh; /* ✅ altura controlada del carrusel */
+  height: 55vh;
   overflow: hidden;
   border-radius: 0;
   box-shadow: none;
@@ -10,7 +10,7 @@
 /* ====== SLIDES ====== */
 .CarruselTrack {
   display: flex;
-  transition: transform 0.9s ease-in-out;
+  transition: transform 2.5s ease-in-out; /* ⬅️ ajuste de 2.5s */
   width: 100%;
   height: 100%;
 }
@@ -22,12 +22,12 @@
   flex-shrink: 0;
 }
 
-/* ✅ Ajuste preciso de las imágenes */
+/* Imágenes del carrusel */
 .CarruselSlide img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* llena el área sin deformar */
-  object-position: center; /* centra el foco de la imagen */
+  object-fit: cover;
+  object-position: center;
 }
 
 /* ====== TEXTO ENCIMA ====== */
@@ -42,7 +42,7 @@
   padding: 15px 30px;
   border-radius: 10px;
   backdrop-filter: blur(4px);
-  animation: fadeIn 0.8s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -52,7 +52,7 @@
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* ====== ANIMACIÓN ====== */
+/* Animación */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -92,7 +92,7 @@
 /* ====== RESPONSIVO ====== */
 @media (max-width: 768px) {
   .CarruselInicio {
-    height: 35vh; /* más pequeño en móvil */
+    height: 35vh;
   }
 
   .CarruselSlide img {
@@ -103,3 +103,4 @@
     font-size: 20px;
   }
 }
+
