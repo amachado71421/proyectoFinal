@@ -1,10 +1,36 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '/src/Styles/Barra.css';
 
 function BarraMenu() {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Inicializa el estado al montar el componente
+    const token = localStorage.getItem('access_token');
+    setIsAuthenticated(!!token);
+
+    // Escucha cambios en localStorage (login/logout desde otros componentes)
+    const handleStorageChange = () => {
+      const token = localStorage.getItem('access_token');
+      setIsAuthenticated(!!token);
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user');
+    setIsAuthenticated(false);
+    navigate('/perfil'); // redirige a la ruta de perfil tras cerrar sesión
+  };
+
   const menuItems = [
     { path: "/", label: "Inicio", icon: "../src/Images/INICIO.png" },
     { path: "/Perfil", label: "Perfil", icon: "../src/Images/PERFIL2.png" },
@@ -14,8 +40,7 @@ function BarraMenu() {
     { path: "/Eventos", label: "Eventos", icon: "../src/Images/EVENTOS.png" },
     { path: "/Ranking", label: "Ranking", icon: "../src/Images/RANKING.png" },
     { path: "/Contactenos", label: "Contactenos", icon: "../src/Images/CONTACTENOS.png" },
-    { path: "/LogOut", label: "Log Out", icon: "../src/Images/LOCKOUT.png" }
-  ]
+  ];
 
   return (
     <div>
@@ -31,10 +56,19 @@ function BarraMenu() {
               {index < menuItems.length - 1 && <div className="linea-vertical"></div>}
             </React.Fragment>
           ))}
+
+          {isAuthenticated && (
+            <>
+              <li className="menu-item" onClick={handleLogout}>
+                <img className="Icono" src="../src/Images/LOCKOUT.png" alt="Log Out" />
+                <span className='Titulo'>Log Out</span>
+              </li>
+            </>
+          )}
         </ul>
       </main>
     </div>
-  )
+  );
 }
 
-export default BarraMenu
+export default BarraMenu;

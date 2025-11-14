@@ -148,7 +148,7 @@ function Register() {
                         type="email"
                         id="email"
                         name="email"
-                        placeholder="Ingresa tu correo"
+                        placeholder="Ingresa tu correo para registrarte"
                         maxLength="254"
                         value={formData.email}
                         onChange={handleChange}
