@@ -5,17 +5,20 @@ import CrearEtiquetas from '../Components/Calendario/Administrador/CrearEtiqueta
 import CrearRangoEdad from '../Components/Calendario/Administrador/CrearRangoEdad'
 import CrearLogros from '../Components/Calendario/Administrador/CrearLogros'
 import CrearEstadosPerfil from '../Components/Calendario/Administrador/CrearEstadosPerfil'
+import '/src/Styles/Pruebas.css';
 
 
 function Calendario() {
     return (
         <div>
-            <BarraMenu/>
-            <CrearRangoEdad/>
-            <CrearEstadosPerfil/>
-            <CrearLogros/>
-            <CrearEtiquetas/>
-            <Calendar/>
+            <BarraMenu />
+            <div className='divPerfil'>
+                <CrearRangoEdad />
+                <CrearEstadosPerfil />
+                <CrearLogros />
+                <CrearEtiquetas />
+                <Calendar />
+            </div>
         </div>
     )
 }

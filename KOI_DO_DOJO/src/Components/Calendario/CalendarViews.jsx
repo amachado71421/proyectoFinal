@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction'
 import multiMonthPlugin from '@fullcalendar/multimonth'
+import '/src/Styles/CalendarioTemporal.css';
 
 const CalendarViews = ({ events }) => {
     const calendarRef = useRef(null)
@@ -17,7 +18,7 @@ const CalendarViews = ({ events }) => {
 
     return (
         <div>
-            {/* 🔹 Botones personalizados para cambiar la vista */}
+            {/*Botones personalizados para cambiar la vista */}
             <div style={{ marginBottom: '1rem' }}>
                 <button onClick={() => changeView('dayGridMonth')}>Mes</button>
                 <button onClick={() => changeView('timeGridWeek')}>Semana</button>

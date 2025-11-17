@@ -1,0 +1,117 @@
+/* --------------------------- */
+/* 🌟 CONTENEDOR DEL CALENDARIO */
+/* --------------------------- */
+.fc {
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.fc:hover {
+    transform: translateY(-4px);
+}
+
+/* --------------------------- */
+/* 🌟 TOOLBAR (barra superior) */
+/* --------------------------- */
+.fc-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.fc-toolbar-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d62828;
+    /* rojo principal */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --------------------------- */
+/* 🌟 BOTONES DEL CALENDARIO */
+/* --------------------------- */
+.fc-button {
+    background: #673ab7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    transition: background 0.3s ease;
+    font-weight: 600;
+}
+
+.fc-button:hover {
+    background: #5e35b1;
+}
+
+.fc-button-active {
+    background: #d62828 !important;
+}
+
+/* --------------------------- */
+/* 🌟 CELDAS DEL MES/SEMANA */
+/* --------------------------- */
+.fc-daygrid-day {
+    border: 1px solid #ddd;
+    transition: background 0.3s ease;
+}
+
+.fc-daygrid-day:hover {
+    background-color: #f8f9fa;
+}
+
+/* --------------------------- */
+/* 🌟 EVENTOS */
+/* --------------------------- */
+.fc-daygrid-event,
+.fc-timegrid-event {
+    background: linear-gradient(145deg, #d62828, #ec1010);
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 6px;
+    font-size: 0.9rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.fc-daygrid-event:hover,
+.fc-timegrid-event:hover {
+    transform: scale(1.05);
+}
+
+/* --------------------------- */
+/* 🌟 LISTA DE EVENTOS */
+/* --------------------------- */
+.fc-list-event {
+    border-left: 5px solid #d62828;
+    background: #fff;
+    border-radius: 10px;
+    margin: 5px 0;
+    padding: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.fc-list-event:hover {
+    transform: translateX(5px);
+}
+
+/* --------------------------- */
+/* 🌟 RESPONSIVE */
+/* --------------------------- */
+@media (max-width: 768px) {
+    .fc-toolbar-title {
+        font-size: 1.2rem;
+    }
+
+    .fc-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+}
