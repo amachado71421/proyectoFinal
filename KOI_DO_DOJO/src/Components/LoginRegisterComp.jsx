@@ -1,4 +1,5 @@
 import Login from './login';
+import UserProfile from './Perfil/UserProfile';
 import Register from './Register';
 import React, { useState, useEffect } from 'react';
 
@@ -21,7 +22,7 @@ function LoginRegisterComp() {
     return (
         <div>
             {isAuthenticated ? (
-                <p>Ya tienes sesión iniciada.</p>
+                <UserProfile/>
             ) : (
                 <>
                     {showLogin ? <Login /> : <Register />}

@@ -1,0 +1,59 @@
+/* ===== PALMARÉS ===== */
+.palmares-card {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.palmares-card h2 {
+    font-size: 1.6rem;
+    color: #d62828;
+    margin-bottom: 1rem;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    /* ✅ responsivo */
+}
+
+.stat-item {
+    flex: 1 1 120px;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item .label {
+    font-weight: 600;
+    color: #444;
+}
+
+.stat-item .value {
+    font-size: 1.4rem;
+    color: #d62828;
+    margin-top: 0.3rem;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .palmares-card {
+        padding: 1rem;
+    }
+
+    .palmares-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .stat-item .value {
+        font-size: 1.2rem;
+    }
+}
