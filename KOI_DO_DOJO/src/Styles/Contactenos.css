@@ -1,0 +1,55 @@
+.TestimonioBloc{
+    margin-top: 180px;
+}
+
+/* ====== TÍTULO PRINCIPAL ====== */
+.TituloTestimonio {
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+  color: #111;
+  margin-top: 40px;
+  margin-bottom: 5px;
+  font-family: "Segoe UI", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.TituloTestimonio::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: #ec1010;      /* rojo dojo */
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* ====== SUBTÍTULO ====== */
+.SubtituloTestimonio {
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  color: #555;
+  margin-bottom: 40px;
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.4;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .TituloTestimonio {
+    font-size: 28px;
+  }
+
+  .SubtituloTestimonio {
+    font-size: 16px;
+    max-width: 90%;
+  }
+}

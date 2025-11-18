@@ -5,12 +5,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  position: fixed;        /* ✅ Siempre visible al hacer scroll */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;            /* ✅ Ocupa todo el ancho */
+  width: 100%;
   z-index: 1000;
   height: 120px;
   font-family: 'Segoe UI', sans-serif;
@@ -18,22 +18,21 @@
   color: #000000;
 }
 
-
+/* Línea vertical */
 .linea-vertical {
-  width: 3px !important;              /* grosor */
-  height: 40px;            /* alto */
-  background-color: #000;  /* color de la línea */
-  margin:2px          /* espacio a los lados */
+  width: 3px !important;
+  height: 40px;
+  background-color: #000;
+  margin: 2px;
 }
 
-
 /* --------------------------- */
-/* 🌟 LISTA PRINCIPAL (Antes .menu → ahora .Inicio) */
+/* 🌟 LISTA PRINCIPAL */
 /* --------------------------- */
 .Inicio {
   list-style: none;
   display: flex;
-  gap: 15px;
+  gap: 18px;
   margin: 0;
   padding: 0;
 }
@@ -66,11 +65,11 @@
 }
 
 /* --------------------------- */
-/* 🌟 NUEVA SECCIÓN: EFECTOS HOVER Y RESPONSIVE */
+/* 🌟 ANIMACIÓN SUBRAYADO */
 /* --------------------------- */
 .Elementos ul {
   list-style: none;
-  display: flex;           /* Alinear horizontalmente */
+  display: flex;
   margin: 0;
   padding: 0;
 }
@@ -83,7 +82,6 @@
   transition: color 0.3s ease;
 }
 
-/* Subrayado animado */
 .Elementos li::after {
   content: "";
   position: absolute;
@@ -103,14 +101,72 @@
   width: 100%;
 }
 
-/* Responsive */
+/* --------------------------- */
+/* 🌟 RESPONSIVE */
+/* --------------------------- */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .Menu {
+    height: 100px;
+    padding: 10px 15px;
+  }
+
+  .Logo {
+    height: 100px;
+  }
+
+  .Elementos li {
+    font-size: 17px;
+  }
+}
+
+/* Móviles */
 @media (max-width: 768px) {
-  .NavBar {
-    width: 180px;
-    padding: 15px 5px;
+
+  .Menu {
+    height: auto;
+    padding: 10px 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Logo {
+    height: 90px;
+  }
+
+  .linea-vertical {
+    display: none !important; /* ❌ oculta la línea en móvil */
+  }
+
+  .Inicio {
+    flex-direction: column; /* Menú vertical */
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .Elementos ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
 
   .Elementos li {
     font-size: 16px;
+  }
+}
+
+/* Teléfonos muy pequeños */
+@media (max-width: 480px) {
+  .Logo {
+    height: 75px;
+  }
+
+  .Elementos li {
+    font-size: 15px;
+  }
+
+  .Icono {
+    height: 28px;
   }
 }
