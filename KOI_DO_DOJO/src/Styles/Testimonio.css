@@ -4,27 +4,41 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 30px;
-    background: #ffffff;          /* Fondo blanco más limpio */
+    background: #ffffff;
+    /* Fondo blanco más limpio */
     padding: 40px 50px;
     width: 100%;
     max-width: 900px;
     margin: 60px auto;
     font-family: "Segoe UI", sans-serif;
 
-    border: 3px solid #e0e0e0;    /* Borde completo */
+    border: 3px solid #e0e0e0;
+    /* Borde completo */
     border-radius: 12px;
     position: relative;
+}
+
+.comillas {
+    width: 90px;
+    position: relative;
+    left: -50px;
+    /* derecha */
+    top: -80px;
+    /* arriba */
 }
 
 /* === EFECTO: borrar esquina superior izquierda === */
 .ContenedorTestimonio::before {
     content: "";
     position: absolute;
-    top: -3px;                 /* Alineado al borde */
+    top: -3px;
+    /* Alineado al borde */
     left: -3px;
-    width: 100px;               /* Tamaño del “hueco” */
+    width: 100px;
+    /* Tamaño del “hueco” */
     height: 40px;
-    background: #ffffff;       /* Color igual al fondo del sitio */
+    background: #ffffff;
+    /* Color igual al fondo del sitio */
     border-top-left-radius: 12px;
 }
 
