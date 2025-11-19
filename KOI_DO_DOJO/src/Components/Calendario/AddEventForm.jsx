@@ -1,5 +1,6 @@
-// src/AddEventForm.jsx
+// src/Components/AddEventForm.jsx
 import React, { useState, useEffect } from 'react'
+import '/src/Styles/AddEventForm.css'
 
 const AddEventForm = ({ onAddEvent }) => {
     const [formData, setFormData] = useState({
@@ -17,43 +18,21 @@ const AddEventForm = ({ onAddEvent }) => {
     const [availableTags, setAvailableTags] = useState([])
     const [showTags, setShowTags] = useState(false)
 
-    // Simulación de carga de etiquetas desde API
     useEffect(() => {
-        const fetchTags = async () => {
-            try {
-                // Aquí más adelante pondrás tu endpoint real
-                // const response = await fetch("http://localhost:8000/api/tags")
-                // const data = await response.json()
-                // setAvailableTags(data)
-
-                // Por ahora etiquetas estáticas
-                setAvailableTags(['Karate', 'Torneo', 'Entrenamiento', 'Examen', 'Social'])
-            } catch (error) {
-                console.error('Error cargando etiquetas:', error)
-            }
-        }
-
-        fetchTags()
+        setAvailableTags(['Karate', 'Torneo', 'Entrenamiento', 'Examen', 'Social'])
     }, [])
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target
-        let newValue = value
-        if (type === 'checkbox') {
-            newValue = checked
-        }
         setFormData((prev) => ({
             ...prev,
-            [name]: newValue
+            [name]: type === 'checkbox' ? checked : value
         }))
     }
 
     const handleTagClick = (tag) => {
         if (!formData.tags.includes(tag)) {
-            setFormData((prev) => ({
-                ...prev,
-                tags: [...prev.tags, tag]
-            }))
+            setFormData((prev) => ({ ...prev, tags: [...prev.tags, tag] }))
         }
     }
 
@@ -67,24 +46,15 @@ const AddEventForm = ({ onAddEvent }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        let start = ''
-        let end = ''
+        const start = formData.allDay
+            ? formData.startDate
+            : `${formData.startDate}T${formData.startTime || '00:00'}`
 
-        if (formData.allDay) {
-            start = formData.startDate
-            if (formData.endDate) {
-                end = formData.endDate
-            } else {
-                end = formData.startDate
-            }
-        } else {
-            start = formData.startDate + 'T' + formData.startTime
-            if (formData.endDate) {
-                end = formData.endDate + 'T' + formData.endTime
-            } else {
-                end = formData.startDate + 'T' + formData.endTime
-            }
-        }
+        const end = formData.allDay
+            ? formData.endDate || formData.startDate
+            : formData.endDate
+                ? `${formData.endDate}T${formData.endTime || '00:00'}`
+                : `${formData.startDate}T${formData.endTime || formData.startTime || '00:00'}`
 
         const newEvent = {
             title: formData.title,
@@ -96,9 +66,8 @@ const AddEventForm = ({ onAddEvent }) => {
             tags: formData.tags
         }
 
-        onAddEvent(newEvent)
+        onAddEvent?.(newEvent)
 
-        // Resetear formulario
         setFormData({
             title: '',
             description: '',
@@ -110,67 +79,147 @@ const AddEventForm = ({ onAddEvent }) => {
             location: '',
             tags: []
         })
+        setShowTags(false)
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>Añadir Evento</h3>
+        <form className="add-event-form" onSubmit={handleSubmit}>
+            <h3 className="form-title">Añadir evento</h3>
 
-            <input name="title" placeholder="Título" value={formData.title} onChange={handleChange} required />
-            <input name="description" placeholder="Descripción" value={formData.description} onChange={handleChange} />
-            <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
+            <div className="form-row">
+                <input
+                    className="form-input"
+                    name="title"
+                    placeholder="Título"
+                    value={formData.title}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-            {formData.allDay === false && (
-                <input type="time" name="startTime" value={formData.startTime} onChange={handleChange} required />
-            )}
+            <div className="form-row">
+                <input
+                    className="form-input"
+                    name="description"
+                    placeholder="Descripción"
+                    value={formData.description}
+                    onChange={handleChange}
+                />
+            </div>
 
-            <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} />
+            <div className="form-row form-grid-2">
+                <div className="form-group">
+                    <label className="form-label">Fecha inicio</label>
+                    <input
+                        className="form-input"
+                        type="date"
+                        name="startDate"
+                        value={formData.startDate}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-            {formData.allDay === false && (
-                <input type="time" name="endTime" value={formData.endTime} onChange={handleChange} />
-            )}
+                {!formData.allDay && (
+                    <div className="form-group">
+                        <label className="form-label">Hora inicio</label>
+                        <input
+                            className="form-input"
+                            type="time"
+                            name="startTime"
+                            value={formData.startTime}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                )}
+            </div>
 
-            <input name="location" placeholder="Lugar" value={formData.location} onChange={handleChange} />
+            <div className="form-row form-grid-2">
+                <div className="form-group">
+                    <label className="form-label">Fecha fin</label>
+                    <input
+                        className="form-input"
+                        type="date"
+                        name="endDate"
+                        value={formData.endDate}
+                        onChange={handleChange}
+                    />
+                </div>
 
-            <label>
-                <input type="checkbox" name="allDay" checked={formData.allDay} onChange={handleChange} />
+                {!formData.allDay && (
+                    <div className="form-group">
+                        <label className="form-label">Hora fin</label>
+                        <input
+                            className="form-input"
+                            type="time"
+                            name="endTime"
+                            value={formData.endTime}
+                            onChange={handleChange}
+                        />
+                    </div>
+                )}
+            </div>
+
+            <div className="form-row">
+                <input
+                    className="form-input"
+                    name="location"
+                    placeholder="Lugar"
+                    value={formData.location}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <label className="form-checkbox">
+                <input
+                    type="checkbox"
+                    name="allDay"
+                    checked={formData.allDay}
+                    onChange={handleChange}
+                />
                 Todo el día
             </label>
 
-            {/* Botón para mostrar/ocultar etiquetas */}
-            <div style={{ marginTop: '1rem' }}>
-                <button type="button" onClick={() => setShowTags(!showTags)}>
+            <div className="tags-section">
+                <button
+                    type="button"
+                    className="toggle-tags-btn"
+                    onClick={() => setShowTags(!showTags)}
+                >
                     {showTags ? 'Ocultar etiquetas' : 'Añadir etiquetas'}
                 </button>
 
                 {showTags && (
-                    <div style={{ marginTop: '0.5rem' }}>
-                        <p>Selecciona etiquetas:</p>
-                        {availableTags.map((tag) => (
-                            <button
-                                type="button"
-                                key={tag}
-                                onClick={() => handleTagClick(tag)}
-                                style={{ marginRight: '0.5rem', marginBottom: '0.5rem' }}
-                            >
-                                {tag}
-                            </button>
-                        ))}
+                    <div className="available-tags">
+                        <p className="tags-title">Selecciona etiquetas:</p>
+                        <div className="tags-grid">
+                            {availableTags.map((tag) => (
+                                <button
+                                    type="button"
+                                    key={tag}
+                                    className="tag-btn"
+                                    onClick={() => handleTagClick(tag)}
+                                >
+                                    {tag}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 )}
 
-                {/* Lista de etiquetas añadidas con opción de quitar */}
                 {formData.tags.length > 0 && (
-                    <div style={{ marginTop: '0.5rem' }}>
+                    <div className="selected-tags">
                         <strong>Etiquetas añadidas:</strong>
-                        <ul>
-                            {formData.tags.map((tag, index) => (
-                                <li key={index}>
-                                    {tag}{' '}
+                        <ul className="tags-list">
+                            {formData.tags.map((tag) => (
+                                <li key={tag} className="tag-item">
+                                    <span className="tag-chip">{tag}</span>
                                     <button
                                         type="button"
+                                        className="remove-tag-btn"
                                         onClick={() => handleRemoveTag(tag)}
-                                        style={{ marginLeft: '0.5rem', color: 'red' }}
+                                        aria-label={`Quitar etiqueta ${tag}`}
                                     >
                                         ❌
                                     </button>
@@ -181,7 +230,10 @@ const AddEventForm = ({ onAddEvent }) => {
                 )}
             </div>
 
-            <button type="submit" style={{ marginTop: '1rem' }}>Agregar</button>
+            {/* Botón principal: Añadir evento */}
+            <button type="submit" className="submit-btn add-event-btn">
+                Añadir evento
+            </button>
         </form>
     )
 }

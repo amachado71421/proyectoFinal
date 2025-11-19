@@ -13,10 +13,6 @@ function Calendario() {
         <div>
             <BarraMenu />
             <div className='divPerfil'>
-                <CrearRangoEdad />
-                <CrearEstadosPerfil />
-                <CrearLogros />
-                <CrearEtiquetas />
                 <Calendar />
             </div>
         </div>
