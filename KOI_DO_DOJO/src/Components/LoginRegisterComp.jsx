@@ -22,10 +22,12 @@ function LoginRegisterComp() {
     return (
         <div>
             {isAuthenticated ? (
-                <UserProfile/>
+                // ✅ Si está autenticado, se muestra el perfil
+                <UserProfile />
             ) : (
                 <>
                     {showLogin ? <Login /> : <Register />}
+                    {/* ✅ Si NO está autenticado, se muestra el botón */}
                     <button onClick={toggleForm}>
                         {showLogin ? 'Registrarse' : 'Iniciar Sesión'}
                     </button>

@@ -83,7 +83,7 @@
     position: fixed; /* ✅ ocupa toda la pantalla */
     inset: 0;
     background: rgba(0,0,0,0.2);
-    z-index: 9999;
+    z-index: 999;
 
     display: flex;
     justify-content: center;

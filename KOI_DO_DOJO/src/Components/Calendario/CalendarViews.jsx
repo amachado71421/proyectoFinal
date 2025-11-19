@@ -3,7 +3,6 @@ import React, { useRef, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import '/src/Styles/CalendarioTemporal.css'
@@ -20,12 +19,11 @@ const CalendarViews = ({ events }) => {
         setMenuOpen(false) // cerrar menú al seleccionar
     }
 
-    // Diccionario para mostrar nombres bonitos
+    // Diccionario para mostrar nombres bonitos (sin lista)
     const viewLabels = {
         dayGridMonth: 'Mes',
         timeGridWeek: 'Semana',
         timeGridDay: 'Día',
-        listWeek: 'Lista',
         multiMonthYear: 'Multi-Mes'
     }
 
@@ -77,7 +75,6 @@ const CalendarViews = ({ events }) => {
                 plugins={[
                     dayGridPlugin,
                     timeGridPlugin,
-                    listPlugin,
                     interactionPlugin,
                     multiMonthPlugin
                 ]}

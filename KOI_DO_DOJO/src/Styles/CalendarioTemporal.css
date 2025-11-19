@@ -8,6 +8,9 @@
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
     padding: 1rem;
     transition: transform 0.3s ease;
+    width: 100%;       /* ✅ menos ancho, no se desborda */
+    max-width: 100%;   /* ✅ límite */
+    margin: 0 auto;   /* ✅ centrado */
 }
 
 .fc:hover {
@@ -28,7 +31,6 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: #d62828;
-    /* rojo principal */
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -42,9 +44,7 @@
     border: none;
     border-radius: 6px;
     padding: 1rem 2rem;
-    /* ✅ más largos en desktop */
-    min-width: 180px;
-    /* ✅ ancho mínimo mayor */
+    min-width: 216px; /* antes 180px → +20% ancho */
     font-size: 1.05rem;
     font-weight: 600;
     transition: background 0.3s ease;
@@ -91,23 +91,6 @@
 }
 
 /* ============================= */
-/* 🌟 LISTA DE EVENTOS */
-/* ============================= */
-.fc-list-event {
-    border-left: 5px solid #d62828;
-    background: #fff;
-    border-radius: 10px;
-    margin: 5px 0;
-    padding: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
-}
-
-.fc-list-event:hover {
-    transform: translateX(5px);
-}
-
-/* ============================= */
 /* 🌟 TOOLBAR PERSONALIZADA */
 /* ============================= */
 .calendar-toolbar {
@@ -125,9 +108,7 @@
     border: none;
     border-radius: 6px;
     padding: 1rem 2rem;
-    /* ✅ más largos en desktop */
-    min-width: 180px;
-    /* ✅ ancho mínimo mayor */
+    min-width: 216px; /* antes 180px → +20% ancho */
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
@@ -149,7 +130,6 @@
 /* Botón activo en móvil */
 .calendar-btn-active-selected {
     width: 100%;
-    /* ✅ ocupa todo el ancho en móvil */
     font-size: 1.2rem;
     font-weight: 700;
     padding: 1.2rem;
@@ -177,13 +157,11 @@
     gap: 12px;
 }
 
-/* Menú desplegable en móvil → horizontal siempre que se pueda */
+/* Menú desplegable en móvil */
 .calendar-menu {
     display: flex;
     flex-direction: row;
-    /* ✅ horizontal */
     flex-wrap: wrap;
-    /* ✅ se acomodan si no caben */
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
@@ -196,7 +174,6 @@
         opacity: 0;
         transform: translateY(-10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -211,24 +188,21 @@
 
     .fc-button {
         padding: 0.7rem 1.2rem;
-        min-width: 140px;
+        min-width: 168px; /* antes 140px → +20% ancho */
         font-size: 0.95rem;
     }
 
     .calendar-toolbar-desktop {
         display: none;
-        /* ocultar en móvil */
     }
 
     .calendar-toolbar-mobile {
         display: flex;
-        /* mostrar en móvil */
     }
 
     .calendar-btn {
         width: auto;
-        min-width: 150px;
-        /* ✅ aún largos en móvil */
+        min-width: 180px; /* antes 150px → +20% ancho */
         font-size: 1rem;
         padding: 0.9rem 1.4rem;
     }
@@ -238,13 +212,11 @@
 @media (max-width: 480px) {
     .calendar-menu {
         flex-direction: column;
-        /* ✅ solo en móviles muy pequeños */
         align-items: center;
     }
 
     .calendar-btn {
         width: 100%;
-        /* ✅ ocupa todo el ancho */
         font-size: 1rem;
         padding: 1rem;
     }
