@@ -12,14 +12,14 @@ function Marciales() {
 
             <div className="ContenedorPiramide">
                 <div className="FilaSuperior">
-                    <img className="ImgEntreno" src="../src/Images/Kickboxing.png" alt="Kickboxing" />
-                    <img className="ImgEntreno" src="../src/Images/Karate.png" alt="Karate" />
+                    <img className="ImgEntreno" src="../src/Images/Karate.png" alt="Kickboxing" />
+                    <img className="ImgEntreno" src="../src/Images/Kickboxing.png"  alt="Karate" />
                 </div>
                 <div className="FilaInferior">
                     <img className="ImgEntreno" src="../src/Images/MMA.png" alt="MMA" />
                 </div>
             </div>
-        </div>
+        </div>  
     );
 }
 

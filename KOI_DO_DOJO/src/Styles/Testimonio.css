@@ -1,0 +1,88 @@
+/* ===== CONTENEDOR GENERAL ===== */
+.ContenedorTestimonio {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    background: #ffffff;          /* Fondo blanco más limpio */
+    padding: 40px 50px;
+    width: 100%;
+    max-width: 900px;
+    margin: 60px auto;
+    font-family: "Segoe UI", sans-serif;
+
+    border: 3px solid #e0e0e0;    /* Borde completo */
+    border-radius: 12px;
+    position: relative;
+}
+
+/* === EFECTO: borrar esquina superior izquierda === */
+.ContenedorTestimonio::before {
+    content: "";
+    position: absolute;
+    top: -3px;                 /* Alineado al borde */
+    left: -3px;
+    width: 100px;               /* Tamaño del “hueco” */
+    height: 40px;
+    background: #ffffff;       /* Color igual al fondo del sitio */
+    border-top-left-radius: 12px;
+}
+
+/* ===== COLUMNA DE TEXTO ===== */
+.ContenedorComentarios {
+    flex: 2;
+}
+
+.Comentario {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #474747;
+    margin-bottom: 20px;
+}
+
+/* ===== COLUMNA DONDE VA LA FOTO Y EL NOMBRE ===== */
+.ContenedorSegmento2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== FOTO DEL TESTIMONIO ===== */
+.ContenedorImagen {
+    text-align: center;
+}
+
+.TestimonioImg {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* ===== NOMBRE Y PUESTO ===== */
+.Nombre {
+    margin: 5px 0 0 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+}
+
+.Puesto {
+    margin: 0;
+    font-size: 15px;
+    color: #cf0808;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .ContenedorTestimonio {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .ContenedorSegmento2 {
+        align-items: center;
+    }
+}
