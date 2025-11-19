@@ -1,0 +1,146 @@
+/* Footer general */
+.Footer {
+    background: #000000;
+    color: #ffffff;
+    padding: 18px 20px;
+    font-family: "Segoe UI", sans-serif;
+    position: relative;
+}
+
+/* Franja roja superior fina */
+.FranjaRoja {
+    width: 100%;
+    height: 6px;
+    background: #ec1010;
+    margin-bottom: 12px;
+}
+
+/* Contenedor principal */
+.FooterContenido {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===================================== */
+/* ENCABEZADO: Imagen - Texto - Imagen   */
+/* ===================================== */
+.FooterHeaderWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 10px;
+}
+
+.FooterHeaderImg1 {
+    width: 100px;
+    object-fit: contain;
+    opacity: 0.95;
+    filter: brightness(1.1);
+}
+.FooterHeaderImg {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+    opacity: 0.95;
+    filter: brightness(1.1);
+}
+
+/* Texto del encabezado */
+.FooterCabecera {
+    text-align: center;
+}
+
+.FooterTitulo {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.FooterDojo {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ec1010;
+    margin: 4px 0;
+}
+
+.FooterLider {
+    font-size: 14px;
+    margin: 0;
+    color: #d6d6d6;
+}
+
+/* ===================================== */
+/* BLOQUE DE INFORMACIÓN */
+/* ===================================== */
+.FooterInfo {
+    text-align: left;
+}
+
+.FooterTexto {
+    font-size: 14px;
+    line-height: 1.45;
+    margin: 4px 0;
+    color: #cfcfcf;
+}
+
+.FooterTexto a {
+    color: #ec1010;
+    text-decoration: none;
+}
+
+.FooterTexto a:hover {
+    text-decoration: underline;
+}
+
+/* ===================================== */
+/* REDES SOCIALES */
+/* ===================================== */
+.FooterRedes {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.FooterRedes a {
+    color: #ffffff;
+    font-size: 22px;
+    transition: 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.FooterRedes a:hover {
+    color: #ec1010;
+    transform: translateY(-3px) scale(1.06);
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+@media (max-width: 760px) {
+    .FooterHeaderWrapper {
+        gap: 10px;
+    }
+
+    .FooterHeaderImg {
+        width: 56px;
+        height: 56px;
+    }
+
+    .FooterTitulo {
+        font-size: 17px;
+    }
+
+    .FooterDojo {
+        font-size: 15px;
+    }
+}

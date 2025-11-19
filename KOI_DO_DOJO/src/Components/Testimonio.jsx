@@ -7,6 +7,7 @@ const Testimonio = ({ testimonio, imagen, nombre, puesto }) => {
 
 
       <div className="ContenedorTestimonio">
+        <img className='comillas' src="../src/Images/comillas1.png" alt="" />
 
         <div className="ContenedorComentarios">
           <p className="Comentario">{testimonio}"El sensei Danilo Vega es una inspiración. Su dedicación y forma de enseñar me han ayudado a superar mis límites tanto dentro como fuera del dojo. ¡El KOI-DO DOJO es mi segundo hogar!"</p>
