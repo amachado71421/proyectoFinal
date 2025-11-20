@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -61,9 +59,8 @@ function Login() {
                 if (data.refresh) localStorage.setItem('refresh_token', data.refresh);
                 if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
 
-                setTimeout(() => {
-                    navigate('/');
-                }, 1500);
+                // ✅ Recargar la página en lugar de navegar
+                window.location.reload();
             }
         } catch (err) {
             console.error(err);

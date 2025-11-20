@@ -1,0 +1,177 @@
+/* ============================= */
+/* 🌟 CONTENEDOR PRINCIPAL */
+/* ============================= */
+.calendar-container {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem clamp(1rem, 5vw, 2rem);
+    background: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    text-align: center;
+
+    position: relative; /* ✅ mantiene compatibilidad */
+}
+
+/* ============================= */
+/* 🌟 TÍTULO */
+/* ============================= */
+.calendar-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+/* ============================= */
+/* 🌟 TOOLBAR */
+/* ============================= */
+.calendar-toolbar {
+    display: flex;
+    justify-content: center; /* ✅ centrado */
+    align-items: center;
+    width: 100%;
+}
+
+.toggle-form-btn {
+    background: #673ab7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-inline: auto; /* ✅ fuerza centrado */
+}
+
+.toggle-form-btn:hover {
+    background: #5e35b1;
+}
+
+/* ============================= */
+/* 🌟 CALENDARIO PRINCIPAL */
+/* ============================= */
+.calendar-main {
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    min-height: 600px;
+    width: min(1000px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+/* ============================= */
+/* 🌟 FORMULARIO OVERLAY FIJO */
+/* ============================= */
+.add-event-overlay {
+    position: fixed; /* ✅ ocupa toda la pantalla */
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 999;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* ✅ aparece desde arriba */
+
+    padding: 5vh 5%; /* ✅ espacio arriba y a los lados */
+    box-sizing: border-box;
+
+    overflow-y: auto; /* ✅ scroll interno */
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.add-event-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.add-event-form {
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.add-event-overlay.visible .add-event-form {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================= */
+/* 🌟 RESPONSIVE */
+/* ============================= */
+@media (max-width: 1080px) {
+    .calendar-toolbar {
+        justify-content: center;
+    }
+    .toggle-form-btn {
+        margin-inline: auto;
+        display: block;
+    }
+    .add-event-overlay {
+        padding: 8vh 8%; /* ✅ más espacio para salir */
+    }
+    .add-event-form {
+        width: 90%;
+    }
+}
+
+@media (max-width: 992px) {
+    .calendar-main {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 720px) {
+    .calendar-toolbar {
+        justify-content: center;
+    }
+    .toggle-form-btn {
+        margin-inline: auto;
+        display: block;
+    }
+    .add-event-overlay {
+        padding: 12vh 10%; /* ✅ espacio extra para cerrar */
+    }
+    .add-event-form {
+        width: 95%;
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-main {
+        grid-template-columns: 1fr;
+    }
+    .add-event-form {
+        border-radius: 12px;
+        padding: 1.5rem;
+        width: 95%;
+    }
+}

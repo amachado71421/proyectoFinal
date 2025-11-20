@@ -1,4 +1,5 @@
 import Login from './login';
+import UserProfile from './Perfil/UserProfile';
 import Register from './Register';
 import React, { useState, useEffect } from 'react';
 
@@ -21,10 +22,12 @@ function LoginRegisterComp() {
     return (
         <div>
             {isAuthenticated ? (
-                <p>Ya tienes sesión iniciada.</p>
+                // ✅ Si está autenticado, se muestra el perfil
+                <UserProfile />
             ) : (
                 <>
                     {showLogin ? <Login /> : <Register />}
+                    {/* ✅ Si NO está autenticado, se muestra el botón */}
                     <button onClick={toggleForm}>
                         {showLogin ? 'Registrarse' : 'Iniciar Sesión'}
                     </button>

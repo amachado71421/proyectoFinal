@@ -1,0 +1,73 @@
+/* ===== LOGROS ===== */
+.logros-card {
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    font-family: "Poppins", sans-serif;
+    overflow-x: auto;
+    /* ✅ scroll horizontal */
+}
+
+.logros-card h2 {
+    font-size: 1.6rem;
+    color: #d62828;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.logros-card ul {
+    display: flex;
+    /* ✅ horizontal */
+    flex-direction: row;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: max-content;
+    /* ✅ asegura scroll si no caben */
+}
+
+.logros-card li {
+    flex: 0 0 auto;
+    /* ✅ no se encogen */
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    min-width: 200px;
+    /* ✅ ancho fijo para scroll */
+    transition: transform 0.2s ease;
+}
+
+.logros-card li:hover {
+    transform: translateY(-3px);
+}
+
+.logros-card .comentario {
+    font-size: 0.9rem;
+    color: #666;
+    display: block;
+    margin-top: 0.3rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .logros-card li {
+        min-width: 160px;
+        padding: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logros-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .logros-card li {
+        min-width: 140px;
+        font-size: 0.9rem;
+    }
+}

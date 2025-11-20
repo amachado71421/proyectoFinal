@@ -1,37 +1,80 @@
 // src/Components/Calendario/CalendarViews.jsx
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction'
 import multiMonthPlugin from '@fullcalendar/multimonth'
+import '/src/Styles/CalendarioTemporal.css'
 
 const CalendarViews = ({ events }) => {
     const calendarRef = useRef(null)
+    const [currentView, setCurrentView] = useState('dayGridMonth')
+    const [menuOpen, setMenuOpen] = useState(false)
 
     const changeView = (viewName) => {
         const calendarApi = calendarRef.current.getApi()
         calendarApi.changeView(viewName)
+        setCurrentView(viewName)
+        setMenuOpen(false) // cerrar menú al seleccionar
+    }
+
+    // Diccionario para mostrar nombres bonitos (sin lista)
+    const viewLabels = {
+        dayGridMonth: 'Mes',
+        timeGridWeek: 'Semana',
+        timeGridDay: 'Día',
+        multiMonthYear: 'Multi-Mes'
     }
 
     return (
         <div>
-            {/* 🔹 Botones personalizados para cambiar la vista */}
-            <div style={{ marginBottom: '1rem' }}>
-                <button onClick={() => changeView('dayGridMonth')}>Mes</button>
-                <button onClick={() => changeView('timeGridWeek')}>Semana</button>
-                <button onClick={() => changeView('timeGridDay')}>Día</button>
-                <button onClick={() => changeView('listWeek')}>Lista</button>
-                <button onClick={() => changeView('multiMonthYear')}>Multi-Mes</button>
+            {/* Barra de botones personalizada */}
+            <div className="calendar-toolbar">
+                {/* Desktop: todos los botones visibles */}
+                <div className="calendar-toolbar-desktop">
+                    {Object.entries(viewLabels).map(([view, label]) => (
+                        <button
+                            key={view}
+                            className={`calendar-btn ${currentView === view ? 'calendar-btn-active-selected' : ''}`}
+                            onClick={() => changeView(view)}
+                        >
+                            {label}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Mobile: solo botón actual + menú desplegable */}
+                <div className="calendar-toolbar-mobile">
+                    <button
+                        className="calendar-btn calendar-btn-active-selected"
+                        onClick={() => setMenuOpen(!menuOpen)}
+                    >
+                        {viewLabels[currentView]}
+                    </button>
+
+                    {menuOpen && (
+                        <div className="calendar-menu">
+                            {Object.entries(viewLabels).map(([view, label]) => (
+                                <button
+                                    key={view}
+                                    className="calendar-btn"
+                                    onClick={() => changeView(view)}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
 
+            {/* Calendario principal */}
             <FullCalendar
                 ref={calendarRef}
                 plugins={[
                     dayGridPlugin,
                     timeGridPlugin,
-                    listPlugin,
                     interactionPlugin,
                     multiMonthPlugin
                 ]}

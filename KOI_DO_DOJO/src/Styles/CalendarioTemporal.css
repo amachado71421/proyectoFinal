@@ -1,0 +1,223 @@
+/* ============================= */
+/* 🌟 CONTENEDOR PRINCIPAL DEL CALENDARIO */
+/* ============================= */
+.fc {
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    padding: 1rem;
+    transition: transform 0.3s ease;
+    width: 100%;       /* ✅ menos ancho, no se desborda */
+    max-width: 100%;   /* ✅ límite */
+    margin: 0 auto;   /* ✅ centrado */
+}
+
+.fc:hover {
+    transform: translateY(-4px);
+}
+
+/* ============================= */
+/* 🌟 TOOLBAR SUPERIOR DE FULLCALENDAR */
+/* ============================= */
+.fc-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.fc-toolbar-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d62828;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ============================= */
+/* 🌟 BOTONES DE FULLCALENDAR */
+/* ============================= */
+.fc-button {
+    background: #673ab7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 1rem 2rem;
+    min-width: 216px; /* antes 180px → +20% ancho */
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    text-align: center;
+}
+
+.fc-button:hover {
+    background: #5e35b1;
+}
+
+.fc-button-active {
+    background: #d62828 !important;
+}
+
+/* ============================= */
+/* 🌟 CELDAS DEL MES/SEMANA */
+/* ============================= */
+.fc-daygrid-day {
+    border: 1px solid #ddd;
+    transition: background 0.3s ease;
+}
+
+.fc-daygrid-day:hover {
+    background-color: #f8f9fa;
+}
+
+/* ============================= */
+/* 🌟 EVENTOS */
+/* ============================= */
+.fc-daygrid-event,
+.fc-timegrid-event {
+    background: linear-gradient(145deg, #d62828, #ec1010);
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.fc-daygrid-event:hover,
+.fc-timegrid-event:hover {
+    transform: scale(1.05);
+}
+
+/* ============================= */
+/* 🌟 TOOLBAR PERSONALIZADA */
+/* ============================= */
+.calendar-toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Botones personalizados */
+.calendar-btn {
+    background: #d62828;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 1rem 2rem;
+    min-width: 216px; /* antes 180px → +20% ancho */
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.calendar-btn:hover {
+    background: #ec1010;
+    transform: translateY(-2px);
+}
+
+.calendar-btn:active {
+    background: #b71c1c;
+    transform: scale(0.95);
+}
+
+/* Botón activo en móvil */
+.calendar-btn-active-selected {
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 1.2rem;
+    background: #d62828;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* ============================= */
+/* 🌟 RESPONSIVE */
+/* ============================= */
+
+/* Desktop: todos los botones visibles */
+.calendar-toolbar-desktop {
+    display: flex;
+    gap: 15px;
+}
+
+/* Mobile: solo botón actual */
+.calendar-toolbar-mobile {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Menú desplegable en móvil */
+.calendar-menu {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    animation: fadeInDown 0.3s ease;
+}
+
+/* Animación */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Breakpoint tablet/móvil */
+@media (max-width: 768px) {
+    .fc-toolbar-title {
+        font-size: 1.2rem;
+    }
+
+    .fc-button {
+        padding: 0.7rem 1.2rem;
+        min-width: 168px; /* antes 140px → +20% ancho */
+        font-size: 0.95rem;
+    }
+
+    .calendar-toolbar-desktop {
+        display: none;
+    }
+
+    .calendar-toolbar-mobile {
+        display: flex;
+    }
+
+    .calendar-btn {
+        width: auto;
+        min-width: 180px; /* antes 150px → +20% ancho */
+        font-size: 1rem;
+        padding: 0.9rem 1.4rem;
+    }
+}
+
+/* Breakpoint móvil pequeño */
+@media (max-width: 480px) {
+    .calendar-menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calendar-btn {
+        width: 100%;
+        font-size: 1rem;
+        padding: 1rem;
+    }
+}
