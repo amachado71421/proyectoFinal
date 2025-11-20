@@ -6,7 +6,6 @@ import QuienesSomos from "../Pages/QuienesSomos.jsx";
 import Dojo from "../Pages/Dojo.jsx";
 import Calendario from "../Pages/Calendario";
 import Eventos from "../Pages/Eventos.jsx";
-import Ranking from "../Pages/Ranking.jsx";
 import Contactenos from "../Pages/Contactenos.jsx";
 
 
@@ -22,7 +21,6 @@ function Routing() {
                 <Route path="/Dojo" element={<Dojo/>} />
                 <Route path="/calendario" element={<Calendario/>}/>
                 <Route path="/Eventos" element={<Eventos/>} />
-                <Route path="/Ranking" element={<Ranking/>} />
                 <Route path="/Contactenos" element={<Contactenos/>} />
                 
 

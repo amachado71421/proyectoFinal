@@ -5,22 +5,19 @@ import '/src/Styles/Barra.css';
 function BarraMenu() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // CONTROLA MENÚ HAMBURGUESA
 
   useEffect(() => {
-    // Inicializa el estado al montar el componente
     const token = localStorage.getItem('access_token');
     setIsAuthenticated(!!token);
 
-    // Escucha cambios en localStorage (login/logout desde otros componentes)
     const handleStorageChange = () => {
       const token = localStorage.getItem('access_token');
       setIsAuthenticated(!!token);
     };
 
     window.addEventListener('storage', handleStorageChange);
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const handleLogout = () => {
@@ -28,7 +25,7 @@ function BarraMenu() {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
     setIsAuthenticated(false);
-    navigate('/'); // redirige a la ruta de perfil tras cerrar sesión
+    navigate('/');
   };
 
   const menuItems = [
@@ -38,36 +35,47 @@ function BarraMenu() {
     { path: "/Dojo", label: "Dojo", icon: "../src/Images/DOJO.png" },
     { path: "/Calendario", label: "Calendario", icon: "../src/Images/CALENDARIO.png" },
     { path: "/Eventos", label: "Eventos", icon: "../src/Images/EVENTOS.png" },
-    { path: "/Ranking", label: "Ranking", icon: "../src/Images/RANKING.png" },
     { path: "/Contactenos", label: "Contactenos", icon: "../src/Images/CONTACTENOS.png" },
   ];
 
   return (
-    <div>
-      <main className='Menu'>
-        <img className="Logo" src="../src/Images/LogoFinal2.png" alt="Logo" />
-        <ul className="Inicio Elementos">
-          {menuItems.map((item, index) => (
-            <React.Fragment key={index}>
-              <li className="menu-item" onClick={() => navigate(item.path)}>
-                <img className="Icono" src={item.icon} alt={item.label} />
-                <span className='Titulo'>{item.label}</span>
-              </li>
-              {index < menuItems.length - 1 && <div className="linea-vertical"></div>}
-            </React.Fragment>
-          ))}
+    <main className='Menu'>
 
-          {isAuthenticated && (
-            <>
-              <li className="menu-item" onClick={handleLogout}>
-                <img className="Icono" src="../src/Images/LOCKOUT.png" alt="Log Out" />
-                <span className='Titulo'>Log Out</span>
-              </li>
-            </>
-          )}
-        </ul>
-      </main>
-    </div>
+      {/* LOGO */}
+      <img className="Logo" src="../src/Images/LogoFinal2.png" alt="Logo" />
+
+      {/* BOTÓN HAMBURGUESA */}
+      <div className={`hamburger ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      {/* MENÚ */}
+      <ul className={`Inicio Elementos ${isOpen ? "open" : ""}`}>
+        {menuItems.map((item, index) => (
+          <React.Fragment key={index}>
+            <li
+              className="menu-item"
+              onClick={() => { navigate(item.path); setIsOpen(false); }}
+            >
+              <img className="Icono" src={item.icon} alt={item.label} />
+              <span className='Titulo'>{item.label}</span>
+            </li>
+
+            {index < menuItems.length - 1 && <div className="linea-vertical"></div>}
+          </React.Fragment>
+        ))}
+
+        {isAuthenticated && (
+          <li className="menu-item" onClick={handleLogout}>
+            <img className="Icono" src="../src/Images/LOCKOUT.png" alt="Log Out" />
+            <span className='Titulo'>Log Out</span>
+          </li>
+        )}
+      </ul>
+
+    </main>
   );
 }
 

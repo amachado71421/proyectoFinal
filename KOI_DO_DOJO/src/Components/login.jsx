@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Layer1 from '../Components/LayerProfile/Layer1';
+
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -71,18 +73,20 @@ function Login() {
     };
 
     return (
-        <div>
-            <h2>Iniciar Sesión</h2>
+        <div className='InicioSesión'>
+            <Layer1/>
+            <h2 className='TituloIniciarSesion'>Iniciar Sesión</h2>
             {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
             {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
 
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Correo electrónico</label>
+                <div className='ContenedorInicioSesion'>
+                    <label htmlFor="email" className='EmailLabel'>Correo electrónico</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
+                        className='EmailInput'
                         placeholder="Ingresa tu correo"
                         value={formData.email}
                         onChange={handleChange}
@@ -91,7 +95,7 @@ function Login() {
                 </div>
 
                 <div>
-                    <label htmlFor="password">Contraseña</label>
+                    <label htmlFor="password" className=''>Contraseña</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
                         id="password"

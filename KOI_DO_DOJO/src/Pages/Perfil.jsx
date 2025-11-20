@@ -1,6 +1,6 @@
 import React from 'react'
 import BarraMenu from '../Components/BarraMenu'
-import '/src/Styles/Pruebas.css';
+import '/src/Styles/Perfil.css';
 import LoginRegisterComp from '../Components/LoginRegisterComp';
 
 
@@ -9,7 +9,7 @@ function Perfil() {
         <div>
             <BarraMenu />
             <div className='divPerfil'>
-            <LoginRegisterComp/>
+                <LoginRegisterComp />
             </div>
 
         </div>
