@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../Context/AuthContext';
 
 function Login() {
+    const { setIsAuthenticated } = useContext(AuthContext);
+    const [formData, setFormData] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
 
-    const togglePassword = () => setShowPassword(!showPassword);
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
+
+    const togglePassword = () => setShowPassword(prev => !prev);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
         setError('');
+        setSuccess('');
     };
 
     const handleSubmit = async (e) => {
@@ -27,79 +30,69 @@ function Login() {
         setError('');
         setSuccess('');
 
-        if (!formData.email || !formData.password) {
+        const { email, password } = formData;
+        if (!email || !password) {
             setError('Completa email y contraseña.');
             setLoading(false);
             return;
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+            const response = await fetch('http://127.0.0.1:8000/api/token/', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password
-                })
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({ username: email, password }), // 👈 usa email como username
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                if (data.detail) {
-                    setError(data.detail);
-                } else if (data.email) {
-                    setError(Array.isArray(data.email) ? data.email[0] : data.email);
-                } else {
-                    setError('Error en el inicio de sesión.');
-                }
+                setError(data.detail || 'Error en el inicio de sesión.');
             } else {
                 setSuccess('Inicio de sesión exitoso. Bienvenido!');
-                if (data.access) localStorage.setItem('access_token', data.access);
-                if (data.refresh) localStorage.setItem('refresh_token', data.refresh);
-                if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
-
-                // ✅ Recargar la página en lugar de navegar
-                window.location.reload();
+                setIsAuthenticated(true);
             }
         } catch (err) {
-            console.error(err);
-            setError('Error de conexión. Intenta de nuevo.');
+            console.error('Error de conexión:', err);
+            setError('No se pudo conectar con el servidor.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div>
+        <div className="login-container">
             <h2>Iniciar Sesión</h2>
-            {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
-            {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div>
+            {error && <div className="login-error">{error}</div>}
+            {success && <div className="login-success">{success}</div>}
+
+            <form onSubmit={handleSubmit} className="login-form">
+                <div className="form-group">
                     <label htmlFor="email">Correo electrónico</label>
                     <input
-                        type="email"
-                        id="email"
+                        type="text"
                         name="email"
-                        placeholder="Ingresa tu correo"
                         value={formData.email}
                         onChange={handleChange}
                         required
+                        autoComplete="username"
                     />
                 </div>
 
-                <div>
+                <div className="form-group">
                     <label htmlFor="password">Contraseña</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
-                        id="password"
                         name="password"
-                        placeholder="Ingresa tu contraseña"
                         value={formData.password}
                         onChange={handleChange}
                         required
+                        autoComplete="current-password"
                     />
                     <button type="button" onClick={togglePassword}>
                         {showPassword ? 'Ocultar' : 'Ver'}

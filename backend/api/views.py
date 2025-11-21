@@ -6,6 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import models
 from . import serializers
+from api.serializers import PerfilSerializer
 
 
 class ResultadoViewSet(viewsets.ReadOnlyModelViewSet):
@@ -136,4 +137,20 @@ class MeAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        return Response(serializers.PerfilSerializer(request.user).data, status=status.HTTP_200_OK)
+        perfil = request.user
+        serializer = PerfilSerializer(perfil)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class LogoutAPIView(APIView):
+    """
+    POST /api/logout/
+    Elimina las cookies de sesión (access y refresh tokens)
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        response = Response({'message': 'Sesión cerrada'}, status=status.HTTP_200_OK)
+        response.delete_cookie('access_token')
+        response.delete_cookie('refresh_token')
+        return response

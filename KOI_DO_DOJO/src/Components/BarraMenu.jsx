@@ -4,31 +4,54 @@ import '/src/Styles/Barra.css';
 
 function BarraMenu() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // null = no verificado aún
 
+  // 🔐 Verifica autenticación solo si hay cookies
   useEffect(() => {
-    // Inicializa el estado al montar el componente
-    const token = localStorage.getItem('access_token');
-    setIsAuthenticated(!!token);
+    const hasAccessToken = document.cookie.includes('access_token=');
+    if (!hasAccessToken) {
+      setIsAuthenticated(false);
+      return;
+    }
 
-    // Escucha cambios en localStorage (login/logout desde otros componentes)
-    const handleStorageChange = () => {
-      const token = localStorage.getItem('access_token');
-      setIsAuthenticated(!!token);
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('http://127.0.0.1:8000/api/auth/me/', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        setIsAuthenticated(res.ok);
+      } catch {
+        setIsAuthenticated(false);
+      }
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
+    checkAuth();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user');
-    setIsAuthenticated(false);
-    navigate('/'); // redirige a la ruta de perfil tras cerrar sesión
+  const handleLogout = async () => {
+    try {
+      await fetch('http://127.0.0.1:8000/api/logout/', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+      });
+    } catch (err) {
+      console.error('Error al cerrar sesión:', err);
+    } finally {
+      setIsAuthenticated(false);
+      navigate('/');
+    }
+  };
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   };
 
   const menuItems = [
@@ -57,13 +80,11 @@ function BarraMenu() {
             </React.Fragment>
           ))}
 
-          {isAuthenticated && (
-            <>
-              <li className="menu-item" onClick={handleLogout}>
-                <img className="Icono" src="../src/Images/LOCKOUT.png" alt="Log Out" />
-                <span className='Titulo'>Log Out</span>
-              </li>
-            </>
+          {isAuthenticated === true && (
+            <li className="menu-item" onClick={handleLogout}>
+              <img className="Icono" src="../src/Images/LOCKOUT.png" alt="Log Out" />
+              <span className='Titulo'>Log Out</span>
+            </li>
           )}
         </ul>
       </main>
