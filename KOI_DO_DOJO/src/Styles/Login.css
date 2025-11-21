@@ -1,0 +1,141 @@
+/* ============================== */
+/* CONTENEDOR GENERAL */
+/* ============================== */
+.InicioSesion {
+  width: 100%;
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 25px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+/* Para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+  .InicioSesion {
+    margin: 25px auto;
+    padding: 15px;
+    max-width: 100%;
+  }
+}
+
+/* Para pantallas medianas (tablets) */
+@media (max-width: 768px) {
+  .InicioSesion {
+    max-width: 350px;
+  }
+}
+
+/* ============================== */
+/* TÍTULO */
+/* ============================== */
+.TituloIniciarSesion {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #d40000;
+}
+
+@media (max-width: 480px) {
+  .TituloIniciarSesion {
+    font-size: 22px;
+  }
+}
+
+/* ============================== */
+/* CONTENEDORES DE ENTRADA */
+/* ============================== */
+.ContenedorInicioSesion {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* ============================== */
+/* LABELS */
+/* ============================== */
+.EmailLabel,
+.PasswordLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: left;
+}
+
+/* ============================== */
+/* INPUTS */
+/* ============================== */
+.EmailInput,
+.PasswordInput {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 30px;
+  border: 2px solid #bfbfbf;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
+  box-sizing: border-box;
+}
+
+.EmailInput:focus,
+.PasswordInput:focus {
+  border-color: #d40000;
+  background-color: #fff;
+}
+
+/* Inputs más cómodos en pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .EmailInput,
+  .PasswordInput {
+    padding: 10px 13px;
+    font-size: 14px;
+  }
+}
+
+/* ============================== */
+/* BOTÓN VER / OCULTAR CONTRASEÑA */
+/* ============================== */
+.BtnVerPassword {
+  margin-top: 8px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.BtnVerPassword:hover {
+  color: #ec1010;
+}
+
+/* ============================== */
+/* BOTÓN INGRESAR */
+/* ============================== */
+.BtnIngresar {
+  width: 100%;
+  padding: 12px;
+  margin-top: 25px;
+  border-radius: 30px;
+  border: 2px solid #d40000;
+  background-color: #d40000;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.BtnIngresar:hover {
+  background-color: white;
+  color: #d40000;
+}
+
+@media (max-width: 480px) {
+  .BtnIngresar {
+    padding: 10px;
+    font-size: 15px;
+  }
+}

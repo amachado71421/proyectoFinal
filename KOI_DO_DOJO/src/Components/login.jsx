@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import React, { useState, useContext } from 'react';
-import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../../Context/AuthContext';
+=======
+import React, { useState } from 'react';
+import '/src/Styles/Login.css';
+
+>>>>>>> 41fd8f8fc023008e7d468a96fe6a67453c1d0012
 
 function Login() {
     const { setIsAuthenticated } = useContext(AuthContext);
@@ -65,6 +71,7 @@ function Login() {
     };
 
     return (
+<<<<<<< HEAD
         <div className="login-container">
             <h2>Iniciar Sesión</h2>
 
@@ -74,9 +81,24 @@ function Login() {
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="form-group">
                     <label htmlFor="email">Correo electrónico</label>
+=======
+        <div >
+            <div className='InicioSesion'>
+            {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
+            {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
+
+            <form onSubmit={handleSubmit}>
+                <div className='ContenedorInicioSesion'>
+                    <label htmlFor="email" className='EmailLabel'>Correo electrónico:</label>
+>>>>>>> 41fd8f8fc023008e7d468a96fe6a67453c1d0012
                     <input
                         type="text"
                         name="email"
+<<<<<<< HEAD
+=======
+                        className='EmailInput'
+                        placeholder="Ingresa tu correo"
+>>>>>>> 41fd8f8fc023008e7d468a96fe6a67453c1d0012
                         value={formData.email}
                         onChange={handleChange}
                         required
@@ -84,25 +106,38 @@ function Login() {
                     />
                 </div>
 
+<<<<<<< HEAD
                 <div className="form-group">
                     <label htmlFor="password">Contraseña</label>
+=======
+                <div>
+                    <label htmlFor="password" className='PasswordLabel'>Contraseña:</label>
+>>>>>>> 41fd8f8fc023008e7d468a96fe6a67453c1d0012
                     <input
                         type={showPassword ? 'text' : 'password'}
                         name="password"
+<<<<<<< HEAD
+=======
+                        className='PasswordInput'
+                        placeholder="Ingresa tu contraseña"
+>>>>>>> 41fd8f8fc023008e7d468a96fe6a67453c1d0012
                         value={formData.password}
                         onChange={handleChange}
                         required
                         autoComplete="current-password"
                     />
-                    <button type="button" onClick={togglePassword}>
+                    <button className='BtnVerPassword' type="button" onClick={togglePassword}>
                         {showPassword ? 'Ocultar' : 'Ver'}
                     </button>
                 </div>
 
-                <button type="submit" disabled={loading}>
+                <button className='BtnIngresar' type="submit" disabled={loading}>
                     {loading ? 'Ingresando...' : 'Ingresar'}
                 </button>
+                 {/* OLVIDAR CONTRASEÑA */}
+                        <h3 className='OlvidarContra'>¿Olvidaste tu contraseña?</h3>
             </form>
+            </div>
         </div>
     );
 }

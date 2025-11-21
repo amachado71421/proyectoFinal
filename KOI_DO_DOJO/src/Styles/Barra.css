@@ -1,50 +1,54 @@
-/* --------------------------- */
-/* 🌟 CONTENEDOR PRINCIPAL */
-/* --------------------------- */
+/* ======================= */
+/* CONTENEDOR PRINCIPAL */
+/* ======================= */
 .Menu {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  z-index: 1000;
   height: 120px;
-  font-family: 'Segoe UI', sans-serif;
   background: #ffffff;
-  color: #000000;
+  z-index: 1000;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Línea vertical */
-.linea-vertical {
-  width: 3px !important;
-  height: 40px;
-  background-color: #000;
-  margin: 2px;
+/* LOGO */
+.Logo {
+  height: 130px;
+  flex-shrink: 0;
 }
 
-/* --------------------------- */
-/* 🌟 LISTA PRINCIPAL */
-/* --------------------------- */
-.Inicio {
-  list-style: none;
+/* MENÚ EN DESKTOP */
+.Elementos {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 18px;
-  margin: 0;
-  padding: 0;
+  margin-left: 15px;
 }
 
-/* --------------------------- */
-/* 🌟 ITEMS DEL MENÚ */
-/* --------------------------- */
+/* PARA ESCRITORIO → El menú SIEMPRE visible */
+.Inicio {
+  display: flex !important;
+  align-items: center;
+  gap: 18px;
+  list-style: none;
+  padding: 0;
+  margin-left: 100px;
+  flex-wrap: nowrap;
+  max-width: 70%;
+}
+
+/* ITEMS */
 .menu-item {
   display: flex;
   align-items: center;
   gap: 5px;
   cursor: pointer;
+  position: relative;
   transition: color 0.3s ease;
 }
 
@@ -52,121 +56,125 @@
   color: #ec1010;
 }
 
-/* --------------------------- */
-/* 🌟 LOGO E ÍCONOS */
-/* --------------------------- */
-.Logo {
-  height: 130px;
-}
-
-.Icono {
-  height: 35px;
-  margin: 2px;
-}
-
-/* --------------------------- */
-/* 🌟 ANIMACIÓN SUBRAYADO */
-/* --------------------------- */
-.Elementos ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.Elementos li {
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.Elementos li::after {
+.menu-item::after {
   content: "";
   position: absolute;
   width: 0%;
-  height: 2px;
+  height: 2.5px;
   left: 0;
-  bottom: -5px;
+  bottom: -6px;
   background: #ec1010;
   transition: width 0.3s ease;
 }
 
-.Elementos li:hover {
-  color: #ec1010;
-}
-
-.Elementos li:hover::after {
+.menu-item:hover::after {
   width: 100%;
 }
 
-/* --------------------------- */
-/* 🌟 RESPONSIVE */
-/* --------------------------- */
-
-/* Tablets */
-@media (max-width: 1024px) {
-  .Menu {
-    height: 100px;
-    padding: 10px 15px;
-  }
-
-  .Logo {
-    height: 100px;
-  }
-
-  .Elementos li {
-    font-size: 17px;
-  }
+.Icono {
+  height: 40px;
 }
 
-/* Móviles */
-@media (max-width: 768px) {
+/* Separadores */
+.linea-vertical {
+  width: 3.5px;
+  min-width: 3.5px;
+  height: 45px;
+  background: #000;
+  flex-shrink: 0;
+}
 
-  .Menu {
-    height: auto;
-    padding: 10px 15px;
-    flex-direction: column;
-    align-items: center;
+/* Texto */
+.Titulo {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ======================= */
+/* HAMBURGUESA */
+/* ======================= */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  width: 35px;
+  height: 28px;
+  justify-content: space-between;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 5px;
+  width: 100%;
+  background: #000;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+/* Animación hamburguesa → X */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+/* ======================= */
+/* RESPONSIVE */
+/* ======================= */
+@media (max-width: 900px) {
+
+  /* Centrar hamburguesa */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 35px;
+  }
+
+  /* MENÚ MOBILE OCULTO POR DEFECTO */
+  .Inicio {
+    flex-direction: column !important;
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - 120px); /* ← Scroll si la pantalla es corta */
+    overflow-y: auto;
+    background: white;
+    display: none !important;
+    padding: 15px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 999;
+    margin-left: 0; /* ← Full width mobile */
+  }
+
+  /* Menú abierto */
+  .Inicio.open {
+    display: flex !important;
+  }
+
+  .linea-vertical {
+    display: none;
+  }
+
+  .menu-item::after {
+    bottom: -3px;
   }
 
   .Logo {
     height: 90px;
   }
 
-  .linea-vertical {
-    display: none !important; /* ❌ oculta la línea en móvil */
-  }
-
-  .Inicio {
-    flex-direction: column; /* Menú vertical */
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  .Elementos ul {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .Elementos li {
-    font-size: 16px;
-  }
-}
-
-/* Teléfonos muy pequeños */
-@media (max-width: 480px) {
-  .Logo {
-    height: 75px;
-  }
-
-  .Elementos li {
-    font-size: 15px;
-  }
-
   .Icono {
-    height: 28px;
+    height: 35px;
+  }
+
+  .Titulo {
+    font-size: 18px;
   }
 }

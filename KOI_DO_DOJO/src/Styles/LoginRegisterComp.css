@@ -1,0 +1,18 @@
+.BtnRegistro{
+  width: 100%;
+  padding: 12px;
+  margin-top: 25px;
+  border-radius: 30px;
+  border: 2px solid #d40000;
+  background-color: #d40000;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.BtnRegistro:hover {
+  background-color: white;
+  color: #d40000;
+}

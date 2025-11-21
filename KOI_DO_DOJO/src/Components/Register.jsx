@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '/src/Styles/Register.css';
 
 function Register() {
     const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +86,7 @@ function Register() {
                     window.location.href = '/';
                 }, 2000);
             }
-        } catch (err) {
+        } catch (Error) {
             setError('Error de conexión. Intenta de nuevo.');
         } finally {
             setLoading(false);
@@ -93,18 +94,19 @@ function Register() {
     };
 
     return (
-        <div>
-            <h2>Registro</h2>
+        <div className='ContenedorRegistro'>
+            <h2 className='TituloRegistro'>Registro</h2>
             {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
             {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
             <form onSubmit={handleSubmit}>
                 {/* Nombre */}
-                <div>
-                    <label htmlFor="first_name">Nombre</label>
+                <div className='ContenedorImputsNombre'>
+                    <label className='NombreLabel' htmlFor="first_name">Nombre</label>
                     <input
                         type="text"
                         id="first_name"
                         name="first_name"
+                        className='NombreInput'
                         placeholder="Ingresa tu nombre"
                         maxLength="150"
                         value={formData.first_name}
@@ -113,12 +115,13 @@ function Register() {
                 </div>
 
                 {/* Apellido */}
-                <div>
-                    <label htmlFor="last_name">Apellido</label>
+                <div className='ContenedorImputsApellido'>
+                    <label className='ApellidoLabel' htmlFor="last_name">Apellido</label>
                     <input
                         type="text"
                         id="last_name"
                         name="last_name"
+                        className='ApellidoInput'
                         placeholder="Ingresa tu apellido"
                         maxLength="150"
                         value={formData.last_name}
@@ -127,12 +130,13 @@ function Register() {
                 </div>
 
                 {/* Username */}
-                <div>
-                    <label htmlFor="username">Usuario</label>
+                <div className='ContenedorImputsUsername'>
+                    <label className='UsernameLabel' htmlFor="username">Usuario</label>
                     <input
                         type="text"
                         id="username"
                         name="username"
+                        className='UsernameInput'
                         placeholder="Elige un nombre de usuario"
                         maxLength="150"
                         value={formData.username}
@@ -142,12 +146,13 @@ function Register() {
                 </div>
 
                 {/* Email */}
-                <div>
-                    <label htmlFor="email">Correo electrónico</label>
+                <div className='ContenedorImputsCorreo'>
+                    <label className='CorreoLabel' htmlFor="email">Correo electrónico</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
+                        className='CorreoInput'
                         placeholder="Ingresa tu correo para registrarte"
                         maxLength="254"
                         value={formData.email}
@@ -157,42 +162,44 @@ function Register() {
                 </div>
 
                 {/* Contraseña */}
-                <div>
-                    <label htmlFor="password">Contraseña</label>
+                <div className='ContenedorImputsContra'>
+                    <label className='ContraLabel' htmlFor="password">Contraseña</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
                         id="password"
                         name="password"
+                        className='ContraInput'
                         placeholder="Crea una contraseña (mín. 8 caracteres)"
                         maxLength="128"
                         value={formData.password}
                         onChange={handleChange}
                         required
                     />
-                    <button type="button" onClick={togglePassword}>
+                    <button className='BtnVerPassword' type="button" onClick={togglePassword}>
                         {showPassword ? 'Ocultar' : 'Ver'}
                     </button>
                 </div>
 
                 {/* Confirmar contraseña */}
-                <div>
-                    <label htmlFor="password_confirm">Confirmar contraseña</label>
+                <div className='ContenedorInputsConfirmarPassword'>
+                    <label className='ConfirmarPasswordLabel' htmlFor="password_confirm">Confirmar contraseña</label>
                     <input
                         type={showConfirmPassword ? 'text' : 'password'}
                         id="password_confirm"
                         name="password_confirm"
                         placeholder="Repite tu contraseña"
+                        className='ConfirmarPasswordInput'
                         maxLength="128"
                         value={formData.password_confirm}
                         onChange={handleChange}
                         required
                     />
-                    <button type="button" onClick={toggleConfirmPassword}>
+                    <button className='BtnVerPassword' type="button" onClick={toggleConfirmPassword}>
                         {showConfirmPassword ? 'Ocultar' : 'Ver'}
                     </button>
                 </div>
 
-                <button type="submit" disabled={loading}>
+                <button className='BtnVersubmit' type="submit" disabled={loading}>
                     {loading ? 'Registrando...' : 'Registrarse'}
                 </button>
             </form>
