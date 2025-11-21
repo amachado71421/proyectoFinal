@@ -35,6 +35,10 @@ Incluye funcionalidades de reservas, eventos, perfiles de usuarios, calendario i
 ### Herramientas de desarrollo
 - **GitHub**: control de versiones y colaboración entre el equipo, con historial de cambios y trabajo en ramas.
 - **Postman**: pruebas de APIs y base de datos, facilitando el manejo y edición de información.
+- **Trello**: gestión de tareas y organización del proyecto.  
+  👉 [Acceder al tablero de Trello](https://trello.com/invite/b/690cafc3334f9574748b3bbb/ATTI8b390f811b13fe2f9523440156a2d5d815151B26/proyecto-final-forward)  
+- **Google Docs**: documentación escrita del proyecto.  
+  👉 [Acceder al documento](https://docs.google.com/document/d/1t7TgtkB0rwp1q7HoqJwD3HoIeiaFClYK11GJvj2rcCU/edit?usp=sharing)
 
 ---
 
@@ -43,7 +47,7 @@ Incluye funcionalidades de reservas, eventos, perfiles de usuarios, calendario i
 - **Frontend (React + FullCalendar + EmailJS)** → Interfaz interactiva y dinámica.
 - **Backend (Django + DRF + JWT + CSRF + CORS)** → Lógica de negocio, seguridad y APIs.
 - **Base de datos (MySQL)** → Almacenamiento estructurado de información.
-- **Herramientas (GitHub + Postman)** → Control de versiones y pruebas.
+- **Herramientas (GitHub + Postman + Trello + Google Docs)** → Control de versiones, pruebas y organización del equipo.
 
 ---
 
@@ -69,6 +73,7 @@ Incluye funcionalidades de reservas, eventos, perfiles de usuarios, calendario i
 ## 👨‍💻 Equipo y colaboración
 
 El proyecto se desarrolla en equipo utilizando **GitHub** para control de versiones y coordinación.  
-Las pruebas de APIs y base de datos se realizan con **Postman** para asegurar calidad y consistencia.
+Las pruebas de APIs y base de datos se realizan con **Postman**.  
+La organización de tareas se gestiona en **Trello** y la documentación se mantiene en **Google Docs**.
 
 ---
