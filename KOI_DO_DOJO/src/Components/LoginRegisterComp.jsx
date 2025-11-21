@@ -2,6 +2,7 @@ import Login from './login';
 import UserProfile from './Perfil/UserProfile';
 import Register from './Register';
 import React, { useState, useEffect } from 'react';
+import '/src/Styles/LoginRegisterComp.css';
 
 function LoginRegisterComp() {
     const [showLogin, setShowLogin] = useState(true);
@@ -28,7 +29,7 @@ function LoginRegisterComp() {
                 <>
                     {showLogin ? <Login /> : <Register />}
                     {/* ✅ Si NO está autenticado, se muestra el botón */}
-                    <button onClick={toggleForm}>
+                    <button className='BtnRegistro'  onClick={toggleForm}>
                         {showLogin ? 'Registrarse' : 'Iniciar Sesión'}
                     </button>
                 </>

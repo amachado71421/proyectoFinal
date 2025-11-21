@@ -12,7 +12,7 @@ function Layer1() {
 
     <div className='TituloEncima'>
         <h1 className='TituloLayer1'>
-            Bienvenido al registro de Koi Do Dojo de Karate
+            Bienvenido al registro e inicio de sesión de Koi Do Dojo
         </h1>
 
         <p className='TituloLayer1'>

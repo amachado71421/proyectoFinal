@@ -1,0 +1,135 @@
+/* ============================== */
+/* CONTENEDOR PRINCIPAL */
+/* ============================== */
+.Layer2 {
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column; /* IMPORTANTE → Título arriba y contenido abajo */
+    padding: 40px;
+    gap: 40px;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    background: #111;
+    color: #fff;
+}
+
+/* TÍTULO */
+.SegmentoTituloLayer2 {
+    width: 100%;
+    text-align: center;
+}
+
+.TituloLayer2 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* ============================== */
+/* ZONA QUE CONTIENE LAS DOS COLUMNAS */
+/* ============================== */
+.Layer2Contenido {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+}
+
+/* ============================== */
+/* COLUMNA IZQUIERDA */
+/* ============================== */
+.Segmento1InSesion {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.ContenedorInSesion {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.TituloIniciarSesion {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.ParrafoInsesion {
+    color: #cfcfcf;
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.LineaHorizontal {
+    margin: 18px 0;
+    border: none;
+    height: 2px;
+    background: #555;
+}
+
+.OlvidarContra {
+    margin-top: 25px;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.OlvidarContra:hover {
+    color: #ec1010;
+}
+
+/* ============================== */
+/* COLUMNA DERECHA */
+/* ============================== */
+.ContenedorImgSesion {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ImgSegmento1 img {
+    width: 100%;
+    height: 743px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid #333;
+}
+
+.ParrafoPieImg {
+    color: #ddd;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-top: 10px;
+}
+
+/* ============================== */
+/* RESPONSIVE */
+/* ============================== */
+@media (max-width: 900px) {
+    .Layer2Contenido {
+        flex-direction: column;
+    }
+
+    .Layer2 {
+        padding: 20px;
+    }
+
+    .ContenedorInSesion {
+        padding: 20px;
+    }
+
+    .TituloLayer2 {
+        font-size: 26px;
+    }
+
+    .ImgSegmento1 img {
+        max-height: 350px;
+        object-fit: cover;
+    }
+}

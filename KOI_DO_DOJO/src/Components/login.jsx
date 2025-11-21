@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layer1 from '../Components/LayerProfile/Layer1';
+import '/src/Styles/Login.css';
 
 
 function Login() {
@@ -73,15 +73,14 @@ function Login() {
     };
 
     return (
-        <div className='InicioSesión'>
-            <Layer1/>
-            <h2 className='TituloIniciarSesion'>Iniciar Sesión</h2>
+        <div >
+            <div className='InicioSesion'>
             {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
             {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
 
             <form onSubmit={handleSubmit}>
                 <div className='ContenedorInicioSesion'>
-                    <label htmlFor="email" className='EmailLabel'>Correo electrónico</label>
+                    <label htmlFor="email" className='EmailLabel'>Correo electrónico:</label>
                     <input
                         type="email"
                         id="email"
@@ -95,25 +94,29 @@ function Login() {
                 </div>
 
                 <div>
-                    <label htmlFor="password" className=''>Contraseña</label>
+                    <label htmlFor="password" className='PasswordLabel'>Contraseña:</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
                         id="password"
                         name="password"
+                        className='PasswordInput'
                         placeholder="Ingresa tu contraseña"
                         value={formData.password}
                         onChange={handleChange}
                         required
                     />
-                    <button type="button" onClick={togglePassword}>
+                    <button className='BtnVerPassword' type="button" onClick={togglePassword}>
                         {showPassword ? 'Ocultar' : 'Ver'}
                     </button>
                 </div>
 
-                <button type="submit" disabled={loading}>
+                <button className='BtnIngresar' type="submit" disabled={loading}>
                     {loading ? 'Ingresando...' : 'Ingresar'}
                 </button>
+                 {/* OLVIDAR CONTRASEÑA */}
+                        <h3 className='OlvidarContra'>¿Olvidaste tu contraseña?</h3>
             </form>
+            </div>
         </div>
     );
 }
