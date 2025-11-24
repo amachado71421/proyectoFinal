@@ -13,11 +13,12 @@ function Routing() {
     return (
         <Router>
             <Routes>
-<<<<<<< HEAD
                 <Route path="/" element={<Inicio />} />
                 <Route path="/Perfil" element={<Perfil />} />
                 <Route path="/QuienesSomos" element={<QuienesSomos />} />
                 <Route path="/Dojo" element={<Dojo />} />
+
+                {/* Calendario protegido con RequireAuth */}
                 <Route
                     path="/calendario"
                     element={
@@ -26,22 +27,10 @@ function Routing() {
                         </RequireAuth>
                     }
                 />
+
                 <Route path="/Eventos" element={<Eventos />} />
-                <Route path="/Ranking" element={<Ranking />} />
                 <Route path="/Contactenos" element={<Contactenos />} />
                 <Route path="/loginregister" element={<LoginRegister />} />
-=======
-                <Route path="/" element={<Inicio/>} />
-                <Route path="/Perfil" element={<Perfil/>} />
-                <Route path="/QuienesSomos" element={<QuienesSomos/>} />
-                <Route path="/Dojo" element={<Dojo/>} />
-                <Route path="/calendario" element={<Calendario/>}/>
-                <Route path="/Eventos" element={<Eventos/>} />
-                <Route path="/Contactenos" element={<Contactenos/>} />
-                
-
-                <Route path="/loginregister" element={<LoginRegister/>}/>
->>>>>>> 41fd8f8fc023008e7d468a96fe6a67453c1d0012
             </Routes>
         </Router>
     );

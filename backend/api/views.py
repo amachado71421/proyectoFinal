@@ -4,10 +4,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from . import models
-from . import serializers
+from . import models, serializers
 from api.serializers import PerfilSerializer
 
+
+# -----------------------------
+# ViewSets de modelos
+# -----------------------------
 
 class ResultadoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Resultado.objects.all()
@@ -87,13 +90,14 @@ class EventoRangoEdadViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
 
-#JWT / Auth endpoints
-
+# -----------------------------
+# Endpoints de Autenticación JWT
+# -----------------------------
 
 class RegisterAPIView(APIView):
     """
     POST /api/auth/register/
-    devuelve access + refresh + datos del user creado
+    Devuelve access + refresh + datos del perfil creado
     """
     permission_classes = [AllowAny]
 
@@ -102,10 +106,11 @@ class RegisterAPIView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
+            perfil = models.Perfil.objects.get(user=user)
             return Response({
                 "access": str(refresh.access_token),
                 "refresh": str(refresh),
-                "user": serializers.PerfilSerializer(user).data
+                "user": PerfilSerializer(perfil).data
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -113,7 +118,7 @@ class RegisterAPIView(APIView):
 class LoginAPIView(APIView):
     """
     POST /api/auth/login/
-    recibe { email, password } y devuelve access + refresh + user
+    Recibe { email, password } y devuelve access + refresh + perfil
     """
     permission_classes = [AllowAny]
 
@@ -122,24 +127,31 @@ class LoginAPIView(APIView):
         if serializer.is_valid():
             user = serializer.validated_data['user']
             refresh = RefreshToken.for_user(user)
+            perfil = models.Perfil.objects.get(user=user)
             return Response({
                 "access": str(refresh.access_token),
                 "refresh": str(refresh),
-                "user": serializers.PerfilSerializer(user).data
+                "user": PerfilSerializer(perfil).data
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class MeAPIView(APIView):
     """
-    GET /api/auth/me/ -> datos del usuario autenticado
+    GET /api/auth/me/ -> datos del perfil autenticado
     """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        perfil = request.user
-        serializer = PerfilSerializer(perfil)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            perfil = models.Perfil.objects.get(user=request.user)
+            serializer = PerfilSerializer(perfil)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except models.Perfil.DoesNotExist:
+            return Response(
+                {"detail": "Perfil no encontrado"},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class LogoutAPIView(APIView):
@@ -150,7 +162,8 @@ class LogoutAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
+        domain = 'localhost'
         response = Response({'message': 'Sesión cerrada'}, status=status.HTTP_200_OK)
-        response.delete_cookie('access_token')
-        response.delete_cookie('refresh_token')
+        response.delete_cookie('access_token', path='/', domain=domain)
+        response.delete_cookie('refresh_token', path='/', domain=domain)
         return response
