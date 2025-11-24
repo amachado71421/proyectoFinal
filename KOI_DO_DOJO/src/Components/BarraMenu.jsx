@@ -11,7 +11,7 @@ function BarraMenu() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/auth/me/', {
+        const res = await fetch('http://localhost:8000/api/auth/me/', {
           method: 'GET',
           credentials: 'include', // envía las cookies HttpOnly
         });
@@ -26,7 +26,7 @@ function BarraMenu() {
 
 const handleLogout = async () => {
   try {
-    await fetch('http://127.0.0.1:8000/api/logout/', {
+    await fetch('http://localhost:8000/api/logout/', {
       method: 'POST',
       credentials: 'include',
       headers: {

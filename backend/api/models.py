@@ -28,7 +28,6 @@ class Resultado(models.Model):
 
 class Perfil(AbstractUser):
     id_perfil = models.AutoField(primary_key=True)
-    
     url_imagen = models.CharField(max_length=255, null=True, blank=True)
     peso_kg = models.FloatField(null=True, blank=True)
     altura = models.IntegerField(null=True, blank=True)

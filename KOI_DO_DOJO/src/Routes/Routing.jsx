@@ -7,24 +7,34 @@ import Dojo from "../Pages/Dojo.jsx";
 import Calendario from "../Pages/Calendario";
 import Eventos from "../Pages/Eventos.jsx";
 import Contactenos from "../Pages/Contactenos.jsx";
-import RequireAuth from "./RequireAuth";
+import Autorizacion from "../Components/Perfil/Autorizacion.jsx";
 
 function Routing() {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Inicio />} />
-                <Route path="/Perfil" element={<Perfil />} />
+
+                {/* Perfil protegido con Autorizacion */}
+                <Route
+                    path="/Perfil"
+                    element={
+                        <Autorizacion>
+                            <Perfil />
+                        </Autorizacion>
+                    }
+                />
+
                 <Route path="/QuienesSomos" element={<QuienesSomos />} />
                 <Route path="/Dojo" element={<Dojo />} />
 
-                {/* Calendario protegido con RequireAuth */}
+                {/* Calendario protegido con Autorizacion */}
                 <Route
                     path="/calendario"
                     element={
-                        <RequireAuth>
+                        <Autorizacion>
                             <Calendario />
-                        </RequireAuth>
+                        </Autorizacion>
                     }
                 />
 

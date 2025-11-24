@@ -1,42 +1,59 @@
 // src/Components/Perfil/UserProfile.jsx
-import React, { useState, useEffect } from 'react'
-import '/src/Styles/UserProfile.css'
+import React, { useState, useEffect } from 'react';
+import '/src/Styles/UserProfile.css';
 
 // Importamos los componentes
-import Palmares from './Palmares'
-import Logros from './Logros'
+import Palmares from './Palmares';
+import Logros from './Logros';
 
 const UserProfile = () => {
-    // Estado inicial estático (simulando datos de API)
-    const [userData, setUserData] = useState({
-        nombre: 'Juan',
-        apellido: 'Pérez',
-        usuario: 'juanperez',
-        correo: 'juan.perez@example.com',
-        rol: 'Estudiante',
-        peso: 70,   // kg
-        altura: 175 // cm
-    })
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-    // Simulación de carga desde API (base para futuro)
     useEffect(() => {
-        // Aquí iría la llamada al API, por ejemplo:
-        // fetch('/api/user').then(res => res.json()).then(data => setUserData(data))
-    }, [])
+        const fetchUserData = async () => {
+            try {
+                const res = await fetch('http://localhost:8000/api/auth/me/', {
+                    method: 'GET',
+                    credentials: 'include', // envía cookies HttpOnly
+                });
 
-    // Handlers para modificar peso y altura
+                if (!res.ok) {
+                    throw new Error('No se pudo obtener el perfil');
+                }
+
+                const data = await res.json();
+                setUserData(data);
+            } catch (err) {
+                console.error('Error al cargar perfil:', err);
+                setError('Error al cargar perfil');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     const handleChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
         setUserData(prev => ({
             ...prev,
             [name]: value
-        }))
-    }
+        }));
+    };
+
+    if (loading) return <div>Cargando perfil...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="user-card">
             <div className="user-image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnWZ1thmT--iqRTOaH45gaSxGzTQf6fIQXyg&s" alt="Foto de perfil" />
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnWZ1thmT--iqRTOaH45gaSxGzTQf6fIQXyg&s"
+                    alt="Foto de perfil"
+                />
             </div>
             <div className="user-info">
                 <h2>{userData.nombre} {userData.apellido}</h2>
@@ -69,14 +86,14 @@ const UserProfile = () => {
             {/* Contenedor para logros y palmarés */}
             <div className="user-stats">
                 <div className="user-logros">
-                    <Logros/>
+                    <Logros />
                 </div>
                 <div className="user-palmares">
                     <Palmares />
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UserProfile
+export default UserProfile;

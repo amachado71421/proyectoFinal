@@ -1,15 +1,16 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '/src/Styles/Login.css';
 
 function Login() {
-    const { setIsAuthenticated } = useContext(AuthContext);
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const [formData, setFormData] = useState({ username: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
+    // Obtener cookies (ej. CSRF)
     const getCookie = (name) => {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
@@ -31,22 +32,22 @@ function Login() {
         setError('');
         setSuccess('');
 
-        const { email, password } = formData;
-        if (!email || !password) {
-            setError('Completa email y contraseña.');
+        const { username, password } = formData;
+        if (!username || !password) {
+            setError('Completa usuario y contraseña.');
             setLoading(false);
             return;
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/token/', {
+            const response = await fetch('http://localhost:8000/api/token/', {
                 method: 'POST',
-                credentials: 'include',
+                credentials: 'include', // importante para que se seteen cookies HttpOnly
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': getCookie('csrftoken'),
                 },
-                body: JSON.stringify({ username: email, password }), 
+                body: JSON.stringify({ username, password }),
             });
 
             const data = await response.json();
@@ -54,8 +55,9 @@ function Login() {
             if (!response.ok) {
                 setError(data.detail || 'Error en el inicio de sesión.');
             } else {
-                setSuccess('Inicio de sesión exitoso. Bienvenido!');
-                setIsAuthenticated(true);
+                setSuccess('Credenciales válidas, redirigiendo...');
+                // Paso 2 lo maneja Autorizacion en /Perfil
+                navigate('/Perfil');
             }
         } catch (err) {
             console.error('Error de conexión:', err);
@@ -75,13 +77,13 @@ function Login() {
 
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="ContenedorInicioSesion">
-                        <label htmlFor="email" className="EmailLabel">Correo electrónico:</label>
+                        <label htmlFor="username" className="EmailLabel">Nombre de usuario:</label>
                         <input
                             type="text"
-                            name="email"
+                            name="username"
                             className="EmailInput"
-                            placeholder="Ingresa tu correo"
-                            value={formData.email}
+                            placeholder="Ingresa tu usuario"
+                            value={formData.username}
                             onChange={handleChange}
                             required
                             autoComplete="username"
