@@ -22,8 +22,6 @@ function Routing() {
                 <Route path="/calendario" element={<Calendario/>}/>
                 <Route path="/Eventos" element={<Eventos/>} />
                 <Route path="/Contactenos" element={<Contactenos/>} />
-                
-
                 <Route path="/loginregister" element={<LoginRegister/>}/>
             </Routes>
         </Router>

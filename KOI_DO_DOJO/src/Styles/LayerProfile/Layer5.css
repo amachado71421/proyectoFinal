@@ -1,0 +1,119 @@
+/* ========================== */
+/* CONTENEDOR GENERAL */
+/* ========================== */
+.Layer5 {
+    width: 100%;
+    background: #ffffff;
+    color: #222;
+    padding: 60px 40px;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+/* ========================== */
+/* TITULOS */
+/* ========================== */
+.TituloL5 {
+    font-size: 34px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* ========================== */
+/* ICONOS */
+/* ========================== */
+.ImgL5 {
+    width: 200px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+.IconL5 {
+    width: 100px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+/* ========================== */
+/* GRID BASE */
+/* ========================== */
+.GridPrivacidad,
+.GridRegistro {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* ========================== */
+/* CARDS */
+/* ========================== */
+.CardPrivacidad,
+.CardRegistro {
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.CardPrivacidad:hover,
+.CardRegistro:hover {
+    transform: translateY(-5px);
+    border-color: #d40000;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+/* CARD TITLES */
+.TituloCardL5 {
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+/* ========================== */
+/* FAQ */
+/* ========================== */
+.FaqSection {
+    padding-top: 20px;
+}
+
+.FaqContenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.FaqItem {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e3e3e3;
+}
+
+.FaqPregunta {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.FaqRespuesta {
+    font-size: 16px;
+    color: #555;
+}
+
+/* ========================== */
+/* RESPONSIVE */
+/* ========================== */
+@media (max-width: 700px) {
+    .Layer5 {
+        padding: 40px 20px;
+    }
+
+    .TituloL5 {
+        font-size: 26px;
+    }
+}

@@ -6,25 +6,25 @@ import '/src/Styles/LayerProfile/Layer2.css';
 function Layer2() {
     return (
         <div className='Layer2'>
-            
+
             {/* TÍTULO GENERAL */}
             <div className='SegmentoTituloLayer2'>
                 <h1 className='TituloLayer2'>Accede a Tu Entrenamiento Personal</h1>
             </div>
 
             <div className='Layer2Contenido'>
-                
+
                 {/* ================================
                     COLUMNA IZQUIERDA
                 ================================= */}
                 <div className='Segmento1InSesion'>
                     <div className='ContenedorInSesion'>
-                        
+
                         <h2 className='TituloIniciarSesion'>Iniciar Sesión o Registrate</h2>
 
                         <p className='ParrafoInsesion'>
-                            Accede para reservar clases y consultar horarios.  
-                            Sigue tu progreso en tiempo real.  
+                            Accede para reservar clases y consultar horarios.
+                            Sigue tu progreso en tiempo real.
                             ¿Nuevo aquí? Únete a nuestra comunidad marcial.
                         </p>
 
@@ -34,10 +34,10 @@ function Layer2() {
                             🔥 Aquí agregué LoginRegisterComp
                         ======================================== */}
                         <div className='LoginRegisterWrapper'>
-                            
+
                             <LoginRegisterComp />
                         </div>
-                       
+
 
                     </div>
                 </div>
