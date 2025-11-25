@@ -143,15 +143,15 @@ class MeAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        try:
-            perfil = models.Perfil.objects.get(user=request.user)
-            serializer = PerfilSerializer(perfil)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except models.Perfil.DoesNotExist:
+        if not request.user or not request.user.is_authenticated:
             return Response(
-                {"detail": "Perfil no encontrado"},
-                status=status.HTTP_404_NOT_FOUND
+                {"detail": "No autenticado"},
+                status=status.HTTP_401_UNAUTHORIZED
             )
+
+        # 👇 request.user ya es un Perfil porque extiende AbstractUser
+        serializer = PerfilSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class LogoutAPIView(APIView):
@@ -163,7 +163,8 @@ class LogoutAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         domain = 'localhost'
-        response = Response({'message': 'Sesión cerrada'}, status=status.HTTP_200_OK)
+        response = Response({'message': 'Sesión cerrada'},
+                            status=status.HTTP_200_OK)
         response.delete_cookie('access_token', path='/', domain=domain)
         response.delete_cookie('refresh_token', path='/', domain=domain)
         return response
