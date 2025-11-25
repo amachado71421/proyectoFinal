@@ -38,6 +38,7 @@ function Layer2() {
                             <LoginRegisterComp />
                         </div>
 
+                
 
                     </div>
                 </div>

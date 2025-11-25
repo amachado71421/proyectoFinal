@@ -7,24 +7,43 @@ import Dojo from "../Pages/Dojo.jsx";
 import Calendario from "../Pages/Calendario";
 import Eventos from "../Pages/Eventos.jsx";
 import Contactenos from "../Pages/Contactenos.jsx";
-
-
-
+import Autorizacion from "../Components/Perfil/Autorizacion.jsx";
 
 function Routing() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Inicio/>} />
-                <Route path="/Perfil" element={<Perfil/>} />
-                <Route path="/QuienesSomos" element={<QuienesSomos/>} />
-                <Route path="/Dojo" element={<Dojo/>} />
-                <Route path="/calendario" element={<Calendario/>}/>
-                <Route path="/Eventos" element={<Eventos/>} />
-                <Route path="/Contactenos" element={<Contactenos/>} />
-                <Route path="/loginregister" element={<LoginRegister/>}/>
+                <Route path="/" element={<Inicio />} />
+
+                {/* Perfil protegido con Autorizacion */}
+                <Route
+                    path="/Perfil"
+                    element={
+                        <Autorizacion>
+                            <Perfil />
+                        </Autorizacion>
+                    }
+                />
+
+                <Route path="/QuienesSomos" element={<QuienesSomos />} />
+                <Route path="/Dojo" element={<Dojo />} />
+
+                {/* Calendario protegido con Autorizacion */}
+                <Route
+                    path="/calendario"
+                    element={
+                        <Autorizacion>
+                            <Calendario />
+                        </Autorizacion>
+                    }
+                />
+
+                <Route path="/Eventos" element={<Eventos />} />
+                <Route path="/Contactenos" element={<Contactenos />} />
+                <Route path="/loginregister" element={<LoginRegister />} />
             </Routes>
         </Router>
-    )
+    );
 }
-export default Routing
+
+export default Routing;

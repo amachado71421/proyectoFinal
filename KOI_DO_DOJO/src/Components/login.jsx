@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '/src/Styles/Login.css';
 
-
 function Login() {
+    const [formData, setFormData] = useState({ username: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+    const navigate = useNavigate();
 
-    const togglePassword = () => setShowPassword(!showPassword);
+    // Obtener cookies (ej. CSRF)
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
+
+    const togglePassword = () => setShowPassword(prev => !prev);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
         setError('');
+        setSuccess('');
     };
 
     const handleSubmit = async (e) => {
@@ -29,93 +32,88 @@ function Login() {
         setError('');
         setSuccess('');
 
-        if (!formData.email || !formData.password) {
-            setError('Completa email y contraseña.');
+        const { username, password } = formData;
+        if (!username || !password) {
+            setError('Completa usuario y contraseña.');
             setLoading(false);
             return;
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/auth/login/', {
+            const response = await fetch('http://localhost:8000/api/token/', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: formData.email,
-                    password: formData.password
-                })
+                credentials: 'include', // importante para que se seteen cookies HttpOnly
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({ username, password }),
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                if (data.detail) {
-                    setError(data.detail);
-                } else if (data.email) {
-                    setError(Array.isArray(data.email) ? data.email[0] : data.email);
-                } else {
-                    setError('Error en el inicio de sesión.');
-                }
+                setError(data.detail || 'Error en el inicio de sesión.');
             } else {
-                setSuccess('Inicio de sesión exitoso. Bienvenido!');
-                if (data.access) localStorage.setItem('access_token', data.access);
-                if (data.refresh) localStorage.setItem('refresh_token', data.refresh);
-                if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
-
-                // ✅ Recargar la página en lugar de navegar
-                window.location.reload();
+                setSuccess('Credenciales válidas, redirigiendo...');
+                // Paso 2 lo maneja Autorizacion en /Perfil
+                navigate('/Perfil');
             }
         } catch (err) {
-            console.error(err);
-            setError('Error de conexión. Intenta de nuevo.');
+            console.error('Error de conexión:', err);
+            setError('No se pudo conectar con el servidor.');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div >
-            <div className='InicioSesion'>
-            {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
-            {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
+        <div className="login-container">
+            <div className="InicioSesion">
+                <h2>Iniciar Sesión</h2>
 
-            <form onSubmit={handleSubmit}>
-                <div className='ContenedorInicioSesion'>
-                    <label htmlFor="email" className='EmailLabel'>Correo electrónico:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        className='EmailInput'
-                        placeholder="Ingresa tu correo"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                {error && <div className="login-error">{error}</div>}
+                {success && <div className="login-success">{success}</div>}
 
-                <div>
-                    <label htmlFor="password" className='PasswordLabel'>Contraseña:</label>
-                    <input
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        name="password"
-                        className='PasswordInput'
-                        placeholder="Ingresa tu contraseña"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                    <button className='BtnVerPassword' type="button" onClick={togglePassword}>
-                        {showPassword ? 'Ocultar' : 'Ver'}
+                <form onSubmit={handleSubmit} className="login-form">
+                    <div className="ContenedorInicioSesion">
+                        <label htmlFor="username" className="EmailLabel">Nombre de usuario:</label>
+                        <input
+                            type="text"
+                            name="username"
+                            className="EmailInput"
+                            placeholder="Ingresa tu usuario"
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                            autoComplete="username"
+                        />
+                    </div>
+
+                    <div className="ContenedorInicioSesion">
+                        <label htmlFor="password" className="PasswordLabel">Contraseña:</label>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            className="PasswordInput"
+                            placeholder="Ingresa tu contraseña"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            autoComplete="current-password"
+                        />
+                        <button className="BtnVerPassword" type="button" onClick={togglePassword}>
+                            {showPassword ? 'Ocultar' : 'Ver'}
+                        </button>
+                    </div>
+
+                    <button className="BtnIngresar" type="submit" disabled={loading}>
+                        {loading ? 'Ingresando...' : 'Ingresar'}
                     </button>
-                </div>
 
-                <button className='BtnIngresar' type="submit" disabled={loading}>
-                    {loading ? 'Ingresando...' : 'Ingresar'}
-                </button>
-                 {/* OLVIDAR CONTRASEÑA */}
-                        <h3 className='OlvidarContra'>¿Olvidaste tu contraseña?</h3>
-            </form>
+                    {/* OLVIDAR CONTRASEÑA */}
+                    <h3 className="OlvidarContra">¿Olvidaste tu contraseña?</h3>
+                </form>
             </div>
         </div>
     );
