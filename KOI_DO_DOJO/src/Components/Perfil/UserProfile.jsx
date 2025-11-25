@@ -46,20 +46,21 @@ const UserProfile = () => {
 
     if (loading) return <div>Cargando perfil...</div>;
     if (error) return <div>{error}</div>;
+    if (!userData) return null;
 
     return (
         <div className="user-card">
             <div className="user-image">
                 <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnWZ1thmT--iqRTOaH45gaSxGzTQf6fIQXyg&s"
+                    src={userData.url_imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnWZ1thmT--iqRTOaH45gaSxGzTQf6fIQXyg&s"}
                     alt="Foto de perfil"
                 />
             </div>
             <div className="user-info">
-                <h2>{userData.nombre} {userData.apellido}</h2>
-                <p><strong>Usuario:</strong> {userData.usuario}</p>
-                <p><strong>Correo:</strong> {userData.correo}</p>
-                <p><strong>Rol:</strong> {userData.rol}</p>
+                <h2>{userData.first_name} {userData.last_name}</h2>
+                <p><strong>Usuario:</strong> {userData.username}</p>
+                <p><strong>Correo:</strong> {userData.email}</p>
+                <p><strong>Rol:</strong> {userData.id_rol?.nombre || 'Sin rol'}</p>
             </div>
 
             <div className="user-extra">
@@ -67,8 +68,8 @@ const UserProfile = () => {
                     Peso (kg):
                     <input
                         type="number"
-                        name="peso"
-                        value={userData.peso}
+                        name="peso_kg"
+                        value={userData.peso_kg || ''}
                         onChange={handleChange}
                     />
                 </label>
@@ -77,7 +78,7 @@ const UserProfile = () => {
                     <input
                         type="number"
                         name="altura"
-                        value={userData.altura}
+                        value={userData.altura || ''}
                         onChange={handleChange}
                     />
                 </label>

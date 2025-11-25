@@ -101,7 +101,7 @@ function Register() {
             <form onSubmit={handleSubmit}>
                 {/* Nombre */}
                 <div className='ContenedorImputsNombre'>
-                    <label className='NombreLabel' htmlFor="first_name">Nombre</label>
+                    <label className='NombreLabel' htmlFor="first_name">Nombre:</label>
                     <input
                         type="text"
                         id="first_name"
@@ -116,7 +116,7 @@ function Register() {
 
                 {/* Apellido */}
                 <div className='ContenedorImputsApellido'>
-                    <label className='ApellidoLabel' htmlFor="last_name">Apellido</label>
+                    <label className='ApellidoLabel' htmlFor="last_name">Apellido:</label>
                     <input
                         type="text"
                         id="last_name"
@@ -131,7 +131,7 @@ function Register() {
 
                 {/* Username */}
                 <div className='ContenedorImputsUsername'>
-                    <label className='UsernameLabel' htmlFor="username">Usuario</label>
+                    <label className='UsernameLabel' htmlFor="username">Usuario:</label>
                     <input
                         type="text"
                         id="username"
@@ -147,7 +147,7 @@ function Register() {
 
                 {/* Email */}
                 <div className='ContenedorImputsCorreo'>
-                    <label className='CorreoLabel' htmlFor="email">Correo electrónico</label>
+                    <label className='CorreoLabel' htmlFor="email">Correo electrónico:</label>
                     <input
                         type="email"
                         id="email"
@@ -163,7 +163,7 @@ function Register() {
 
                 {/* Contraseña */}
                 <div className='ContenedorImputsContra'>
-                    <label className='ContraLabel' htmlFor="password">Contraseña</label>
+                    <label className='ContraLabel' htmlFor="password">Contraseña:</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
                         id="password"
@@ -182,7 +182,7 @@ function Register() {
 
                 {/* Confirmar contraseña */}
                 <div className='ContenedorInputsConfirmarPassword'>
-                    <label className='ConfirmarPasswordLabel' htmlFor="password_confirm">Confirmar contraseña</label>
+                    <label className='ConfirmarPasswordLabel' htmlFor="password_confirm">Confirmar contraseña:</label>
                     <input
                         type={showConfirmPassword ? 'text' : 'password'}
                         id="password_confirm"

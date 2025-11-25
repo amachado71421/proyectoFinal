@@ -1,0 +1,117 @@
+/* ================================ */
+/* CONTENEDOR GENERAL */
+/* ================================ */
+.ContenedorLayer4 {
+    width: 100%;
+    padding: 60px 40px;
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ================================ */
+/* TÍTULO PRINCIPAL */
+/* ================================ */
+.TituloLayer4 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* ================================ */
+/* GRID DE FORTALEZAS */
+/* ================================ */
+.GridFortalezas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* ================================ */
+/* ICONOS */
+/* ================================ */
+.IconoValores {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 0 auto 20px auto;
+    display: block;
+}
+
+/* ================================ */
+/* CARDS DE FORTALEZAS */
+/* ================================ */
+.FortalezaCard {
+    background: #1a1a1a;
+    padding: 35px 25px;
+    border-radius: 12px;
+    border: 1px solid #2c2c2c;
+    transition: 0.3s ease;
+    text-align: center;
+}
+
+.FortalezaCard:hover {
+    border-color: #c4161c;
+    transform: translateY(-4px);
+}
+
+/* Título */
+.TituloFortaleza {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* Texto */
+.TextoFortaleza {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #d4d4d4;
+    margin-top: 5px;
+}
+
+/* ================================ */
+/* RESPONSIVE */
+/* ================================ */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 900px) {
+    .GridFortalezas {
+        grid-template-columns: 1fr;
+    }
+
+    .TituloLayer4 {
+        font-size: 28px;
+    }
+
+    .IconoValores {
+        width: 70px;
+        height: 70px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+    .ContenedorLayer4 {
+        padding: 40px 20px;
+    }
+
+    .TituloLayer4 {
+        font-size: 24px;
+    }
+
+    .FortalezaCard {
+        padding: 28px 20px;
+    }
+
+    .IconoValores {
+        width: 60px;
+        height: 60px;
+    }
+}

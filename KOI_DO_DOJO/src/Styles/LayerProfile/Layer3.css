@@ -1,0 +1,149 @@
+/* ============================== */
+/* CONTENEDOR GENERAL */
+/* ============================== */
+.ContenedorLayer3 {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background: #111;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ============================== */
+/* COLUMNA IZQUIERDA (IMAGEN) */
+/* ============================== */
+.ImgLayer3 img {
+    width: 800px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* ============================== */
+/* COLUMNA DERECHA (TEXTO Y CARDS) */
+/* ============================== */
+.ContenedorTextoLayer3 {
+    flex: 1;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Título principal */
+.TituloBeneficos {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* ============================== */
+/* GRID PRINCIPAL DE BENEFICIOS */
+/* ============================== */
+.ContenedorBeneficios2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    width: 100%;
+}
+
+/* ============================== */
+/* CARDS */
+/* ============================== */
+.Tradición,
+.Exclusivo,
+.PromocionesEspeciales1 {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #2d2d2d;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.PromocionesEspeciales1 {
+    grid-column: span 2;
+}
+
+/* Iconos */
+.IconosBeneficios {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 10px;
+}
+
+.TituloBeneficio {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.ParrafoBeneficio {
+    font-size: 16px;
+    color: #d0d0d0;
+    line-height: 1.5;
+}
+
+/* ============================== */
+/* RESPONSIVE */
+/* ============================== */
+
+/* TABLET / PANTALLA MEDIANA */
+@media (max-width: 1100px) {
+    .ImgLayer3 img {
+        width: 600px;
+    }
+
+    .TituloBeneficos {
+        font-size: 32px;
+    }
+}
+
+/* MOBILE / PANTALLA PEQUEÑA */
+@media (max-width: 900px) {
+    .ContenedorLayer3 {
+        flex-direction: column;
+    }
+
+    .ImgLayer3 img {
+        width: 100%;
+        max-height: 450px;
+        object-fit: cover;
+    }
+
+    .ContenedorTextoLayer3 {
+        padding: 30px 20px;
+    }
+
+    .TituloBeneficos {
+        font-size: 28px;
+    }
+
+    .ContenedorBeneficios2 {
+        grid-template-columns: 1fr;
+    }
+
+    .PromocionesEspeciales1 {
+        grid-column: span 1;
+    }
+}
+
+/* MOBILE MUY PEQUEÑO */
+@media (max-width: 480px) {
+    .TituloBeneficos {
+        font-size: 24px;
+    }
+
+    .TituloBeneficio {
+        font-size: 18px;
+    }
+
+    .ParrafoBeneficio {
+        font-size: 14px;
+    }
+
+    .ContenedorTextoLayer3 {
+        padding: 20px 15px;
+    }
+}
