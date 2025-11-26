@@ -107,11 +107,38 @@ class RegisterAPIView(APIView):
             user = serializer.save()
             refresh = RefreshToken.for_user(user)
             perfil = models.Perfil.objects.get(user=user)
-            return Response({
-                "access": str(refresh.access_token),
-                "refresh": str(refresh),
-                "user": PerfilSerializer(perfil).data
+
+            response = Response({
+                "user": PerfilSerializer(perfil).data,
+                "message": "Registro exitoso"
             }, status=status.HTTP_201_CREATED)
+
+            # 👇 setear cookies HttpOnly
+            domain = 'localhost'
+            secure = not settings.DEBUG
+            samesite = 'Lax'
+
+            response.set_cookie(
+                key='access_token',
+                value=str(refresh.access_token),
+                httponly=True,
+                secure=secure,
+                samesite=samesite,
+                path='/',
+                domain=domain,
+                max_age=15 * 60
+            )
+            response.set_cookie(
+                key='refresh_token',
+                value=str(refresh),
+                httponly=True,
+                secure=secure,
+                samesite=samesite,
+                path='/',
+                domain=domain,
+                max_age=7 * 24 * 60 * 60
+            )
+            return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -128,13 +155,39 @@ class LoginAPIView(APIView):
             user = serializer.validated_data['user']
             refresh = RefreshToken.for_user(user)
             perfil = models.Perfil.objects.get(user=user)
-            return Response({
-                "access": str(refresh.access_token),
-                "refresh": str(refresh),
-                "user": PerfilSerializer(perfil).data
-            }, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
+            response = Response({
+                "user": PerfilSerializer(perfil).data,
+                "message": "Login exitoso"
+            }, status=status.HTTP_200_OK)
+
+            # 👇 setear cookies HttpOnly
+            domain = 'localhost'
+            secure = not settings.DEBUG
+            samesite = 'Lax'
+
+            response.set_cookie(
+                key='access_token',
+                value=str(refresh.access_token),
+                httponly=True,
+                secure=secure,
+                samesite=samesite,
+                path='/',
+                domain=domain,
+                max_age=15 * 60
+            )
+            response.set_cookie(
+                key='refresh_token',
+                value=str(refresh),
+                httponly=True,
+                secure=secure,
+                samesite=samesite,
+                path='/',
+                domain=domain,
+                max_age=7 * 24 * 60 * 60
+            )
+            return response
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
 
 class MeAPIView(APIView):
     """

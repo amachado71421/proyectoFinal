@@ -8,12 +8,12 @@ class CookieJWTAuthentication(JWTAuthentication):
     """
 
     def authenticate(self, request):
-        # 1. Intentar obtener el token desde el header
+        # 1. Intentar obtener el token desde el header Authorization
         header = self.get_header(request)
         if header is not None:
             raw_token = self.get_raw_token(header)
         else:
-            # 2. Si no hay header, buscar el token en la cookie
+            # 2. Si no hay header, buscar el token en la cookie HttpOnly
             raw_token = request.COOKIES.get('access_token')
 
         # Si no se encontró token en ninguno de los dos lugares

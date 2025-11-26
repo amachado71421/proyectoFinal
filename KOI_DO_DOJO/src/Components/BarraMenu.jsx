@@ -1,56 +1,81 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '/src/Styles/Barra.css';
+import TokenRefresher from '../Components/Perfil/TokenRefresher';
+
+// Helper silencioso
+async function silentFetch(url, options) {
+  try {
+    const res = await fetch(url, options);
+    return res;
+  } catch {
+    return { ok: false, status: 0 };
+  }
+}
+
+function hasAnyCookie() {
+  return Boolean(document.cookie && document.cookie.trim() !== '');
+}
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return undefined;
+}
 
 function BarraMenu() {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [loggedOut, setLoggedOut] = useState(false); // 👈 nuevo estado
 
-  // Verifica autenticación preguntando al backend
   useEffect(() => {
+    let mounted = true;
+
     const checkAuth = async () => {
-      try {
-        const res = await fetch('http://localhost:8000/api/auth/me/', {
-          method: 'GET',
-          credentials: 'include', // envía las cookies HttpOnly
-        });
-        setIsAuthenticated(res.ok); // true si el backend reconoce la cookie
-      } catch {
+      if (!hasAnyCookie()) {
+        if (mounted) setIsAuthenticated(false);
+        return;
+      }
+
+      const res = await silentFetch('http://localhost:8000/api/auth/me/', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (!mounted) return;
+
+      if (res.ok) {
+        setIsAuthenticated(true);
+      } else if (res.status === 401) {
+        setIsAuthenticated(false);
+      } else {
         setIsAuthenticated(false);
       }
     };
 
     checkAuth();
+    return () => { mounted = false; };
   }, []);
 
   const handleLogout = async () => {
-    try {
-      await fetch('http://localhost:8000/api/logout/', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken'),
-        },
-      });
-    } catch (err) {
-      console.error('Error al cerrar sesión:', err);
-    } finally {
-      setIsAuthenticated(false);
-      navigate('/');
-    }
-  };
+    await silentFetch('http://localhost:8000/api/logout/', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken') || '',
+      },
+    });
 
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    setIsAuthenticated(false);
+    setLoggedOut(true); // 👈 marcar logout
+    navigate('/');
   };
 
   const menuItems = [
     { path: "/", label: "Inicio", icon: "../src/Images/INICIO.png" },
-    // 👇 Perfil dinámico: si está autenticado → /Perfil, si no → /loginregister
     { path: isAuthenticated ? "/Perfil" : "/loginregister", label: "Perfil", icon: "../src/Images/PERFIL2.png" },
     { path: "/QuienesSomos", label: "¿Quienes Somos?", icon: "../src/Images/NOSOTROS.png" },
     { path: "/Dojo", label: "Dojo", icon: "../src/Images/DOJO.png" },
@@ -92,6 +117,16 @@ function BarraMenu() {
           )}
         </ul>
       </main>
+
+      {/* TokenRefresher sincronizado */}
+      <TokenRefresher
+        onRefresh={() => setIsAuthenticated(true)}
+        onLogout={() => {
+          setIsAuthenticated(false);
+          setLoggedOut(true);
+        }}
+        loggedOut={loggedOut}
+      />
     </div>
   );
 }

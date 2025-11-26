@@ -11,17 +11,30 @@ function Autorizacion({ children }) {
                     method: 'GET',
                     credentials: 'include',
                 });
-                setAuthorized(res.ok);
-            } catch {
+
+                if (res.ok) {
+                    setAuthorized(true);
+                } else if (res.status === 401) {
+                    setAuthorized(false);
+                }
+            } catch (err) {
+                console.error('Error al verificar sesión:', err);
                 setAuthorized(false);
             }
         };
+
         checkAuth();
     }, []);
 
-    if (authorized === null) return <div>Verificando sesión...</div>;
-    if (authorized) return children;
-    return <Navigate to="/loginregister" replace />;
+    if (authorized === null) {
+        return <div>Verificando sesión...</div>; // estado de carga
+    }
+
+    if (!authorized) {
+        return <Navigate to="/loginregister" replace />;
+    }
+
+    return children;
 }
 
 export default Autorizacion;

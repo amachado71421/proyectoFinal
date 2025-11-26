@@ -1,12 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenRefreshView
 from api.views_auth import (
     CookieTokenObtainPairView,
+    CookieTokenRefreshView,   # 👈 usa tu versión con cookies
     get_csrf_token,
     LogoutAPIView
 )
-from api.views_auth import get_csrf_token
 from . import views
 
 # Rutas de modelos
@@ -32,7 +31,11 @@ urlpatterns = [
     # Registro y login tradicional (devuelve tokens en el body)
     path('auth/login/', views.LoginAPIView.as_view(), name='login'),
     path('auth/register/', views.RegisterAPIView.as_view(), name='register'),
-    path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Refresh con cookies HttpOnly
+    path('auth/refresh/', CookieTokenRefreshView.as_view(), name='token_refresh'),
+
+    # Perfil autenticado
     path('auth/me/', views.MeAPIView.as_view(), name='me'),
 
     # Login con cookies HttpOnly

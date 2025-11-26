@@ -4,12 +4,12 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#  Seguridad
+# 🔐 Seguridad
 SECRET_KEY = 'django-insecure-buob)7!r1huf$39v+2eq-c(k63z61v+k@*(^+_f=7ea-v7)7fo'
 DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-#  Aplicaciones
+# 📦 Aplicaciones
 INSTALLED_APPS = [
     'corsheaders',
     'django.contrib.admin',
@@ -46,6 +46,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
+
+# 🔐 CSRF confiable
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 # 🧩 Templates
 ROOT_URLCONF = 'backendKoiDo.urls'
@@ -101,7 +109,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🔐 CSRF settings
-CSRF_COOKIE_HTTPONLY = False  # frontend necesita leerla
+CSRF_COOKIE_HTTPONLY = False  # frontend puede leerla si hace falta
 CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = not DEBUG
 
@@ -111,13 +119,13 @@ REST_FRAMEWORK = {
         'api.authentication.CookieJWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',  # vistas públicas permitidas
+        'rest_framework.permissions.AllowAny',
     ),
 }
 
 # 🔐 JWT con cookies HttpOnly
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),   # más razonable en dev
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': False,
