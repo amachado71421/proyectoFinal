@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '/src/Styles/Barra.css';
 import TokenRefresher from '../Components/Perfil/TokenRefresher';
 
-// Helper silencioso
 async function silentFetch(url, options) {
   try {
     const res = await fetch(url, options);
@@ -28,7 +27,7 @@ function BarraMenu() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [loggedOut, setLoggedOut] = useState(false); // 👈 nuevo estado
+  const [loggedOut, setLoggedOut] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -48,8 +47,6 @@ function BarraMenu() {
 
       if (res.ok) {
         setIsAuthenticated(true);
-      } else if (res.status === 401) {
-        setIsAuthenticated(false);
       } else {
         setIsAuthenticated(false);
       }
@@ -70,7 +67,7 @@ function BarraMenu() {
     });
 
     setIsAuthenticated(false);
-    setLoggedOut(true); // 👈 marcar logout
+    setLoggedOut(true);
     navigate('/');
   };
 
@@ -118,15 +115,17 @@ function BarraMenu() {
         </ul>
       </main>
 
-      {/* TokenRefresher sincronizado */}
-      <TokenRefresher
-        onRefresh={() => setIsAuthenticated(true)}
-        onLogout={() => {
-          setIsAuthenticated(false);
-          setLoggedOut(true);
-        }}
-        loggedOut={loggedOut}
-      />
+      {/* 👇 TokenRefresher solo se monta si hay sesión */}
+      {isAuthenticated && !loggedOut && (
+        <TokenRefresher
+          onRefresh={() => setIsAuthenticated(true)}
+          onLogout={() => {
+            setIsAuthenticated(false);
+            setLoggedOut(true);
+          }}
+          loggedOut={loggedOut}
+        />
+      )}
     </div>
   );
 }

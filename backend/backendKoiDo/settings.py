@@ -79,9 +79,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'koido_dojo',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '12345678',
         # use 127.0.0.1 to avoid socket/host resolution issues on Windows
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
             'charset': 'utf8mb4',
