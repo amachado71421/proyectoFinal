@@ -1,0 +1,116 @@
+/* ============================= */
+/* CONTENEDOR GENERAL */
+/* ============================= */
+.DojoSection {
+    width: 100%;
+    background: #ffffff;
+    color: #000;
+    padding: 60px 40px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ============================= */
+/* TÍTULO */
+/* ============================= */
+.DojoTitulo {
+    font-size: 38px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+/* ============================= */
+/* CONTENEDOR PRINCIPAL */
+/* ============================= */
+.DojoContenedor {
+    display: flex;
+    gap: 35px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+/* Imagen del dojo */
+.DojoImagenBox {
+    width: 45%;
+}
+
+.DojoImagen {
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* Texto */
+.DojoTexto {
+    width: 50%;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* ============================= */
+/* TARJETAS */
+/* ============================= */
+.DojoCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.DojoCard {
+    background: #f3f3f3;
+    padding: 30px 25px;
+    border-radius: 14px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    transition: 0.3s;
+}
+
+.DojoCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Iconos */
+.DojoIcon {
+    width: 70px;
+    margin-bottom: 15px;
+}
+
+/* Títulos de tarjetas */
+.DojoCardTitulo {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Texto de tarjetas */
+.DojoCardTexto {
+    font-size: 16px;
+    color: #333;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+@media (max-width: 900px) {
+    .DojoContenedor {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .DojoImagenBox, .DojoTexto {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .DojoTitulo {
+        font-size: 30px;
+    }
+
+    .DojoTexto {
+        font-size: 16px;
+    }
+}
