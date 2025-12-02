@@ -1,0 +1,155 @@
+/* ============================== */
+/* CONTENEDOR GENERAL (HERO) */
+/* ============================== */
+.LayerDojo {
+    position: relative;
+    width: 100%;
+    height: 100vh;               /* Pantalla completa */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ============================== */
+/* VIDEO DE FONDO */
+/* ============================== */
+.VideoDojo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* Overlay para contraste */
+.LayerDojo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.55); /* Oscurece para leer mejor */
+    backdrop-filter: blur(2px);
+    z-index: -1;
+}
+
+/* ============================== */
+/* CONTENIDO */
+.ContenidoDojo {
+    text-align: center;
+    max-width: 900px;
+    padding: 0 20px;
+    animation: fadeIn 1.2s ease;
+}
+
+/* SUBTÍTULO */
+.TituloLayerDoyo1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* TÍTULO PRINCIPAL */
+.TituloLayerDoyo {
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+/* PÁRRAFO */
+.ParrafoVideo {
+    font-size: 20px;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    line-height: 1.6;
+}
+
+/* ============================== */
+/* BOTONES */
+.BotonesDojo {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.BtnDojo {
+    padding: 12px 28px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    background: #d40000;
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.BtnDojo:hover {
+    background: #a30000;
+    transform: translateY(-3px);
+}
+
+.BtnBlanco {
+    background: #ffffff;
+    color: #000;
+}
+
+.BtnBlanco:hover {
+    background: #e4e4e4;
+    transform: translateY(-3px);
+}
+
+/* ============================== */
+/* ANIMACIÓN */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================== */
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .TituloLayerDoyo {
+        font-size: 45px;
+    }
+
+    .ParrafoVideo {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .LayerDojo {
+        height: 85vh;
+    }
+
+    .TituloLayerDoyo1 {
+        font-size: 22px;
+    }
+
+    .TituloLayerDoyo {
+        font-size: 32px;
+    }
+
+    .ParrafoVideo {
+        font-size: 16px;
+    }
+
+    .BotonesDojo {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .BtnDojo {
+        width: 100%;
+    }
+}
