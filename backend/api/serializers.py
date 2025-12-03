@@ -1,70 +1,66 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import models
+
+Perfil = get_user_model()
 
 
 class ResultadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Resultado
-        fields = '__all__'
+        fields = ['id_resultado', 'estado_resultado']
 
 
 class RolSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rol
-        fields = '__all__'
+        fields = ['id_rol', 'nombre_rol']
 
 
 class PerfilSerializer(serializers.ModelSerializer):
-    nombre_rol = serializers.CharField(
-        source='id_rol.nombre_rol', read_only=True)
-    id_rol = serializers.PrimaryKeyRelatedField(
-        queryset=models.Rol.objects.all(), allow_null=True, required=False
-    )
+    id_perfil = serializers.IntegerField(read_only=True)
 
     class Meta:
-        model = models.Perfil
-        fields = ['id_perfil', 'username', 'email', 'first_name', 'last_name',
-                  'url_imagen', 'peso_kg', 'altura', 'id_rol', 'nombre_rol', 'is_active']
-        read_only_fields = ['id_perfil', 'nombre_rol', 'is_active']
+        model = Perfil
+        fields = [
+            'id_perfil', 'username', 'email', 'first_name', 'last_name',
+            'url_imagen', 'peso_kg', 'altura', 'id_rol',
+            'is_active', 'is_staff', 'is_superuser'
+        ]
+        read_only_fields = ['is_active', 'is_staff', 'is_superuser']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
     password_confirm = serializers.CharField(write_only=True, min_length=8)
-    id_rol = serializers.PrimaryKeyRelatedField(
-        queryset=models.Rol.objects.all(), allow_null=True, required=False
-    )
 
     class Meta:
-        model = models.Perfil
+        model = Perfil
         fields = ['username', 'email', 'password', 'password_confirm',
                   'first_name', 'last_name', 'url_imagen', 'peso_kg', 'altura', 'id_rol']
 
     def validate_email(self, value):
-        if models.Perfil.objects.filter(email=value).exists():
+        if Perfil.objects.filter(email__iexact=value).exists():
             raise serializers.ValidationError("Este correo ya está registrado.")
         return value
 
     def validate(self, data):
         if data.get('password') != data.get('password_confirm'):
-            raise serializers.ValidationError(
-                {"password": "Las contraseñas no coinciden."})
+            raise serializers.ValidationError({"password": "Las contraseñas no coinciden."})
         return data
 
     def create(self, validated_data):
         validated_data.pop('password_confirm', None)
         password = validated_data.pop('password')
-        username = validated_data.get(
-            'username') or validated_data.get('email')
-        user = models.Perfil.objects.create_user(
-            username=username, email=validated_data.get('email'), password=password)
+        username = validated_data.get('username') or validated_data.get('email')
+        user = Perfil.objects.create_user(username=username, email=validated_data.get('email'), password=password)
+        # asignar campos opcionales
         for attr in ('first_name', 'last_name', 'url_imagen', 'peso_kg', 'altura', 'id_rol'):
             if attr in validated_data and validated_data[attr] is not None:
                 setattr(user, attr, validated_data[attr])
         user.save()
         return user
-
 
 
 class LoginSerializer(serializers.Serializer):
@@ -74,79 +70,77 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, data):
         email = data.get('email')
         password = data.get('password')
-        try:
-            user = models.Perfil.objects.get(email=email)
-        except models.Perfil.DoesNotExist:
-            raise serializers.ValidationError(
-                {"detail": "Credenciales inválidas."})
+        user = None
+        if email:
+            user = Perfil.objects.filter(email__iexact=email).first()
+        if not user:
+            raise serializers.ValidationError("Email o contraseña inválidos.")
         if not user.check_password(password):
-            raise serializers.ValidationError(
-                {"detail": "Credenciales inválidas."})
+            raise serializers.ValidationError("Email o contraseña inválidos.")
         if not user.is_active:
-            raise serializers.ValidationError(
-                {"detail": "Usuario desactivado."})
-        refresh = RefreshToken.for_user(user)
+            raise serializers.ValidationError("Cuenta inactiva.")
         data['user'] = user
-        data['access'] = str(refresh.access_token)
-        data['refresh'] = str(refresh)
         return data
 
 
 class PalmaresSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Palmares
-        fields = '__all__'
+        fields = ['id_palmares', 'id_perfil', 'id_resultado']
 
 
 class LogroSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Logro
-        fields = '__all__'
+        fields = ['id_logro', 'nombre_logro', 'descripcion_logro', 'fecha_creacion']
 
 
 class PerfilLogroSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PerfilLogro
-        fields = '__all__'
+        fields = ['id_perfil', 'id_logro', 'fecha_asignacion', 'comentarios_logro']
 
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Categoria
-        fields = '__all__'
+        fields = ['id_categoria', 'nombre_categoria']
 
 
 class RangoEdadSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RangoEdad
-        fields = '__all__'
-
-
-class EventoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Evento
-        fields = '__all__'
+        fields = ['id_rango_edad', 'nombre_rango_edad', 'edad_minima', 'edad_maxima']
 
 
 class EstadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Estado
-        fields = '__all__'
+        fields = ['id_estado', 'nombre_estado']
+
+
+class EventoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Evento
+        fields = [
+            'id_evento', 'nombre_evento', 'descripcion_evento',
+            'hora_inicio', 'hora_final', 'fecha_inicio', 'fecha_final', 'lugar'
+        ]
 
 
 class PerfilEventoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PerfilEvento
-        fields = '__all__'
+        fields = ['id_perfil', 'id_evento', 'id_estado', 'id_rol']
 
 
 class EventoCategoriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.EventoCategoria
-        fields = '__all__'
+        fields = ['id_evento', 'id_categoria']
 
 
 class EventoRangoEdadSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.EventoRangoEdad
-        fields = '__all__'
+        fields = ['id_evento', 'id_rango_edad']

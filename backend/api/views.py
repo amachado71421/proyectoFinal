@@ -1,16 +1,14 @@
-from rest_framework import viewsets, status
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import viewsets
+from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
 
 from . import models, serializers
-from api.serializers import PerfilSerializer
+from .serializers import PerfilSerializer
 
-
-# -----------------------------
-# ViewSets de modelos
-# -----------------------------
 
 class ResultadoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Resultado.objects.all()
@@ -18,10 +16,10 @@ class ResultadoViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
 
-class RolViewSet(viewsets.ReadOnlyModelViewSet):
+class RolViewSet(viewsets.ModelViewSet):
     queryset = models.Rol.objects.all()
     serializer_class = serializers.RolSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class PerfilViewSet(viewsets.ModelViewSet):
@@ -66,7 +64,7 @@ class EventoViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
 
-class EstadoViewSet(viewsets.ReadOnlyModelViewSet):
+class EstadoViewSet(viewsets.ModelViewSet):
     queryset = models.Estado.objects.all()
     serializer_class = serializers.EstadoSerializer
     permission_classes = [AllowAny]
@@ -88,136 +86,3 @@ class EventoRangoEdadViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.EventoRangoEdad.objects.all()
     serializer_class = serializers.EventoRangoEdadSerializer
     permission_classes = [AllowAny]
-
-
-# -----------------------------
-# Endpoints de Autenticación JWT
-# -----------------------------
-
-class RegisterAPIView(APIView):
-    """
-    POST /api/auth/register/
-    Devuelve access + refresh + datos del perfil creado
-    """
-    permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        serializer = serializers.RegisterSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            refresh = RefreshToken.for_user(user)
-            perfil = models.Perfil.objects.get(user=user)
-
-            response = Response({
-                "user": PerfilSerializer(perfil).data,
-                "message": "Registro exitoso"
-            }, status=status.HTTP_201_CREATED)
-
-            # 👇 setear cookies HttpOnly
-            domain = 'localhost'
-            secure = not settings.DEBUG
-            samesite = 'Lax'
-
-            response.set_cookie(
-                key='access_token',
-                value=str(refresh.access_token),
-                httponly=True,
-                secure=secure,
-                samesite=samesite,
-                path='/',
-                domain=domain,
-                max_age=15 * 60
-            )
-            response.set_cookie(
-                key='refresh_token',
-                value=str(refresh),
-                httponly=True,
-                secure=secure,
-                samesite=samesite,
-                path='/',
-                domain=domain,
-                max_age=7 * 24 * 60 * 60
-            )
-            return response
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class LoginAPIView(APIView):
-    """
-    POST /api/auth/login/
-    Recibe { email, password } y devuelve access + refresh + perfil
-    """
-    permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        serializer = serializers.LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data['user']
-            refresh = RefreshToken.for_user(user)
-            perfil = models.Perfil.objects.get(user=user)
-
-            response = Response({
-                "user": PerfilSerializer(perfil).data,
-                "message": "Login exitoso"
-            }, status=status.HTTP_200_OK)
-
-            # 👇 setear cookies HttpOnly
-            domain = 'localhost'
-            secure = not settings.DEBUG
-            samesite = 'Lax'
-
-            response.set_cookie(
-                key='access_token',
-                value=str(refresh.access_token),
-                httponly=True,
-                secure=secure,
-                samesite=samesite,
-                path='/',
-                domain=domain,
-                max_age=15 * 60
-            )
-            response.set_cookie(
-                key='refresh_token',
-                value=str(refresh),
-                httponly=True,
-                secure=secure,
-                samesite=samesite,
-                path='/',
-                domain=domain,
-                max_age=7 * 24 * 60 * 60
-            )
-            return response
-        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
-
-class MeAPIView(APIView):
-    """
-    GET /api/auth/me/ -> datos del perfil autenticado
-    """
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, *args, **kwargs):
-        if not request.user or not request.user.is_authenticated:
-            return Response(
-                {"detail": "No autenticado"},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-
-        # 👇 request.user ya es un Perfil porque extiende AbstractUser
-        serializer = PerfilSerializer(request.user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class LogoutAPIView(APIView):
-    """
-    POST /api/logout/
-    Elimina las cookies de sesión (access y refresh tokens)
-    """
-    permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        domain = 'localhost'
-        response = Response({'message': 'Sesión cerrada'},
-                            status=status.HTTP_200_OK)
-        response.delete_cookie('access_token', path='/', domain=domain)
-        response.delete_cookie('refresh_token', path='/', domain=domain)
-        return response

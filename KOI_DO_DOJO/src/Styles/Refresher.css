@@ -1,0 +1,60 @@
+/* ======================= */
+/* TOKEN REFRESHER MODAL */
+/* ======================= */
+.token-refresher {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #f0f0f0;
+    /* gris claro */
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    z-index: 20000;
+    /* muy alto para sobreponerse */
+    width: 320px;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.token-refresher p {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.token-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.token-buttons button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.token-buttons button:first-child {
+    background: #2d6cdf;
+    color: #fff;
+}
+
+.token-buttons button:first-child:hover {
+    background: #1b4fa3;
+}
+
+.token-buttons button:last-child {
+    background: #ec1010;
+    color: #fff;
+}
+
+.token-buttons button:last-child:hover {
+    background: #a30c0c;
+}

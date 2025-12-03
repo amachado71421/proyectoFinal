@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import '/src/Styles/Pruebas.css';
+import '/src/Styles/Refresher.css';
+
 
 async function silentFetch(url, options) {
     try {
@@ -89,10 +91,12 @@ const TokenRefresher = ({ onRefresh, onLogout, loggedOut }) => {
     if (loggedOut || !showPrompt) return null;
 
     return (
-        <div className="divPerfil">
+        <div className="token-refresher">
             <p>Tu sesión está por expirar o es inválida. ¿Quieres extender la sesión?</p>
-            <button onClick={handleExtendSession}>Sí, extender sesión</button>
-            <button onClick={handleLogout}>No, cerrar sesión</button>
+            <div className="token-buttons">
+                <button onClick={handleExtendSession}>Sí, extender sesión</button>
+                <button onClick={handleLogout}>No, cerrar sesión</button>
+            </div>
         </div>
     );
 };

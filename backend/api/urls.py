@@ -1,14 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.views_auth import (
-    CookieTokenObtainPairView,
-    CookieTokenRefreshView,   # 👈 usa tu versión con cookies
-    get_csrf_token,
-    LogoutAPIView
-)
-from . import views
 
-# Rutas de modelos
+from . import views
+from . import views_auth
+
 router = DefaultRouter()
 router.register(r'resultados', views.ResultadoViewSet, basename='resultado')
 router.register(r'roles', views.RolViewSet, basename='rol')
@@ -24,26 +19,19 @@ router.register(r'perfil-evento', views.PerfilEventoViewSet, basename='perfil_ev
 router.register(r'evento-categoria', views.EventoCategoriaViewSet, basename='evento_categoria')
 router.register(r'evento-rango', views.EventoRangoEdadViewSet, basename='evento_rango')
 
-# Rutas de autenticación y seguridad
 urlpatterns = [
     path('', include(router.urls)),
 
-    # Registro y login tradicional (devuelve tokens en el body)
-    path('auth/login/', views.LoginAPIView.as_view(), name='login'),
-    path('auth/register/', views.RegisterAPIView.as_view(), name='register'),
+    # Auth endpoints (moved to views_auth)
+    path('auth/login/', views_auth.LoginAPIView.as_view(), name='login'),
+    path('auth/register/', views_auth.RegisterAPIView.as_view(), name='register'),
 
-    # Refresh con cookies HttpOnly
-    path('auth/refresh/', CookieTokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/refresh/', views_auth.CookieTokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/me/', views_auth.MeAPIView.as_view(), name='me'),
+    path('token/', views_auth.CookieTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('csrf/', views_auth.get_csrf_token, name='get_csrf_token'),
+    path('logout/', views_auth.LogoutAPIView.as_view(), name='logout'),
 
-    # Perfil autenticado
-    path('auth/me/', views.MeAPIView.as_view(), name='me'),
-
-    # Login con cookies HttpOnly
-    path('token/', CookieTokenObtainPairView.as_view(), name='token_obtain_pair'),
-
-    # CSRF token para frontend
-    path('csrf/', get_csrf_token, name='get_csrf_token'),
-
-    # Logout que elimina cookies
-    path('logout/', LogoutAPIView.as_view(), name='logout'),
+    # Promote / demote users (requires admin token)
+    path('auth/promote-user/', views_auth.PromoteUserAPIView.as_view(), name='promote_user'),
 ]
