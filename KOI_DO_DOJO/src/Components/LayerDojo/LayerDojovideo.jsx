@@ -1,10 +1,13 @@
 // src/components/LayerDojoVideo.jsx
-import React from 'react';
 import '/src/Styles/LayerDojo/LayerDojoVideo.css';
 
 export default function LayerDojoVideo() {
     return (
         <div className="layer-video-container">
+               {/* TÍTULO ENCIMA DEL VIDEO */}
+            <h1 className="layer-video-title">
+                “Descubre la Fuerza del Karate – Mirá el Video”
+            </h1>
             <div className="video-wrapper">
                 <video
                     className="dojo-video"

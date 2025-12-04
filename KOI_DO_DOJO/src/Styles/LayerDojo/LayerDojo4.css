@@ -1,0 +1,141 @@
+/* =========================================
+   CONTENEDOR GENERAL
+   ========================================= */
+.dojo4-section {
+    background: #0f0f0f;
+    color: #ffffff;
+    padding: 70px 20px;
+    font-family: "Poppins", sans-serif;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.dojo4-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 45px;
+    text-align: left;
+    border-left: 6px solid #b92020;
+    padding-left: 18px;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================
+   BLOQUES SUPERIORES (2 columnas)
+   ========================================= */
+.dojo4-top {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    margin-bottom: 60px;
+}
+
+/* Imagen */
+.dojo4-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+/* Subtítulos */
+.dojo4-subtitle {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #ffffff;
+}
+
+/* Texto */
+.dojo4-text {
+    color: #cccccc;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* =========================================
+   HORARIOS (3 columnas con cards)
+   ========================================= */
+.dojo4-schedule {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+/* Card contenedora */
+.schedule-item {
+    background: #b92020;
+    padding: 22px;
+    border-radius: 8px;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover profesional */
+.schedule-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+/* Título de cada card */
+.schedule-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+/* Días */
+.schedule-days {
+    margin: 4px 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Horas */
+.schedule-hours {
+    display: block;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 1000px) {
+    .dojo4-img {
+        height: 260px;
+    }
+    .schedule-title {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .dojo4-top {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .dojo4-schedule {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .dojo4-schedule {
+        grid-template-columns: 1fr;
+    }
+
+    .dojo4-section {
+        padding: 50px 15px;
+    }
+
+    .dojo4-title {
+        font-size: 2.2rem;
+    }
+}
