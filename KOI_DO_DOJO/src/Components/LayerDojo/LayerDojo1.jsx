@@ -1,71 +1,57 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import '/src/Styles/LayerDojo/LayerDojo1.css';
 
 function LayerDojo1() {
+
+    const sectionRef = useRef(null);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting) {
+                    setVisible(true);
+                }
+            },
+            { threshold: 0.3 }
+        );
+        observer.observe(sectionRef.current);
+    }, []);
+
     return (
-        <div className="DojoSection">
+        <div ref={sectionRef} className={`MapaDojoSection ${visible ? "visible" : ""}`}>
 
-            {/* ===== TÍTULO ===== */}
-            <h1 className="DojoTitulo">¿Qué es un Dojo? El Lugar del Camino</h1>
-
-            {/* ===== CONTENEDOR PRINCIPAL ===== */}
-            <div className="DojoContenedor">
-
-                {/* Imagen */}
-                <div className="DojoImagenBox">
-                    <img
-                        src="../src/Images/LayerDojo/LayerDojo1.png"
-                        alt="Dojo Tradicional"
-                        className="DojoImagen"
-                    />
-                </div>
-
-                {/* Texto */}
-                <div className="DojoTexto">
-                    <p>
-                        El término japonés <strong>"dōjō" (道場)</strong> significa literalmente
-                        "lugar del camino", un espacio sagrado dedicado a la práctica y
-                        enseñanza de artes marciales tradicionales como Karate, Judo, Aikido
-                        y más. Es mucho más que un simple gimnasio: representa un santuario
-                        donde convergen disciplina, respeto mutuo y crecimiento personal bajo
-                        la sabia guía de un sensei experimentado.
-                    </p>
-
-                    <p>
-                        En nuestro dojo, cada elemento tiene un propósito y significado
-                        profundo: el <strong>kamiza</strong> (asiento de honor del maestro), el
-                        <strong>kamidana</strong> (altar espiritual que conecta con la tradición),
-                        y la organización meticulosa de los estudiantes según su grado de
-                        experiencia y dedicación al camino marcial.
-                    </p>
-                </div>
+            {/* MAPA - IZQUIERDA */}
+            <div className="BoxItem fade-slide">
+                <iframe
+                    title="Mapa Dojo"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, borderRadius: "15px" }}
+                    loading="lazy"
+                    allowFullScreen
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d491.30228018760886!2d-84.05449462084826!3d9.899080801892866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e32a044d4683%3A0x26800bb1c5733e94!2sKyokushin%20Kenbukai%20-%20Koi-Do%20Dojo%20Desamparados!5e0!3m2!1ses-419!2scr!4v1764698527002!5m2!1ses-419!2scr"
+                ></iframe>
             </div>
 
-            {/* ===== TARJETAS ===== */}
-            <div className="DojoCards">
+            {/* TEXTO - DERECHA */}
+            <div className="BoxItem fade-slide">
+                <h2 className="MapaTitulo">📍 Nuestra Ubicación</h2>
+                <h1 className="MapaSubtitulo">Koi-Do Dojo Desamparados</h1>
 
-                <div className="DojoCard">
-                    <img src="../src/Images/LayerDojo/Meditacion.png" className="DojoIcon" />
-                    <h2 className="DojoCardTitulo">Espacio Sagrado</h2>
-                    <p className="DojoCardTexto">Ambiente diseñado para concentración y respeto</p>
+                <p className="MapaDescripcion">
+                    Entrena en un ambiente diseñado para el crecimiento físico,
+                    mental y espiritual. Nuestra ubicación es accesible y segura
+                    para practicantes de todas las edades.
+                </p>
+
+                <div className="InfoDetalle">
+                    <p><span className="Icono">📌</span> Contiguo al Condominio La Constancia</p>
+                    <p><span className="Icono">📍</span> Boulevard San Antonio</p>
+                    <p><span className="Icono">🧭</span> Del Cementerio 100 oeste y 25 norte</p>
+                    <p><span className="Icono">🏢</span> Locales 1 y 2</p>
+                    <p><span className="Icono">🌎</span> San José — San Antonio, 10305</p>
                 </div>
-
-                <div className="DojoCard">
-                    <img src="../src/Images/LayerDojo/espadas.png" className="DojoIcon" />
-                    <h2 className="DojoCardTitulo">Disciplina Total</h2>
-                    <p className="DojoCardTexto">
-                        Estructura tradicional japonesa en cada sesión
-                    </p>
-                </div>
-
-                <div className="DojoCard">
-                    <img src="../src/Images/LayerDojo/Guia.png" className="DojoIcon" />
-                    <h2 className="DojoCardTitulo">Guía del Sensei</h2>
-                    <p className="DojoCardTexto">
-                        Maestría transmitida de generación en generación
-                    </p>
-                </div>
-
             </div>
 
         </div>

@@ -1,0 +1,131 @@
+/* ============================= */
+/* CONTENEDOR GENERAL */
+/* ============================= */
+.DojoSection {
+    width: 100%;
+    max-width: 1300px;       /* Evita que crezca demasiado */
+    margin: 0 auto;          /* Centra todo */
+    background: #ffffff;
+    color: #000;
+    padding: 60px 20px;      /* Padding reducido para no desbordar */
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+/* ============================= */
+/* TÍTULO */
+/* ============================= */
+.DojoTitulo {
+    font-size: 34px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 45px;
+    padding: 0 10px;         /* Evita que se pegue a los bordes en pantallas pequeñas */
+}
+
+/* ============================= */
+/* CONTENEDOR PRINCIPAL */
+/* ============================= */
+.DojoContenedor {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 50px;
+    flex-wrap: wrap;         /* Esto evita que se salga en pantallas medianas */
+}
+
+/* Imagen del dojo */
+.DojoImagenBox {
+    flex: 1 1 420px;        /* Se adapta sin salirse */
+    max-width: 530px;
+}
+
+.DojoImagen {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Texto */
+.DojoTexto {
+    flex: 1 1 420px;
+    max-width: 600px;
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* ============================= */
+/* TARJETAS */
+/* ============================= */
+.DojoCards {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.DojoCard {
+    background: #f3f3f3;
+    padding: 28px 20px;
+    border-radius: 14px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.DojoCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Iconos */
+.DojoIcon {
+    width: 65px;
+    margin-bottom: 15px;
+}
+
+/* Títulos de tarjetas */
+.DojoCardTitulo {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Texto de tarjetas */
+.DojoCardTexto {
+    font-size: 16px;
+    color: #333;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+@media (max-width: 900px) {
+    .DojoTitulo {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .DojoSection {
+        padding: 40px 15px;
+    }
+
+    .DojoTitulo {
+        font-size: 26px;
+    }
+
+    .DojoTexto {
+        font-size: 15.5px;
+    }
+
+    .DojoIcon {
+        width: 55px;
+    }
+}

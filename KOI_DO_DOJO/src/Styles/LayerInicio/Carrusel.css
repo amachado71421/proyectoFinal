@@ -1,0 +1,106 @@
+.CarruselInicio {
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ====== SLIDES ====== */
+.CarruselTrack {
+  display: flex;
+  transition: transform 2.5s ease-in-out; /* ⬅️ ajuste de 2.5s */
+  width: 100%;
+  height: 100%;
+}
+
+.CarruselSlide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Imágenes del carrusel */
+.CarruselSlide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ====== TEXTO ENCIMA ====== */
+.CarruselTexto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 15px 30px;
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 1s ease-in-out;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.CarruselTexto h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ====== BOTONES ====== */
+.CarruselBotones {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.CarruselBotones button {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.CarruselBotones .activo {
+  background-color: #ec1010;
+  transform: scale(1.4);
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 768px) {
+  .CarruselInicio {
+    height: 35vh;
+  }
+
+  .CarruselSlide img {
+    height: 35vh;
+  }
+
+  .CarruselTexto h2 {
+    font-size: 20px;
+  }
+}
+

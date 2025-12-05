@@ -1,0 +1,167 @@
+/* ============================
+   SECCIÓN PRINCIPAL
+============================ */
+.inicio-section {
+    width: 100%;
+    background: #0d0d0d;
+    color: #ffffff;
+    padding: 60px 0;
+    font-family: "Poppins", sans-serif;
+    overflow-x: hidden;     /* 👈 evita desplazamiento horizontal */
+}
+
+/* Wrapper centrado */
+.inicio-wrapper {
+    width: 100%;
+    max-width: 1300px;      /* 👈 NUNCA se salga del ancho */
+    margin: 0 auto;
+    padding: 0 20px;        /* 👈 ayuda a no pegarse a los bordes */
+}
+
+/* ============================
+   CONTENEDOR GRID
+============================ */
+.inicio-container {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+}
+
+/* ============================
+   IMAGEN GRANDE IZQUIERDA
+============================ */
+.inicio-img-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.inicio-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============================
+   CONTENIDO DERECHO
+============================ */
+.inicio-content {
+    width: 100%;
+}
+
+.inicio-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+/* ============================
+   CITA
+============================ */
+.inicio-quote {
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 25px 30px;
+    margin-bottom: 35px;
+    background: rgba(255,255,255,0.03);
+}
+
+.quote-symbol {
+    position: absolute;
+    font-size: 3rem;
+    font-weight: 600;
+    opacity: 0.4;
+}
+
+.quote-symbol.left {
+    top: -20px;
+    left: -10px;
+}
+
+.quote-symbol.right {
+    bottom: -20px;
+    right: -10px;
+}
+
+.inicio-quote p {
+    font-size: 1rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* ============================
+   SUBTÍTULO
+============================ */
+.inicio-subtitle {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* ============================
+   TEXTO
+============================ */
+.inicio-text {
+    color: #cccccc;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.inicio-text.final {
+    margin-top: 25px;
+}
+
+/* ============================
+   IMAGEN PEQUEÑA
+============================ */
+.inicio-small-img-wrapper {
+    margin: 20px 0;
+}
+
+.inicio-small-img {
+    width: 260px;
+    border-radius: 6px;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 1200px) {
+    .inicio-container {
+        grid-template-columns: 45% 55%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .inicio-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .inicio-title {
+        font-size: 3rem;
+    }
+
+    .inicio-content {
+        padding-right: 0;
+    }
+
+    .inicio-small-img-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .inicio-title {
+        font-size: 2.2rem;
+    }
+
+    .inicio-small-img {
+        width: 100%;
+        max-width: 350px;
+    }
+}
