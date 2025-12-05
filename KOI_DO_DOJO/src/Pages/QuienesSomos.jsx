@@ -36,6 +36,7 @@ function QuienesSomos() {
                     <h3>Crear Etiquetas</h3>
                     <CrearEtiquetas/>
                 </section>
+                
 
                 <section style={{ marginTop: '2rem' }}>
                     <h3>Crear Logros</h3>
