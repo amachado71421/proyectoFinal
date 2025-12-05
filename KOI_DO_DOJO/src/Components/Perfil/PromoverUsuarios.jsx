@@ -62,20 +62,7 @@ export default function PromoverUsuarios() {
         load()
     }, [])
 
-    const getActionLabel = (changes) => {
-        if ('is_staff' in changes) {
-            return changes.is_staff ? 'Dar privilegios de staff' : 'Quitar privilegios de staff'
-        }
-        if ('is_superuser' in changes) {
-            return changes.is_superuser ? 'Hacer superuser (administrador)' : 'Quitar superuser (administrador)'
-        }
-        return 'Cambiar privilegios'
-    }
-
     const promote = async (id, changes) => {
-        const actionLabel = getActionLabel(changes)
-        if (!window.confirm(`¿Confirmar acción: ${actionLabel} para el usuario con ID ${id}?`)) return
-
         setActionLoadingId(id)
         setError('')
 
@@ -92,13 +79,13 @@ export default function PromoverUsuarios() {
             const data = await res.json().catch(() => ({}))
 
             if (res.status === 401) {
-                setError(`No tienes permisos para: ${actionLabel}. Solo administradores pueden hacerlo.`)
+                setError('No tienes permisos. Solo administradores pueden hacerlo.')
                 setNoAuth(true)
                 return
             }
 
             if (!res.ok) {
-                setError(data.detail || data.error || `Error al realizar: ${actionLabel}.`)
+                setError(data.detail || data.error || 'Error al cambiar privilegios.')
                 return
             }
 
@@ -115,7 +102,7 @@ export default function PromoverUsuarios() {
             )
         } catch (err) {
             console.error('Error de conexión:', err)
-            setError(`Error de conexión al intentar: ${actionLabel}. Intenta de nuevo.`)
+            setError('Error de conexión. Intenta de nuevo.')
         } finally {
             setActionLoadingId(null)
         }
@@ -161,31 +148,34 @@ export default function PromoverUsuarios() {
                                 <td style={{ textAlign: 'center', padding: 8 }}>
                                     <button
                                         disabled={actionLoadingId === u.id || loading}
-                                        onClick={() => promote(u.id, { is_staff: true })}
-                                        style={{ padding: '4px 8px', marginRight: 4, cursor: 'pointer' }}
+                                        onClick={() => promote(u.id, { is_staff: !u.is_staff })}
+                                        style={{
+                                            padding: '4px 8px',
+                                            marginRight: 4,
+                                            cursor: actionLoadingId === u.id ? 'wait' : 'pointer',
+                                            backgroundColor: u.is_staff ? '#d9534f' : '#5cb85c',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: 4,
+                                            opacity: actionLoadingId === u.id ? 0.6 : 1
+                                        }}
                                     >
-                                        Dar privilegios (staff)
+                                        {actionLoadingId === u.id ? '...' : (u.is_staff ? 'Quitar Staff' : 'Agregar Staff')}
                                     </button>
                                     <button
                                         disabled={actionLoadingId === u.id || loading}
-                                        onClick={() => promote(u.id, { is_staff: false })}
-                                        style={{ padding: '4px 8px', marginRight: 4, cursor: 'pointer' }}
+                                        onClick={() => promote(u.id, { is_superuser: !u.is_superuser })}
+                                        style={{
+                                            padding: '4px 8px',
+                                            cursor: actionLoadingId === u.id ? 'wait' : 'pointer',
+                                            backgroundColor: u.is_superuser ? '#d9534f' : '#5cb85c',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: 4,
+                                            opacity: actionLoadingId === u.id ? 0.6 : 1
+                                        }}
                                     >
-                                        Quitar privilegios (staff)
-                                    </button>
-                                    <button
-                                        disabled={actionLoadingId === u.id || loading}
-                                        onClick={() => promote(u.id, { is_superuser: true })}
-                                        style={{ padding: '4px 8px', marginRight: 4, cursor: 'pointer' }}
-                                    >
-                                        Hacer administrador
-                                    </button>
-                                    <button
-                                        disabled={actionLoadingId === u.id || loading}
-                                        onClick={() => promote(u.id, { is_superuser: false })}
-                                        style={{ padding: '4px 8px', cursor: 'pointer' }}
-                                    >
-                                        Quitar administrador
+                                        {actionLoadingId === u.id ? '...' : (u.is_superuser ? 'Quitar Admin' : 'Agregar Admin')}
                                     </button>
                                 </td>
                             </tr>

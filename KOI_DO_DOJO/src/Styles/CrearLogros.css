@@ -1,0 +1,124 @@
+.crear-logros-container {
+    padding: 1rem;
+    max-width: 600px;
+}
+
+.crear-logro-form {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.form-textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background: #4cae4c;
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.logros-list {
+    margin-top: 1.5rem;
+}
+
+.logros-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logro-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.logro-info {
+    flex: 1;
+}
+
+.logro-nombre {
+    margin: 0 0 0.5rem 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.logro-descripcion {
+    margin: 0.5rem 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.logro-fecha {
+    display: block;
+    color: #999;
+    font-size: 12px;
+    margin-top: 0.5rem;
+}
+
+.delete-btn {
+    padding: 0.5rem 0.75rem;
+    background: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.delete-btn:hover:not(:disabled) {
+    background: #c9302c;
+}
+
+.delete-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

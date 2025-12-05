@@ -19,6 +19,7 @@ from .serializers import PerfilSerializer
 @ensure_csrf_cookie
 @api_view(['GET'])
 def get_csrf_token(request):
+    """Obtener token CSRF"""
     return Response({'message': 'CSRF cookie set'})
 
 
@@ -26,6 +27,7 @@ def get_csrf_token(request):
 # Cookie token obtain / refresh
 # -----------------------------
 class CookieTokenObtainPairView(TokenObtainPairView):
+    """Obtener tokens JWT y guardarlos en cookies HttpOnly"""
     permission_classes = [AllowAny]
 
     @method_decorator(ensure_csrf_cookie)
@@ -36,11 +38,12 @@ class CookieTokenObtainPairView(TokenObtainPairView):
             access = response.data.get('access')
             refresh = response.data.get('refresh')
 
-            response.data = {'message': 'Token set in HttpOnly cookie'}
+            response.data = {'message': 'Tokens guardados en cookies seguras'}
 
             secure = not settings.DEBUG
             samesite = 'Lax'
 
+            # Cookie de acceso (15 minutos)
             response.set_cookie(
                 key='access_token',
                 value=access,
@@ -51,6 +54,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 max_age=15 * 60
             )
 
+            # Cookie de refresco (7 días)
             response.set_cookie(
                 key='refresh_token',
                 value=refresh,
@@ -65,12 +69,13 @@ class CookieTokenObtainPairView(TokenObtainPairView):
 
 
 class CookieTokenRefreshView(TokenRefreshView):
+    """Refrescar token JWT desde cookie"""
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get('refresh_token')
         if not refresh_token:
-            return Response({"detail": "No refresh cookie provided"}, status=400)
+            return Response({"detail": "No hay refresh token en cookie"}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = TokenRefreshSerializer(data={"refresh": refresh_token})
         serializer.is_valid(raise_exception=True)
@@ -78,7 +83,7 @@ class CookieTokenRefreshView(TokenRefreshView):
 
         if 'access' in data:
             access = data['access']
-            response = Response({"message": "Access token refrescado en cookie"}, status=200)
+            response = Response({"message": "Token de acceso refrescado"}, status=status.HTTP_200_OK)
 
             secure = not settings.DEBUG
             samesite = 'Lax'
@@ -90,17 +95,18 @@ class CookieTokenRefreshView(TokenRefreshView):
                 secure=secure,
                 samesite=samesite,
                 path='/',
-                max_age=60 * 60
+                max_age=15 * 60
             )
             return response
 
-        return Response({"detail": "No access token generated"}, status=400)
+        return Response({"detail": "No se generó token de acceso"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # -----------------------------
-# Register / Login (JSON + cookie set)
+# Register (con cookies)
 # -----------------------------
 class RegisterAPIView(APIView):
+    """Registrar nuevo usuario"""
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -140,7 +146,11 @@ class RegisterAPIView(APIView):
         return response
 
 
+# -----------------------------
+# Login (con cookies)
+# -----------------------------
 class LoginAPIView(APIView):
+    """Iniciar sesión y guardar tokens en cookies"""
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
@@ -184,12 +194,16 @@ class LoginAPIView(APIView):
 # Me (datos del usuario autenticado)
 # -----------------------------
 class MeAPIView(APIView):
+    """Obtener datos del usuario autenticado"""
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         user = request.user
         if not user or not user.is_authenticated:
-            return Response({"detail": "No autenticado"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"detail": "No autenticado"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
         return Response(PerfilSerializer(user).data, status=status.HTTP_200_OK)
 
 
@@ -197,10 +211,14 @@ class MeAPIView(APIView):
 # Logout
 # -----------------------------
 class LogoutAPIView(APIView):
+    """Cerrar sesión eliminando cookies"""
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        response = Response({'message': 'Sesión cerrada'}, status=status.HTTP_200_OK)
+        response = Response(
+            {'message': 'Sesión cerrada exitosamente'},
+            status=status.HTTP_200_OK
+        )
         response.delete_cookie('access_token', path='/')
         response.delete_cookie('refresh_token', path='/')
         return response
@@ -210,21 +228,29 @@ class LogoutAPIView(APIView):
 # Promote / Demote users (admins only)
 # -----------------------------
 class PromoteUserAPIView(APIView):
+    """Promover o degradar privilegios de usuario (solo administradores)"""
     permission_classes = [IsAdminUser]
 
     def post(self, request, *args, **kwargs):
         uid = request.data.get('id_perfil') or request.data.get('id') or request.data.get('username')
         if not uid:
-            return Response({"detail": "id_perfil, id o username requerido."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "id_perfil, id o username requerido."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
-            if request.data.get('username'):
-                user = models.Perfil.objects.get(username=request.data.get('username'))
+            if isinstance(uid, str) and not uid.isdigit():
+                user = models.Perfil.objects.get(username=uid)
             else:
                 user = models.Perfil.objects.get(id_perfil=uid)
         except models.Perfil.DoesNotExist:
-            return Response({"detail": "Usuario no encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"detail": "Usuario no encontrado."},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
+        # Actualizar permisos
         if 'is_staff' in request.data:
             user.is_staff = bool(request.data.get('is_staff'))
         if 'is_superuser' in request.data:

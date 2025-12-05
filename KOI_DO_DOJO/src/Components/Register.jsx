@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '/src/Styles/Register.css';
 
 function Register() {
@@ -7,6 +8,8 @@ function Register() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -16,15 +19,19 @@ function Register() {
         last_name: ''
     });
 
+    // Mismo método que en Login
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
+
     const togglePassword = () => setShowPassword(!showPassword);
     const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
         setError('');
     };
 
@@ -41,53 +48,69 @@ function Register() {
         }
 
         try {
+            // -------------------------
+            // 1) Registrar usuario
+            // -------------------------
             const response = await fetch('http://localhost:8000/api/auth/register/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
                 },
-                body: JSON.stringify({
-                    username: formData.username,
-                    email: formData.email,
-                    password: formData.password,
-                    password_confirm: formData.password_confirm,
-                    first_name: formData.first_name,
-                    last_name: formData.last_name
-                })
+                credentials: 'include',
+                body: JSON.stringify(formData)
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                if (data.email) {
-                    setError(data.email[0] || 'Error en el registro');
-                } else if (data.username) {
-                    setError(data.username[0] || 'Error en el registro');
-                } else if (data.password) {
-                    setError(data.password[0] || 'Error en el registro');
-                } else if (data.detail) {
-                    setError(data.detail);
-                } else {
-                    setError('Error en el registro. Intenta de nuevo.');
-                }
-            } else {
-                setSuccess('Registro exitoso. Bienvenido!');
-                localStorage.setItem('access_token', data.access);
-                localStorage.setItem('refresh_token', data.refresh);
-                setFormData({
-                    username: '',
-                    email: '',
-                    password: '',
-                    password_confirm: '',
-                    first_name: '',
-                    last_name: ''
-                });
-                setTimeout(() => {
-                    window.location.href = '/';
-                }, 2000);
+                if (data.email) setError(data.email[0]);
+                else if (data.username) setError(data.username[0]);
+                else if (data.password) setError(data.password[0]);
+                else if (data.detail) setError(data.detail);
+                else setError('Error en el registro.');
+                setLoading(false);
+                return;
             }
-        } catch (Error) {
-            setError('Error de conexión. Intenta de nuevo.');
+
+            // -------------------------
+            // 2) Registro OK → Login automático
+            // -------------------------
+            setSuccess('Registro exitoso, iniciando sesión...');
+
+            const loginResp = await fetch('http://localhost:8000/api/token/', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({
+                    username: formData.username,
+                    password: formData.password
+                }),
+            });
+
+            const loginData = await loginResp.json();
+
+            if (!loginResp.ok) {
+                setError('El registro fue exitoso pero no se pudo iniciar sesión.');
+                console.log(loginData);
+                setLoading(false);
+                return;
+            }
+
+            // -------------------------
+            // 3) Redirigir igual que Login
+            // -------------------------
+            setSuccess('Registro exitoso! Redirigiendo...');
+            setTimeout(() => {
+                navigate('/Perfil');
+            }, 1500);
+
+        } catch (error) {
+            console.error(error);
+            setError('Error de conexión.');
         } finally {
             setLoading(false);
         }
@@ -96,8 +119,10 @@ function Register() {
     return (
         <div className='ContenedorRegistro'>
             <h2 className='TituloRegistro'>Registro</h2>
+
             {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
             {success && <div style={{ color: 'green', marginBottom: '1rem' }}>{success}</div>}
+
             <form onSubmit={handleSubmit}>
                 {/* Nombre */}
                 <div className='ContenedorImputsNombre'>
@@ -108,7 +133,6 @@ function Register() {
                         name="first_name"
                         className='NombreInput'
                         placeholder="Ingresa tu nombre"
-                        maxLength="150"
                         value={formData.first_name}
                         onChange={handleChange}
                     />
@@ -123,7 +147,6 @@ function Register() {
                         name="last_name"
                         className='ApellidoInput'
                         placeholder="Ingresa tu apellido"
-                        maxLength="150"
                         value={formData.last_name}
                         onChange={handleChange}
                     />
@@ -138,7 +161,6 @@ function Register() {
                         name="username"
                         className='UsernameInput'
                         placeholder="Elige un nombre de usuario"
-                        maxLength="150"
                         value={formData.username}
                         onChange={handleChange}
                         required
@@ -146,15 +168,14 @@ function Register() {
                 </div>
 
                 {/* Email */}
-                <div className='ContenedorImputsCorreo'>
+                <div className='ContenedorImputsCorreo '>
                     <label className='CorreoLabel' htmlFor="email">Correo electrónico:</label>
                     <input
                         type="email"
                         id="email"
                         name="email"
                         className='CorreoInput'
-                        placeholder="Ingresa tu correo para registrarte"
-                        maxLength="254"
+                        placeholder="Ingresa tu correo"
                         value={formData.email}
                         onChange={handleChange}
                         required
@@ -169,8 +190,7 @@ function Register() {
                         id="password"
                         name="password"
                         className='ContraInput'
-                        placeholder="Crea una contraseña (mín. 8 caracteres)"
-                        maxLength="128"
+                        placeholder="Crea una contraseña"
                         value={formData.password}
                         onChange={handleChange}
                         required
@@ -180,16 +200,15 @@ function Register() {
                     </button>
                 </div>
 
-                {/* Confirmar contraseña */}
+                {/* Confirmar */}
                 <div className='ContenedorInputsConfirmarPassword'>
                     <label className='ConfirmarPasswordLabel' htmlFor="password_confirm">Confirmar contraseña:</label>
                     <input
                         type={showConfirmPassword ? 'text' : 'password'}
                         id="password_confirm"
                         name="password_confirm"
-                        placeholder="Repite tu contraseña"
                         className='ConfirmarPasswordInput'
-                        maxLength="128"
+                        placeholder="Repite la contraseña"
                         value={formData.password_confirm}
                         onChange={handleChange}
                         required

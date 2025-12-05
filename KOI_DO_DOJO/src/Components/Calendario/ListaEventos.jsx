@@ -1,57 +1,74 @@
-// src/Components/Calendario/CalendarListView.jsx
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import listPlugin from '@fullcalendar/list'
 import interactionPlugin from '@fullcalendar/interaction'
 import '/src/Styles/CalendarioTemporal.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const EVENTOS_ENDPOINT = `${API_URL}/api/eventos/`
+
 const ListaEventos = () => {
     const calendarRef = useRef(null)
+    const [events, setEvents] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState('')
 
-    // 🔥 Datos quemados de ejemplo
-    const eventosDemo = [
-        {
-            title: 'Clase de Karate - Principiantes',
-            start: '2025-11-19T10:00:00',
-            end: '2025-11-19T11:00:00',
-        },
-        {
-            title: 'Entrenamiento Avanzado',
-            start: '2025-11-20T18:00:00',
-            end: '2025-11-20T19:30:00',
-        },
-        {
-            title: 'Examen de Cinturón',
-            start: '2025-11-21T14:00:00',
-            end: '2025-11-21T16:00:00',
-        },
-        {
-            title: 'Reunión de Instructores',
-            start: '2025-11-22T09:00:00',
-            end: '2025-11-22T10:30:00',
-        },
-        {
-            title: 'Clase Especial con Maestro Invitado',
-            start: '2025-11-23T15:00:00',
-            end: '2025-11-23T17:00:00',
-        },
-    ]
+    const getAuthHeaders = (json = true) => {
+        const headers = {}
+        if (json) headers['Content-Type'] = 'application/json'
+        return headers
+    }
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            setLoading(true)
+            setError('')
+            try {
+                const res = await fetch(EVENTOS_ENDPOINT, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: getAuthHeaders(false)
+                })
+                if (!res.ok) throw new Error(`HTTP ${res.status}`)
+                const data = await res.json()
+                const normalized = Array.isArray(data) ? data : data.results || []
+
+                const mapped = normalized.map(ev => ({
+                    id: ev.id_evento ?? ev.id,
+                    title: ev.nombre_evento ?? ev.title ?? 'Evento',
+                    start: ev.fecha_inicio ?? ev.start,
+                    end: ev.fecha_final ?? ev.end,
+                    allDay: !!ev.todo_dia
+                }))
+
+                setEvents(mapped)
+            } catch (err) {
+                console.error('Error cargando eventos:', err)
+                setError('No se pudieron cargar eventos.')
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchEvents()
+    }, [])
 
     return (
         <div className="calendar-list-container">
+            {error && <div style={{ color: 'red', padding: 8 }}>{error}</div>}
             <FullCalendar
                 ref={calendarRef}
                 plugins={[listPlugin, interactionPlugin]}
-                initialView="listWeek"   // puedes cambiar a "listMonth" si prefieres
-                events={eventosDemo}     // 🔥 usamos los datos quemados
+                initialView="listWeek"
+                events={events}
                 selectable={true}
-                editable={true}
+                editable={false}
                 headerToolbar={{
                     left: 'prev,next today',
                     center: 'title',
-                    right: '' // sin botones de cambio de vista
+                    right: ''
                 }}
-                noEventsContent="No hay eventos programados"
+                noEventsContent={loading ? 'Cargando eventos...' : 'No hay eventos programados'}
             />
         </div>
     )

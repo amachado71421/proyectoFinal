@@ -120,12 +120,52 @@ class EstadoSerializer(serializers.ModelSerializer):
 
 
 class EventoSerializer(serializers.ModelSerializer):
+    categorias = serializers.PrimaryKeyRelatedField(
+        queryset=models.Categoria.objects.all(),
+        many=True,
+        required=False,
+        write_only=True
+    )
+    
     class Meta:
         model = models.Evento
         fields = [
             'id_evento', 'nombre_evento', 'descripcion_evento',
-            'hora_inicio', 'hora_final', 'fecha_inicio', 'fecha_final', 'lugar'
+            'hora_inicio', 'hora_final', 'fecha_inicio', 'fecha_final', 
+            'lugar', 'todo_dia', 'categorias'
         ]
+
+    def create(self, validated_data):
+        categorias = validated_data.pop('categorias', [])
+        evento = models.Evento.objects.create(**validated_data)
+        
+        # Crear relaciones con categorías
+        for categoria in categorias:
+            models.EventoCategoria.objects.create(
+                id_evento=evento,
+                id_categoria=categoria
+            )
+        
+        return evento
+
+    def update(self, instance, validated_data):
+        categorias = validated_data.pop('categorias', None)
+        
+        # Actualizar campos del evento
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        
+        # Actualizar categorías si se proporcionan
+        if categorias is not None:
+            models.EventoCategoria.objects.filter(id_evento=instance).delete()
+            for categoria in categorias:
+                models.EventoCategoria.objects.create(
+                    id_evento=instance,
+                    id_categoria=categoria
+                )
+        
+        return instance
 
 
 class PerfilEventoSerializer(serializers.ModelSerializer):

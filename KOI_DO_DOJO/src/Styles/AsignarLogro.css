@@ -1,0 +1,123 @@
+.asignar-logro-container {
+    padding: 1rem;
+    max-width: 900px;
+}
+
+.asignar-logro-form {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-textarea {
+    resize: vertical;
+}
+
+.form-select {
+    background: white;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover:not(:disabled) {
+    background: #4cae4c;
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.asignaciones-list {
+    margin-top: 1.5rem;
+}
+
+.asignaciones-table-container {
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.asignaciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.asignaciones-table thead {
+    background: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+}
+
+.asignaciones-table th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.asignaciones-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.asignaciones-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.delete-btn {
+    padding: 0.4rem 0.6rem;
+    background: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover:not(:disabled) {
+    background: #c9302c;
+}
+
+.delete-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
