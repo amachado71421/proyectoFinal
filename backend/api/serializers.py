@@ -84,6 +84,10 @@ class LoginSerializer(serializers.Serializer):
 
 
 class PalmaresSerializer(serializers.ModelSerializer):
+    # Aceptar PKs para las relaciones y validarlas
+    id_perfil = serializers.PrimaryKeyRelatedField(queryset=models.Perfil.objects.all())
+    id_resultado = serializers.PrimaryKeyRelatedField(queryset=models.Resultado.objects.all())
+
     class Meta:
         model = models.Palmares
         fields = ['id_palmares', 'id_perfil', 'id_resultado']
@@ -132,7 +136,7 @@ class EventoSerializer(serializers.ModelSerializer):
         fields = [
             'id_evento', 'nombre_evento', 'descripcion_evento',
             'hora_inicio', 'hora_final', 'fecha_inicio', 'fecha_final', 
-            'lugar', 'todo_dia', 'categorias'
+            'lugar', 'categorias'
         ]
 
     def create(self, validated_data):

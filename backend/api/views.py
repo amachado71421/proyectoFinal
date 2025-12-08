@@ -10,10 +10,10 @@ from . import models, serializers
 from .serializers import PerfilSerializer
 
 
-class ResultadoViewSet(viewsets.ReadOnlyModelViewSet):
+class ResultadoViewSet(viewsets.ModelViewSet):
     queryset = models.Resultado.objects.all()
     serializer_class = serializers.ResultadoSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class RolViewSet(viewsets.ModelViewSet):

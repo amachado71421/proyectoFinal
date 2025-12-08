@@ -7,6 +7,8 @@ import Dojo from "../Pages/Dojo.jsx";
 import Calendario from "../Pages/Calendario";
 import Eventos from "../Pages/Eventos.jsx";
 import Contactenos from "../Pages/Contactenos.jsx";
+import GestionEventosPage from "../Pages/GestionEventosPage.jsx";
+import InscribirsePage from "../Pages/InscribirsePage.jsx";
 import Autorizacion from "../Components/Perfil/Autorizacion.jsx";
 
 function Routing() {
@@ -34,6 +36,26 @@ function Routing() {
                     element={
                         <Autorizacion>
                             <Calendario />
+                        </Autorizacion>
+                    }
+                />
+
+                {/* Gestión de eventos protegido con Autorizacion */}
+                <Route
+                    path="/gestion-eventos"
+                    element={
+                        <Autorizacion>
+                            <GestionEventosPage />
+                        </Autorizacion>
+                    }
+                />
+
+                {/* Inscripción a eventos */}
+                <Route
+                    path="/inscribirse-evento"
+                    element={
+                        <Autorizacion>
+                            <InscribirsePage />
                         </Autorizacion>
                     }
                 />

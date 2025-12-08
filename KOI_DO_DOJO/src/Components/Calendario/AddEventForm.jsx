@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const CATEGORIAS_ENDPOINT = `${API_URL}/api/categorias/`
 const EVENTOS_ENDPOINT = `${API_URL}/api/eventos/`
 
-export default function AddEventForm({ onAddEvent }) {
+export default function AddEventForm({ onAddEvent, initialData = null, onUpdate, onCancel }) {
     const [formData, setFormData] = useState({
         nombre_evento: '',
         descripcion: '',
@@ -27,6 +27,13 @@ export default function AddEventForm({ onAddEvent }) {
         const headers = {}
         if (json) headers['Content-Type'] = 'application/json'
         return headers
+    }
+
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`
+        const parts = value.split(`; ${name}=`)
+        if (parts.length === 2) return parts.pop().split(';').shift()
+        return null
     }
 
     useEffect(() => {
@@ -60,6 +67,22 @@ export default function AddEventForm({ onAddEvent }) {
         fetchCategorias()
     }, [])
 
+    // Prefill form when editing
+    useEffect(() => {
+        if (!initialData) return
+        setFormData({
+            nombre_evento: initialData.nombre_evento ?? initialData.title ?? '',
+            descripcion: initialData.descripcion_evento ?? initialData.description ?? '',
+            fecha_inicio: initialData.fecha_inicio ?? '',
+            hora_inicio: initialData.hora_inicio ?? '',
+            fecha_final: initialData.fecha_final ?? '',
+            hora_fin: initialData.hora_final ?? '',
+            todo_dia: !!(initialData.todo_dia),
+            ubicacion: initialData.lugar ?? initialData.location ?? '',
+            categorias: (initialData.categorias || initialData.tags || []).map(c => ({ id: c.id_categoria ?? c.id, nombre: c.nombre_categoria ?? c.nombre }))
+        })
+    }, [initialData])
+
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
@@ -88,40 +111,53 @@ export default function AddEventForm({ onAddEvent }) {
 
         setLoading(true); setError('')
         try {
-            const fechaInicio = formData.todo_dia
-                ? formData.fecha_inicio
-                : `${formData.fecha_inicio}T${formData.hora_inicio || '00:00'}:00`
-
-            const fechaFinal = formData.todo_dia
-                ? (formData.fecha_final || formData.fecha_inicio)
-                : (formData.fecha_final
-                    ? `${formData.fecha_final}T${formData.hora_fin || '00:00'}:00`
-                    : `${formData.fecha_inicio}T${formData.hora_fin || formData.hora_inicio || '00:00'}:00`)
-
+            // Construir payload con campos separados de fecha y hora
             const body = {
                 nombre_evento: formData.nombre_evento.trim(),
                 descripcion_evento: formData.descripcion.trim(),
-                fecha_inicio: fechaInicio,
-                fecha_final: fechaFinal,
-                todo_dia: formData.todo_dia,
-                lugar: formData.ubicacion.trim(),
+                fecha_inicio: formData.fecha_inicio || null,
+                fecha_final: formData.fecha_final || null,
+                hora_inicio: formData.hora_inicio || null,
+                hora_final: formData.hora_fin || null,
+                lugar: formData.ubicacion.trim() || null,
                 categorias: formData.categorias.map(c => c.id)
             }
 
-            const res = await fetch(EVENTOS_ENDPOINT, {
-                method: 'POST',
+            const headers = getAuthHeaders(true)
+            const csrftoken = getCookie('csrftoken')
+            if (csrftoken) headers['X-CSRFToken'] = csrftoken
+
+            const isEdit = Boolean(initialData && (initialData.id_evento ?? initialData.id))
+            const url = isEdit ? `${EVENTOS_ENDPOINT}${initialData.id_evento ?? initialData.id}/` : EVENTOS_ENDPOINT
+            const method = isEdit ? 'PUT' : 'POST'
+
+            const res = await fetch(url, {
+                method,
                 credentials: 'include',
-                headers: getAuthHeaders(true),
+                headers,
                 body: JSON.stringify(body)
             })
 
-            const data = await res.json().catch(() => ({}))
+            let data = {}
+            let textBody = ''
+            try {
+                data = await res.json()
+            } catch {
+                try { textBody = await res.text() } catch { textBody = '' }
+            }
+
             if (!res.ok) {
-                setError(data.detail || JSON.stringify(data) || 'Error al crear evento.')
+                const serverMsg = data && Object.keys(data).length ? JSON.stringify(data) : textBody || res.statusText
+                console.error('Error guardando evento:', res.status, serverMsg)
+                setError(`Error ${res.status}: ${serverMsg}`)
                 return
             }
 
-            onAddEvent?.(data)
+            if (isEdit) {
+                onUpdate?.(data)
+            } else {
+                onAddEvent?.(data)
+            }
 
             setFormData({
                 nombre_evento: '',
@@ -135,6 +171,7 @@ export default function AddEventForm({ onAddEvent }) {
                 categorias: []
             })
             setShowTags(false)
+            if (isEdit && onCancel) onCancel()
         } catch (err) {
             console.error('Error de conexión:', err)
             setError('Error de conexión al guardar evento.')
@@ -145,7 +182,7 @@ export default function AddEventForm({ onAddEvent }) {
 
     return (
         <form className="add-event-form" onSubmit={handleSubmit}>
-            <h3 className="form-title">Añadir evento</h3>
+            <h3 className="form-title">{initialData ? 'Editar evento' : 'Añadir evento'}</h3>
 
             {error && <div style={{ color: 'red', marginBottom: 12, padding: 8, backgroundColor: '#fee', borderRadius: 4 }}>{error}</div>}
 
@@ -227,9 +264,16 @@ export default function AddEventForm({ onAddEvent }) {
                 )}
             </div>
 
-            <button type="submit" className="submit-btn add-event-btn" disabled={loading}>
-                {loading ? 'Guardando...' : 'Añadir evento'}
-            </button>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 12 }}>
+                <button type="submit" className="submit-btn add-event-btn" disabled={loading}>
+                    {loading ? 'Guardando...' : (initialData ? 'Guardar cambios' : 'Añadir evento')}
+                </button>
+                {initialData && (
+                    <button type="button" className="submit-btn" onClick={() => onCancel?.()} disabled={loading} style={{ background: '#aaa' }}>
+                        Cancelar
+                    </button>
+                )}
+            </div>
         </form>
     )
 }

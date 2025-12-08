@@ -6,6 +6,8 @@ import AsignarRol from '../Components/Perfil/AsignarRol.jsx'
 import CrearEtiquetas from '../Components/Calendario/Administrador/CrearEtiquetas.jsx'
 import CrearLogros from '../Components/Perfil/CrearLogros.jsx'
 import AsignarLogro from '../Components/Perfil/AsignarLogro.jsx'
+import AdministradorPalmares from '../Components/Perfil/AdministradorPalmares.jsx'
+import AdministrarResultados from '../Components/Perfil/AdministrarResultados.jsx'
 
 function QuienesSomos() {
     return (
@@ -46,6 +48,16 @@ function QuienesSomos() {
                 <section style={{ marginTop: '2rem' }}>
                     <h3>Asignar Logros</h3>
                     <AsignarLogro/>
+                </section>
+
+                <section style={{ marginTop: '2rem' }}>
+                    <h3>Asignar Logros</h3>
+                    <AdministrarResultados/>
+                </section>
+
+                <section style={{ marginTop: '2rem' }}>
+                    <h3>Asignar Logros</h3>
+                    <AdministradorPalmares/>
                 </section>
 
 

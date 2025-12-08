@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import AddEventForm from './AddEventForm'
 import CalendarViews from './CalendarViews'
 import '/src/Styles/CalendarioBase.css'
@@ -17,6 +18,7 @@ const mapEventFromApi = (ev) => ({
 })
 
 const Calendar = () => {
+    const navigate = useNavigate()
     const [events, setEvents] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [formMounted, setFormMounted] = useState(false)
@@ -91,6 +93,12 @@ const Calendar = () => {
             <div className="calendar-toolbar">
                 <button className="toggle-form-btn" onClick={toggleForm}>
                     {showForm ? 'Cancelar' : 'Añadir Evento'}
+                </button>
+                <button className="toggle-form-btn" onClick={() => navigate('/gestion-eventos')}>
+                    Gestionar Eventos
+                </button>
+                <button className="toggle-form-btn" onClick={() => navigate('/inscribirse-evento')}>
+                    Inscribirse
                 </button>
             </div>
         </div>
