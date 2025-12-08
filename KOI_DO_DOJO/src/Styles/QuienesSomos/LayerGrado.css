@@ -1,0 +1,173 @@
+/* Container */
+.LayerGrados {
+    max-width: 920px;
+    margin: 24px auto;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.GradosTitle {
+    display: flex;
+}
+
+/* Title */
+.lg-title {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+}
+
+.LayerIconoQS {
+    width: 40px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/* Buttons toolbar */
+.lg-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+/* Each button */
+.lg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: transform .14s ease, box-shadow .14s ease, background .2s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    min-width: 140px;
+    text-align: left;
+    outline: none;
+}
+
+.lg-btn:hover,
+.lg-btn:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.lg-btn.active {
+    background: linear-gradient(90deg, rgba(250, 250, 250, 1), rgba(240, 240, 240, 1));
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* belt dot */
+.belt-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
+}
+
+/* label */
+.btn-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #222;
+}
+
+/* Panel area */
+.lg-panel {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Placeholder */
+.lg-placeholder {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Detalle card */
+.grado-card {
+    width: 100%;
+    max-width: 720px;
+    background: #fff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.grado-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.grado-belt {
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    box-shadow: inset 0 -6px 18px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    flex-shrink: 0;
+}
+
+.grado-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #111;
+}
+
+.grado-belt-name {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.grado-desc {
+    margin: 10px 0;
+    color: #333;
+    line-height: 1.4;
+}
+
+/* Meta list */
+.grado-meta {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 16px;
+    color: #444;
+    font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .lg-btn {
+        min-width: 120px;
+        padding: 9px 10px;
+    }
+
+    .LayerGrados {
+        padding: 12px;
+    }
+
+    .grado-card {
+        padding: 12px;
+    }
+
+    .lg-buttons {
+        gap: 8px;
+    }
+}

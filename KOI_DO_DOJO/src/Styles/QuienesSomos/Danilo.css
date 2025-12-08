@@ -1,0 +1,81 @@
+.FichaContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 30px;
+    background-color: #111;
+    /* fondo oscuro */
+    width: 100%;
+    /* ocupa todo el ancho de la página */
+    box-sizing: border-box;
+    /* incluye padding en el ancho total */
+    margin: 0;
+    /* sin márgenes externos */
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.Encargado {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #ec1010;
+    /* rojo destacado */
+}
+
+.FichaImagen img {
+    width: 450px;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.FichaInfo {
+    flex: 1;
+}
+
+.FichaNombre {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #ec1010;
+    /* rojo destacado */
+}
+
+.FichaExperiencia {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.FichaLogros {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.FichaLogros li {
+    margin-bottom: 5px;
+}
+
+.FichaHistoria {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* --------------------------------------------- */
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .FichaContainer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .FichaImagen img {
+        width: 250px;
+        margin-bottom: 20px;
+    }
+
+    .FichaInfo {
+        width: 100%;
+    }
+}

@@ -74,7 +74,7 @@ function BarraMenu() {
   const menuItems = [
     { path: "/", label: "Inicio", icon: "../src/Images/INICIO.png" },
     { path: isAuthenticated ? "/Perfil" : "/loginregister", label: "Perfil", icon: "../src/Images/PERFIL2.png" },
-    { path: "/QuienesSomos", label: "¿Quienes Somos?", icon: "../src/Images/NOSOTROS.png" },
+    { path: "/QuienesSomos", label: "Integrantes", icon: "../src/Images/NOSOTROS.png" },
     { path: "/Dojo", label: "Dojo", icon: "../src/Images/DOJO.png" },
     { path: "/Calendario", label: "Calendario", icon: "../src/Images/CALENDARIO.png" },
     { path: "/Eventos", label: "Eventos", icon: "../src/Images/EVENTOS.png" },

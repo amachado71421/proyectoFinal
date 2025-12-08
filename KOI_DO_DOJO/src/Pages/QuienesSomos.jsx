@@ -1,16 +1,24 @@
 import React from 'react'
 import BarraMenu from '../Components/BarraMenu'
+import Sensei from '../Components/QuienesSomos/Sensei.jsx'
+import Danilo from '../Components/QuienesSomos/Danilo.jsx'
+
 import CrearRoles from '../Components/Perfil/CrearRoles.jsx'
 import PromoverUsuarios from '../Components/Perfil/PromoverUsuarios.jsx'
 import AsignarRol from '../Components/Perfil/AsignarRol.jsx'
 import CrearEtiquetas from '../Components/Calendario/Administrador/CrearEtiquetas.jsx'
 import CrearLogros from '../Components/Perfil/CrearLogros.jsx'
 import AsignarLogro from '../Components/Perfil/AsignarLogro.jsx'
+import LayerGrados from '../Components/QuienesSomos/LayerGrados.jsx'
 
 function QuienesSomos() {
     return (
         <div>
             <BarraMenu />
+            <Sensei/>
+            <Danilo/>
+            <LayerGrados/>
+            
 
             <main style={{ padding: '1rem' }}>
                 <section style={{ marginBottom: '2rem' }}>
@@ -48,8 +56,9 @@ function QuienesSomos() {
                     <AsignarLogro/>
                 </section>
 
-
-
+                <section style={{ marginTop: '2rem' }}>
+                    <h3>Asignar Logros</h3>
+                </section>
             </main>
         </div>
     )

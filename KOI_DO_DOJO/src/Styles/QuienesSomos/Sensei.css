@@ -1,0 +1,176 @@
+/* --------------------------------------------- */
+/* CONTENEDOR PRINCIPAL */
+/* --------------------------------------------- */
+.EspacioCarrusel {
+    width: 100%;                /* Ocupa todo el ancho de la página */
+    height: 100vh;              /* Ocupa toda la altura de la ventana */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;     /* fondo negro */
+    padding: 5px;
+    box-sizing: border-box;     /* incluye padding en el ancho total */
+    margin: 0;                  /* sin márgenes externos */
+    overflow-x: hidden;         /* evita scroll horizontal */
+    margin-top: 137px;
+}
+
+
+/* Contenedor de las 3 imágenes */
+.CarruselSensei {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1400px;
+    flex-wrap: wrap; /* Para que se ajusten en pantallas pequeñas */
+}
+
+/* --------------------------------------------- */
+/* TAMAÑO GENERAL DE TODAS LAS IMÁGENES */
+/* --------------------------------------------- */
+.ImagenSensei {
+    width: 360px;     
+    height: 500px;    
+    object-fit: cover;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Blanco y negro para laterales */
+.SenseiIzq,
+.SenseiDer {
+    filter: grayscale(100%);
+    opacity: 0.8;
+}
+
+.SenseiIzq:hover,
+.SenseiDer:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.SenseiCentro:hover {
+    transform: scale(1.05);
+}
+
+/* --------------------------------------------- */
+/* OVERLAY (Texto encima de imágenes) */
+/* --------------------------------------------- */
+.contenedor-overlay {
+    position: relative;
+    display: inline-block;
+}
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+}
+
+/* --------------------------------------------- */
+/* TITULOS */
+/* --------------------------------------------- */
+.TituloBlanco {
+    color: #ffffff;
+    font-size: 2.4rem;
+    margin: 0;
+    line-height: 1.1;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.TituloAmarillo {
+    color: #ffd200;
+    font-size: 2.4rem;
+    margin: 0;
+    line-height: 1.1;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* --------------------------------------------- */
+/* FIRMA (ya ajustada a 80px) */
+/* --------------------------------------------- */
+.Firma {
+    width: 200px;  
+    margin-bottom: 8px;
+    margin-top: 160px;
+}
+
+/* Contenedor firma + nombre */
+.FirmaTitulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --------------------------------------------- */
+/* MEDIA QUERIES - RESPONSIVE CORREGIDO */
+/* --------------------------------------------- */
+
+/* Tablets medianas */
+@media (max-width: 1024px) {
+    .CarruselSensei {
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: nowrap; /* Mantener en fila */
+    }
+    .ImagenSensei {
+        width: 300px;
+        height: 420px;
+    }
+    .TituloBlanco,
+    .TituloAmarillo {
+        font-size: 2rem;
+    }
+    .Firma {
+        width: 160px;
+        margin-top: 120px;
+    }
+}
+
+/* Tablets pequeñas / móviles grandes */
+@media (max-width: 768px) {
+    .CarruselSensei {
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: nowrap; /* Evitar que las imágenes se envuelvan mal */
+    }
+    .ImagenSensei {
+        width: 220px;
+        height: 320px;
+    }
+    .TituloBlanco,
+    .TituloAmarillo {
+        font-size: 1.6rem;
+    }
+    .Firma {
+        width: 140px;
+        margin-top: 100px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .CarruselSensei {
+        flex-direction: column; /* Apilar verticalmente */
+        gap: 20px;
+        align-items: center; /* Centrar imágenes */
+    }
+    .ImagenSensei {
+        width: 180px;
+        height: 260px;
+    }
+    .TituloBlanco,
+    .TituloAmarillo {
+        font-size: 1.4rem;
+    }
+    .Firma {
+        width: 120px;
+        margin-top: 60px;
+    }
+}
