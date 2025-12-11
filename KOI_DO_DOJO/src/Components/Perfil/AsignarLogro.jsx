@@ -333,7 +333,7 @@ export default function AsignarLogro() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {asignaciones.map((asignacion, idx) => (
+                                {asignaciones.map((asignacion) => (
                                     <tr key={`${asignacion.id_perfil}-${asignacion.id_logro}`}>
                                         <td>{getPerfilName(asignacion.id_perfil)}</td>
                                         <td>{getLogroName(asignacion.id_logro)}</td>

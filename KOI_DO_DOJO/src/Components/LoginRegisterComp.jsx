@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import '/src/Styles/LoginRegisterComp.css';
 
 function LoginRegisterComp() {
     const [showLogin, setShowLogin] = useState(true);
-    const navigate = useNavigate();
 
     const toggleForm = () => setShowLogin(!showLogin);
 

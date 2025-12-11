@@ -1,106 +1,89 @@
+/* CONTENEDOR */
 .CarruselInicio {
   position: relative;
   width: 100%;
-  height: 55vh;
+  height: 60vh;    /* 👈 menos alto */
   overflow: hidden;
-  border-radius: 0;
-  box-shadow: none;
 }
 
-/* ====== SLIDES ====== */
+/* TRACK */
 .CarruselTrack {
   display: flex;
-  transition: transform 2.5s ease-in-out; /* ⬅️ ajuste de 2.5s */
   width: 100%;
   height: 100%;
+  transition: transform 2.5s ease-in-out;
 }
 
+/* SLIDE */
 .CarruselSlide {
-  position: relative;
+  flex: 0 0 100%;
   width: 100%;
   height: 100%;
-  flex-shrink: 0;
+  position: relative;
 }
 
-/* Imágenes del carrusel */
+/* IMAGEN */
 .CarruselSlide img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover;         /* 👈 mejor escala */
+  display: block;
 }
 
-/* ====== TEXTO ENCIMA ====== */
+/* TEXTO ENCIMA */
 .CarruselTexto {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #ffffff;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 15px 30px;
-  border-radius: 10px;
-  backdrop-filter: blur(4px);
-  animation: fadeIn 1s ease-in-out;
   font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  background: none !important;  /* 👈 eliminado fondo */
+  padding: 0;
 }
 
+/* TÍTULO */
 .CarruselTexto h2 {
-  font-size: 32px;
-  font-weight: bold;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0px 0px 10px rgba(0,0,0,0.7);
 }
 
-/* Animación */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -40%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-}
-
-/* ====== BOTONES ====== */
+/* BOTONES */
 .CarruselBotones {
   position: absolute;
-  bottom: 20px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .CarruselBotones button {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   border: none;
-  background-color: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background-color: rgba(255,255,255,0.5);
+  transition: .3s;
 }
 
 .CarruselBotones .activo {
-  background-color: #ec1010;
-  transform: scale(1.4);
+  background-color: #e40707;
+  transform: scale(1.3);
 }
 
-/* ====== RESPONSIVO ====== */
-@media (max-width: 768px) {
-  .CarruselInicio {
-    height: 35vh;
-  }
-
+/* RESPONSIVE */
+@media(max-width:768px){
+  .CarruselInicio,
+  .CarruselSlide,
   .CarruselSlide img {
-    height: 35vh;
+    height: 30vh;   /* 👈 móvil más bajo */
   }
 
-  .CarruselTexto h2 {
-    font-size: 20px;
+  .CarruselTexto h2{
+    font-size: 18px;
   }
 }
-

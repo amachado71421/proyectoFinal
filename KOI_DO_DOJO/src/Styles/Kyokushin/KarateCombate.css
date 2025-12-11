@@ -1,0 +1,271 @@
+/* =============================
+       WRAPPER GENERAL
+============================= */
+.combate-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff; /* color claro similar al diseño */
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* =============================
+       FIGURAS DE ESQUINA
+============================= */
+.corner {
+  position: absolute;
+  width: 120px;
+}
+
+.corner-top-left {
+  top: 10px;
+  left: 20px;
+  width: 210px;
+}
+.corner-bottom-right {
+  bottom: 10px;
+  right: 20px;
+   width: 210px;
+}
+
+/* =============================
+       FONDO SEMICÍRCULO
+============================= */
+.background-semicircle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+/* =============================
+       CONTENIDO CENTRAL texto
+============================= */
+.combate-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =============================
+       SOL ROJO
+============================= */
+.red-sun {
+  position: absolute;
+  width: 550px;
+  z-index: 2;
+  top: 100px;
+}
+
+/* =============================
+       FIGURA PRINCIPAL
+============================= */
+.main-figure {
+  position: absolute;
+  width: 650px; 
+  z-index: 3;
+  top: 140px;
+}
+
+/* =============================
+       SAKURA
+============================= */
+.sakura {
+  position: absolute;
+  width: 420px;
+  right: -3%;
+  top: 10px;
+  bottom: 0;
+  z-index: 2;
+}
+
+/* =============================
+       TEXTO
+============================= */
+.text-box {
+  position: absolute;
+  left: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  max-width: 280px;
+  text-align: justify;
+}
+
+.combate-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.combate-desc {
+  margin-top: 15px;
+  color: #333;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.combate-desc strong {
+  color: #d62828;
+}
+
+/* ============================================================
+      📱📱 RESPONSIVE SIN CAMBIAR TU CÓDIGO ORIGINAL
+============================================================ */
+
+/* 💻 1200px — Laptops */
+@media (max-width: 1200px) {
+
+  .main-figure {
+    width: 520px;
+    top: 160px;
+  }
+
+  .red-sun {
+    width: 470px;
+    top: 120px;
+  }
+
+  .sakura {
+    width: 360px;
+  }
+
+  .text-box {
+    left: 6%;
+    top: 55%;
+  }
+
+  .combate-content {
+    padding-top: 620px;
+  }
+
+  .corner-top-left,
+  .corner-bottom-right {
+    width: 170px;
+  }
+}
+
+/* 📱 TABLET HORIZONTAL — 992px */
+@media (max-width: 992px) {
+
+  .main-figure {
+    width: 440px;
+    top: 180px;
+  }
+
+  .red-sun {
+    width: 380px;
+    top: 150px;
+  }
+
+  .sakura {
+    width: 300px;
+    right: -6%;
+  }
+
+  .text-box {
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    top: 60%;
+    max-width: 350px;
+    text-align: center;
+  }
+
+  .combate-title {
+    font-size: 2.4rem;
+  }
+
+  .combate-desc {
+    font-size: 1rem;
+  }
+
+  .combate-content {
+    padding-top: 660px;
+  }
+
+  .corner-top-left,
+  .corner-bottom-right {
+    width: 150px;
+  }
+}
+
+/* 📱 TABLET VERTICAL — 768px */
+@media (max-width: 768px) {
+
+  .main-figure {
+    width: 360px;
+    top: 230px;
+  }
+
+  .red-sun {
+    width: 300px;
+    top: 180px;
+  }
+
+  .sakura {
+    width: 240px;
+    right: -10%;
+  }
+
+  .text-box {
+    top: 65%;
+    max-width: 320px;
+    margin-top: 80px;
+    text-align: center;
+  }
+
+  .combate-content {
+    padding-top: 700px;
+  }
+}
+
+/* 📱 CELULARES — 480px */
+@media (max-width: 480px) {
+
+  .main-figure {
+    width: 260px;
+    top: 260px;
+  }
+
+  .red-sun {
+    width: 220px;
+    top: 210px;
+  }
+
+  .sakura {
+    width: 180px;
+    right: -15%;
+  }
+
+  .text-box {
+    top: 72%;
+    max-width: 250px;
+    text-align: center;
+  }
+
+  .combat-title {
+    font-size: 2rem;
+  }
+
+  .combat-desc {
+    font-size: 0.9rem;
+  }
+
+  .combate-content {
+    padding-top: 760px;
+  }
+
+  .corner-top-left,
+  .corner-bottom-right {
+    width: 120px;
+  }
+}

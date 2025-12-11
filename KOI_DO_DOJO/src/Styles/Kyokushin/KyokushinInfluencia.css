@@ -1,0 +1,90 @@
+/* SECCIÓN */
+.influ-section {
+    background: #252525;
+    padding: 70px 0;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+}
+
+/* CONTENEDOR */
+.influ-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* TÍTULO */
+.influ-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* SUBTÍTULO */
+.influ-subtitle {
+    max-width: 950px;
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin-bottom: 45px;
+}
+
+/* GRID DE TARJETAS */
+.influ-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* TARJETA */
+.influ-card {
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    transition: 0.3s ease;
+}
+
+.influ-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.15);
+}
+
+/* IMAGEN */
+.influ-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* TÍTULO DE TARJETA */
+.influ-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+/* TEXTO DE TARJETA */
+.influ-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+/* RESPONSIVE */
+@media (max-width: 992px) {
+    .influ-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .influ-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .influ-title {
+        font-size: 2.2rem;
+    }
+}

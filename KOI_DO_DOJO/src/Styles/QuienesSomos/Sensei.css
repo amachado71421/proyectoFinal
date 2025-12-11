@@ -1,7 +1,7 @@
 /* --------------------------------------------- */
 /* CONTENEDOR PRINCIPAL */
 /* --------------------------------------------- */
-.EspacioCarrusel {
+.EspacioCarrusel1 {
     width: 100%;                /* Ocupa todo el ancho de la página */
     height: 100vh;              /* Ocupa toda la altura de la ventana */
     display: flex;
@@ -12,7 +12,7 @@
     box-sizing: border-box;     /* incluye padding en el ancho total */
     margin: 0;                  /* sin márgenes externos */
     overflow-x: hidden;         /* evita scroll horizontal */
-    margin-top: 137px;
+    margin-top: 120px;
 }
 
 

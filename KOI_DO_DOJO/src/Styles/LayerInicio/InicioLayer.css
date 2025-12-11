@@ -112,6 +112,8 @@
 
 .inicio-text.final {
     margin-top: 25px;
+    text-align: justify;
+    margin-right: 50px;
 }
 
 /* ============================
@@ -164,4 +166,15 @@
         width: 100%;
         max-width: 350px;
     }
+}
+
+/* ============================
+   LIMITAR ANCHO GLOBAL
+============================ */
+.inicio-section,
+.inicio-wrapper,
+.inicio-container {
+    max-width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -1,0 +1,76 @@
+/* ======================================
+      FILOSOFÍA DEL KYOKUSHIN (Compacto)
+====================================== */
+.filosofia {
+  font-family: "Poppins", sans-serif;
+  padding: 45px 10%;        /* ⬅ MUCHO MÁS BAJO */
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.IconoFilosofia{
+  width: 200px;
+  margin-left: 50px;
+}
+
+.filosofia h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #ff2b2b;
+  margin-bottom: 30px;       /* ⬅ reducido */
+}
+
+/* ===== CONTENEDOR DE BLOQUES ===== */
+.filosofia-bloques {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;                 /* ⬅ reducido */
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ===== BLOQUES ===== */
+.bloque {
+  background: #111;
+  padding: 20px 20px;        /* ⬅ más compacto */
+  border-radius: 10px;
+  border-left: 5px solid #ff2b2b;
+  text-align: left;
+  box-shadow: 0 5px 20px rgba(255, 0, 0, 0.12);
+}
+
+.bloque h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ff2b2b;
+  margin-bottom: 10px;
+}
+
+.bloque p {
+  font-size: 1rem;
+  line-height: 1.55;         /* ⬅ menos separación */
+  color: #e6e6e6;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
+  .filosofia-bloques {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .filosofia-bloques {
+    grid-template-columns: 1fr;
+  }
+
+  .filosofia {
+    padding: 35px 7%;
+  }
+
+  .filosofia h2 {
+    font-size: 1.8rem;
+  }
+}
