@@ -1,16 +1,29 @@
+/* CONTENEDOR PERFIL */
+.div-perfil {
+    margin-top: 10%;
+    width: 100%;
+}
+
+/* TARJETA PRINCIPAL */
 .user-card {
     max-width: 900px;
-    margin: 2rem auto;
-    padding: 1.5rem;
+    width: 100%; /* ✅ asegura que ocupe todo el ancho disponible */
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 1.5rem;
     border-radius: 15px;
     background: #fff;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     font-family: "Poppins", sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
+/* FOTO */
 .user-image {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.4rem;
 }
 
 .user-image img {
@@ -21,9 +34,10 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* INFO */
 .user-info {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.4rem;
 }
 
 .user-info h2 {
@@ -31,11 +45,13 @@
     color: #d62828;
 }
 
+/* PESO Y ALTURA */
 .user-extra {
     display: flex;
     justify-content: center;
     gap: 2rem;
     margin-bottom: 2rem;
+    flex-wrap: wrap; /* ✅ permite que se acomoden si no cabe */
 }
 
 .user-extra label {
@@ -51,34 +67,77 @@
     border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 1rem;
+    width: 100%; /* ✅ inputs se adaptan */
+    max-width: 250px;
 }
 
-/* Contenedor de logros y palmarés */
+/* LOGROS + PALMARÉS */
 .user-stats {
     display: flex;
     justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
-    /* ✅ responsivo */
+    margin-bottom: 2rem; 
 }
 
-.user-logros {
-    flex: 1 1 45%;
-}
-
+.user-logros,
 .user-palmares {
     flex: 1 1 45%;
 }
 
-/* Responsivo */
+/* BOTÓN ADMIN — SIEMPRE ABAJO */
+.admin-administrar {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.admin-btn {
+    background: #d62828;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s ease;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.admin-btn:hover {
+    background: #b71f1f;
+    transform: scale(1.03);
+}
+
+/* 📱 RESPONSIVO */
 @media (max-width: 768px) {
+    .user-card {
+        width: 95%; /* ✅ ocupa casi todo el ancho en móvil */
+        padding-top: 5rem !important;
+    }
+
+    .user-extra {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
     .user-stats {
         flex-direction: column;
         gap: 1.5rem;
+        margin-top: 2.5rem;
     }
 
     .user-logros,
     .user-palmares {
         flex: 1 1 100%;
+    }
+
+    .admin-btn {
+        width: 90%;
     }
 }

@@ -9,6 +9,7 @@ import Eventos from "../Pages/Eventos.jsx";
 import Contactenos from "../Pages/Contactenos.jsx";
 import GestionEventosPage from "../Pages/GestionEventosPage.jsx";
 import InscribirsePage from "../Pages/InscribirsePage.jsx";
+import AdministrarPerfilesPage from "../Pages/AdministrarPerfilesPage.jsx";
 import Autorizacion from "../Components/Perfil/Autorizacion.jsx";
 
 function Routing() {
@@ -56,6 +57,16 @@ function Routing() {
                     element={
                         <Autorizacion>
                             <InscribirsePage />
+                        </Autorizacion>
+                    }
+                />
+
+                {/* Administración de perfiles protegido con Autorizacion */}
+                <Route
+                    path="/administrar-perfiles"
+                    element={
+                        <Autorizacion>
+                            <AdministrarPerfilesPage />
                         </Autorizacion>
                     }
                 />

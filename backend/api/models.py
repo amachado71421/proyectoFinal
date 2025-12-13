@@ -169,7 +169,15 @@ class PerfilEvento(models.Model):
     id_perfil = models.ForeignKey(Perfil, db_column='id_perfil', on_delete=models.CASCADE)
     id_evento = models.ForeignKey(Evento, db_column='id_evento', on_delete=models.CASCADE)
     id_estado = models.ForeignKey(Estado, db_column='id_estado', on_delete=models.RESTRICT)
-    id_rol = models.ForeignKey(Rol, db_column='id_rol', on_delete=models.RESTRICT)
+
+    # ✅ CAMBIO: ahora es opcional
+    id_rol = models.ForeignKey(
+        Rol,
+        db_column='id_rol',
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         db_table = 'perfil_evento'

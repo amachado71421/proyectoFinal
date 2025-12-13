@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import '../../Styles/PromoverUsuario.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const USERS_ENDPOINT = `${API_URL}/api/perfiles/`
@@ -93,10 +94,16 @@ export default function PromoverUsuarios() {
                 prev.map(u =>
                     u.id === id
                         ? {
-                            ...u,
-                            is_staff: data.is_staff !== undefined ? !!data.is_staff : u.is_staff,
-                            is_superuser: data.is_superuser !== undefined ? !!data.is_superuser : u.is_superuser
-                        }
+                              ...u,
+                              is_staff:
+                                  data.is_staff !== undefined
+                                      ? !!data.is_staff
+                                      : u.is_staff,
+                              is_superuser:
+                                  data.is_superuser !== undefined
+                                      ? !!data.is_superuser
+                                      : u.is_superuser
+                          }
                         : u
                 )
             )
@@ -110,78 +117,90 @@ export default function PromoverUsuarios() {
 
     if (noAuth) {
         return (
-            <div style={{ padding: '1rem', backgroundColor: '#fee', borderRadius: 4 }}>
-                <p style={{ color: '#c00' }}>{error}</p>
-                <button onClick={() => window.location.href = '/login'}>Ir a Login</button>
+            <div className="promover-no-auth">
+                <p>{error}</p>
+                <button onClick={() => (window.location.href = '/login')}>
+                    Ir a Login
+                </button>
             </div>
         )
     }
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <h2>Promover / Demover Usuarios</h2>
+        <div className="promover-container">
+            <h2 className="promover-title">Promover / Demover Usuarios</h2>
 
-            {error && <div style={{ color: 'red', marginBottom: 12, padding: 8, backgroundColor: '#fee', borderRadius: 4 }}>{error}</div>}
+            {error && <div className="promover-alert-error">{error}</div>}
 
-            {loading && <div style={{ color: '#666' }}>Cargando usuarios...</div>}
+            {loading && <div className="promover-loading">Cargando usuarios...</div>}
 
-            {!loading && users.length === 0 && <div style={{ color: '#666' }}>No hay usuarios.</div>}
+            {!loading && users.length === 0 && (
+                <div className="promover-no-users">No hay usuarios.</div>
+            )}
 
             {users.length > 0 && (
-                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12 }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f5f5f5', borderBottom: '2px solid #ddd' }}>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Usuario</th>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Email</th>
-                            <th style={{ textAlign: 'center', padding: 8 }}>Staff</th>
-                            <th style={{ textAlign: 'center', padding: 8 }}>Administrador</th>
-                            <th style={{ textAlign: 'center', padding: 8 }}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(u => (
-                            <tr key={u.id} style={{ borderBottom: '1px solid #ddd' }}>
-                                <td style={{ padding: 8 }}>{u.username}</td>
-                                <td style={{ padding: 8 }}>{u.email}</td>
-                                <td style={{ textAlign: 'center', padding: 8 }}>{u.is_staff ? 'Sí' : 'No'}</td>
-                                <td style={{ textAlign: 'center', padding: 8 }}>{u.is_superuser ? 'Sí' : 'No'}</td>
-                                <td style={{ textAlign: 'center', padding: 8 }}>
-                                    <button
-                                        disabled={actionLoadingId === u.id || loading}
-                                        onClick={() => promote(u.id, { is_staff: !u.is_staff })}
-                                        style={{
-                                            padding: '4px 8px',
-                                            marginRight: 4,
-                                            cursor: actionLoadingId === u.id ? 'wait' : 'pointer',
-                                            backgroundColor: u.is_staff ? '#d9534f' : '#5cb85c',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: 4,
-                                            opacity: actionLoadingId === u.id ? 0.6 : 1
-                                        }}
-                                    >
-                                        {actionLoadingId === u.id ? '...' : (u.is_staff ? 'Quitar Staff' : 'Agregar Staff')}
-                                    </button>
-                                    <button
-                                        disabled={actionLoadingId === u.id || loading}
-                                        onClick={() => promote(u.id, { is_superuser: !u.is_superuser })}
-                                        style={{
-                                            padding: '4px 8px',
-                                            cursor: actionLoadingId === u.id ? 'wait' : 'pointer',
-                                            backgroundColor: u.is_superuser ? '#d9534f' : '#5cb85c',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: 4,
-                                            opacity: actionLoadingId === u.id ? 0.6 : 1
-                                        }}
-                                    >
-                                        {actionLoadingId === u.id ? '...' : (u.is_superuser ? 'Quitar Admin' : 'Agregar Admin')}
-                                    </button>
-                                </td>
+                <div className="promover-table-wrapper">
+                    <table className="promover-table">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Email</th>
+                                <th>Staff</th>
+                                <th>Administrador</th>
+                                <th>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+                            {users.map(u => {
+                                const isActionLoading = actionLoadingId === u.id || loading
+                                return (
+                                    <tr key={u.id}>
+                                        <td>{u.username}</td>
+                                        <td>{u.email}</td>
+                                        <td className="center">{u.is_staff ? 'Sí' : 'No'}</td>
+                                        <td className="center">{u.is_superuser ? 'Sí' : 'No'}</td>
+                                        <td className="center">
+                                            <button
+                                                onClick={() =>
+                                                    !isActionLoading &&
+                                                    promote(u.id, { is_staff: !u.is_staff })
+                                                }
+                                                className={`promover-btn ${
+                                                    u.is_staff ? 'btn-red' : 'btn-green'
+                                                } ${isActionLoading ? 'disabled' : ''}`}
+                                            >
+                                                {isActionLoading
+                                                    ? '...'
+                                                    : u.is_staff
+                                                    ? 'Quitar Staff'
+                                                    : 'Agregar Staff'}
+                                            </button>
+
+                                            <button
+                                                onClick={() =>
+                                                    !isActionLoading &&
+                                                    promote(u.id, {
+                                                        is_superuser: !u.is_superuser
+                                                    })
+                                                }
+                                                className={`promover-btn ${
+                                                    u.is_superuser ? 'btn-red' : 'btn-green'
+                                                } ${isActionLoading ? 'disabled' : ''}`}
+                                            >
+                                                {isActionLoading
+                                                    ? '...'
+                                                    : u.is_superuser
+                                                    ? 'Quitar Admin'
+                                                    : 'Agregar Admin'}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     )

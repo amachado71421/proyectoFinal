@@ -1,0 +1,105 @@
+.administrar-estados-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 20px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #d40000;
+    margin-bottom: 2rem;
+}
+
+.error-banner {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #f5c6cb;
+}
+
+.loading-text {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.crear-estado {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.crear-estado input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.estados-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.estado-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.estado-card input {
+    flex: 1;
+    padding: 6px;
+    font-size: 1rem;
+}
+
+.estado-actions button {
+    margin-left: 8px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-green {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-green:hover {
+    background-color: #218838;
+}
+
+.btn-red {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-red:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .crear-estado {
+        flex-direction: column;
+    }
+
+    .estado-actions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .estado-actions button {
+        margin: 4px 0;
+    }
+}

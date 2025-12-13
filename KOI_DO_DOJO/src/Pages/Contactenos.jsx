@@ -1,6 +1,7 @@
 import React from 'react'
 import BarraMenu from '../Components/BarraMenu'
 import Testimonio from '../Components/Testimonio'
+import Contacto from '../Components/QuienesSomos/Contacto'
 import Footer from '../Components/Footer';
 import "../Styles/Contactenos.css";
 
@@ -16,6 +17,7 @@ function Contactenos() {
             <div>
                 <Testimonio />
             </div>
+            <Contacto />
             <Footer/>
 
         </div>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import '../../Styles/AsignarRol.css';
+
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const USERS_ENDPOINT = `${API_URL}/api/perfiles/`
@@ -130,73 +132,68 @@ export default function AsignarRol() {
     }
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <h2>Asignar Roles a Usuarios</h2>
+        <div className="asignar-rol-container">
+            <h2 className="asignar-rol-title">Asignar Roles a Usuarios</h2>
 
-            {error && <div style={{ color: 'red', marginBottom: 12, padding: 8, backgroundColor: '#fee', borderRadius: 4 }}>{error}</div>}
+            {error && <div className="asignar-rol-error">{error}</div>}
 
-            {loading && <div style={{ color: '#666' }}>Cargando usuarios y roles...</div>}
+            {loading && <div className="asignar-rol-loading">Cargando usuarios y roles...</div>}
 
-            {!loading && users.length === 0 && <div style={{ color: '#666' }}>No hay usuarios.</div>}
+            {!loading && users.length === 0 && <div className="asignar-rol-empty">No hay usuarios.</div>}
 
             {users.length > 0 && (
-                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 12 }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f5f5f5', borderBottom: '2px solid #ddd' }}>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Usuario</th>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Nombre</th>
-                            <th style={{ textAlign: 'left', padding: 8 }}>Apellido</th>
-                            <th style={{ textAlign: 'center', padding: 8 }}>Rol Actual</th>
-                            <th style={{ textAlign: 'center', padding: 8 }}>Asignar Rol</th>
-                            <th style={{ textAlign: 'center', padding: 8 }}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(u => {
-                            const currentRol = roles.find(r => r.id === u.id_rol)
-                            return (
-                                <tr key={u.id} style={{ borderBottom: '1px solid #ddd' }}>
-                                    <td style={{ padding: 8 }}>{u.username}</td>
-                                    <td style={{ padding: 8 }}>{u.first_name || '-'}</td>
-                                    <td style={{ padding: 8 }}>{u.last_name || '-'}</td>
-                                    <td style={{ textAlign: 'center', padding: 8 }}>
-                                        {currentRol ? currentRol.nombre : 'Sin rol'}
-                                    </td>
-                                    <td style={{ textAlign: 'center', padding: 8 }}>
-                                        <select
-                                            value={selectedRoles[u.id] || ''}
-                                            onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                                            style={{ padding: '0.5rem', minWidth: '150px' }}
-                                        >
-                                            <option value="">-- Seleccionar rol --</option>
-                                            {roles.map(r => (
-                                                <option key={r.id} value={r.id}>
-                                                    {r.nombre}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </td>
-                                    <td style={{ textAlign: 'center', padding: 8 }}>
-                                        <button
-                                            disabled={actionLoadingId === u.id || loading}
-                                            onClick={() => assignRole(u.id)}
-                                            style={{
-                                                padding: '0.5rem 1rem',
-                                                cursor: 'pointer',
-                                                backgroundColor: '#5cb85c',
-                                                color: 'white',
-                                                border: 'none',
-                                                borderRadius: 4
-                                            }}
-                                        >
-                                            Asignar
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <div className="asignar-rol-table-container">
+                    <table className="asignar-rol-table">
+                        <thead>
+                            <tr>
+                                <th className="col-usuario">Usuario</th>
+                                <th className="col-nombre responsive-hide">Nombre</th>
+                                <th className="col-apellido responsive-hide">Apellido</th>
+                                <th className="col-rol-actual">Rol Actual</th>
+                                <th className="col-asignar">Asignar Rol</th>
+                                <th className="col-acciones">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map(u => {
+                                const currentRol = roles.find(r => r.id === u.id_rol)
+                                return (
+                                    <tr key={u.id}>
+                                        <td className="col-usuario">{u.username}</td>
+                                        <td className="col-nombre responsive-hide">{u.first_name || '-'}</td>
+                                        <td className="col-apellido responsive-hide">{u.last_name || '-'}</td>
+                                        <td className="col-rol-actual">
+                                            {currentRol ? currentRol.nombre : 'Sin rol'}
+                                        </td>
+                                        <td className="col-asignar">
+                                            <select
+                                                value={selectedRoles[u.id] || ''}
+                                                onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                                                className="asignar-rol-select"
+                                            >
+                                                <option value="">-- Seleccionar rol --</option>
+                                                {roles.map(r => (
+                                                    <option key={r.id} value={r.id}>
+                                                        {r.nombre}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </td>
+                                        <td className="col-acciones">
+                                            <button
+                                                disabled={actionLoadingId === u.id || loading}
+                                                onClick={() => assignRole(u.id)}
+                                                className="asignar-rol-button"
+                                            >
+                                                Asignar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     )

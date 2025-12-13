@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '/src/Styles/Barra.css';
 import TokenRefresher from '../Components/Perfil/TokenRefresher';
 
@@ -25,6 +25,7 @@ function getCookie(name) {
 
 function BarraMenu() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loggedOut, setLoggedOut] = useState(false);
@@ -96,7 +97,7 @@ function BarraMenu() {
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
               <li
-                className="menu-item"
+                className={`menu-item ${location.pathname === item.path ? 'active' : ''}`}
                 onClick={() => { navigate(item.path); setIsOpen(false); }}
               >
                 <img className="Icono" src={item.icon} alt={item.label} />
@@ -107,7 +108,10 @@ function BarraMenu() {
           ))}
 
           {isAuthenticated && (
-            <li className="menu-item" onClick={handleLogout}>
+            <li
+              className={`menu-item ${location.pathname === '/logout' ? 'active' : ''}`}
+              onClick={handleLogout}
+            >
               <img className="Icono" src="../src/Images/LOCKOUT.png" alt="Log Out" />
               <span className='Titulo'>Log Out</span>
             </li>
@@ -115,7 +119,6 @@ function BarraMenu() {
         </ul>
       </main>
 
-      {/* 👇 TokenRefresher solo se monta si hay sesión */}
       {isAuthenticated && !loggedOut && (
         <TokenRefresher
           onRefresh={() => setIsAuthenticated(true)}

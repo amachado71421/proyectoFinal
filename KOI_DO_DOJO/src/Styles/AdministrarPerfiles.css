@@ -1,0 +1,227 @@
+/* ============================== */
+/* CONTENEDOR PRINCIPAL           */
+/* ============================== */
+.administrar-perfiles {
+  width: 100%;
+  max-width: 1200px;
+  margin: 10vw auto 0;
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* ============================== */
+/* BOTÓN VOLVER                   */
+/* ============================== */
+.volver-btn {
+  background: #222;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.volver-btn:hover {
+  background: #444;
+}
+
+/* ============================== */
+/* HEADER                          */
+/* ============================== */
+.admin-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #d40000, #ec1010);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.admin-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+.admin-header p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  color: #fff;
+}
+
+/* ============================== */
+/* CONTENEDOR DE TABS              */
+/* ============================== */
+.tabs-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* ============================== */
+/* HEADER DE TABS                  */
+/* ============================== */
+.tabs-header {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  overflow-x: auto;
+}
+
+.tabs-header::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tabs-header::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tabs-header::-webkit-scrollbar-thumb {
+  background: #d40000;
+  border-radius: 2px;
+}
+
+/* ============================== */
+/* BOTONES DE TABS                 */
+/* ============================== */
+.tab-button {
+  flex: 1;
+  min-width: 150px;
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  position: relative;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+  background-color: #e9ecef;
+  color: #d40000;
+}
+
+.tab-button.active {
+  color: #d40000;
+  background-color: white;
+  border-bottom-color: #d40000;
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #d40000, #ec1010);
+}
+
+/* ============================== */
+/* TAB CONTENT                      */
+/* ============================== */
+.tab-content {
+  padding: 30px;
+  min-height: 600px;
+}
+
+/* ============================== */
+/* SELECT CUSTOMIZADO (MOBILE)     */
+/* ============================== */
+.tabs-select-wrapper {
+  display: none;
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+  z-index: 100;
+}
+
+.tabs-select-btn {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: linear-gradient(135deg, #d40000, #ec1010);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  text-align: left;
+}
+
+.tabs-select-btn::after {
+  content: '▼';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+}
+
+.tabs-select-options {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: block;
+}
+
+.tabs-select-wrapper.up .tabs-select-options {
+  bottom: 100%;
+  margin-bottom: 4px;
+  margin-top: 0;
+}
+
+.tabs-select-options li {
+  list-style: none;
+  padding: 10px 12px;
+  cursor: pointer;
+  color: #495057;
+  transition: 0.2s;
+}
+
+.tabs-select-options li:hover {
+  background-color: #f1f1f1;
+}
+
+/* ============================== */
+/* RESPONSIVE                       */
+/* ============================== */
+@media (max-width: 768px) {
+  .tabs-header {
+    display: none;
+  }
+  .tabs-select-wrapper {
+    display: block;
+  }
+  .tab-content {
+    padding: 20px 15px;
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .volver-btn {
+    margin-top: 80px;
+  }
+  .tab-content {
+    padding: 15px 10px;
+  }
+}

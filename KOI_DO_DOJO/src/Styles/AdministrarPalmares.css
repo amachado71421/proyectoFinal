@@ -1,0 +1,284 @@
+/* ================================
+   CONTENEDOR PRINCIPAL
+================================ */
+.administrador-palmares {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.administrador-palmares h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+/* ================================
+   FILTRO
+================================ */
+.filtro-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.filtro-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-recargar {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-recargar:hover {
+    background-color: #222;
+}
+
+/* ================================
+   GRID
+================================ */
+.usuarios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* ================================
+   TARJETA DE USUARIO
+================================ */
+.usuario-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.usuario-imagen {
+    width: 65px;
+    height: 65px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+.usuario-datos h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.usuario-email {
+    margin-top: 2px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.usuario-nombre {
+    font-size: 0.9rem;
+    color: #444;
+}
+
+/* ================================
+   BLOQUES DE RESULTADOS
+================================ */
+.resultados-contenedor {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.resultado-grupo {
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.resultado-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.resultado-label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+.resultado-numero {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* ================================
+   BOTONES
+================================ */
+.resultado-botones {
+    display: flex;
+    gap: 10px;
+}
+
+/* BOTONES BASE */
+.btn-agregar,
+.btn-eliminar {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* ================================
+   COLORES POR TIPO
+================================ */
+
+/* --- VICTORIAS (verde) --- */
+.btn-victoria.btn-agregar {
+    background-color: #2d7d2d;
+    color: #fff;
+}
+
+.btn-victoria.btn-agregar:hover {
+    background-color: #226622;
+}
+
+.btn-victoria.btn-eliminar:not(:disabled) {
+    background-color: #b50000;
+    color: #fff;
+}
+
+.btn-victoria.btn-eliminar:not(:disabled):hover {
+    background-color: #900000;
+}
+
+/* --- EMPATES (azul) --- */
+.btn-empate.btn-agregar {
+    background-color: #2366c7;
+    color: #fff;
+}
+
+.btn-empate.btn-agregar:hover {
+    background-color: #1a4f9a;
+}
+
+.btn-empate.btn-eliminar:not(:disabled) {
+    background-color: #b50000;
+    color: #fff;
+}
+
+.btn-empate.btn-eliminar:not(:disabled):hover {
+    background-color: #900000;
+}
+
+/* --- DERROTAS (rojo) --- */
+.btn-derrota.btn-agregar {
+    background-color: #c11a1a;
+    color: #fff;
+}
+
+.btn-derrota.btn-agregar:hover {
+    background-color: #9b1414;
+}
+
+.btn-derrota.btn-eliminar:not(:disabled) {
+    background-color: #b50000;
+    color: #fff;
+}
+
+.btn-derrota.btn-eliminar:not(:disabled):hover {
+    background-color: #900000;
+}
+
+/* ================================
+   BOTÓN ELIMINAR DESACTIVADO
+================================ */
+.btn-eliminar:disabled {
+    background-color: #cccccc !important;
+    color: #666 !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ================================
+   TOTAL
+================================ */
+.estadisticas-total {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+    font-weight: bold;
+}
+
+/* ================================
+   SIN RESULTADOS
+================================ */
+.sin-resultados {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #777;
+    padding: 30px 0;
+}
+
+/* ================================
+   ERROR
+================================ */
+.error-mensaje {
+    padding: 10px 14px;
+    background-color: #ffdddd;
+    border: 1px solid #dd8888;
+    color: #900;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .administrador-palmares {
+        padding: 15px 10px;
+    }
+
+    .administrador-palmares h1 {
+        font-size: 1.7rem;
+    }
+
+    .filtro-contenedor {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .usuarios-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .usuario-card {
+        padding: 12px;
+    }
+
+    .resultado-grupo {
+        padding: 10px;
+    }
+}
