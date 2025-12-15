@@ -25,7 +25,9 @@ const Calendar = () => {
     const [error, setError] = useState('')
     const [showForm, setShowForm] = useState(false)
 
-    useEffect(() => { checkAuth() }, [checkAuth])
+    useEffect(() => {
+        checkAuth()
+    }, [checkAuth])
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -46,7 +48,9 @@ const Calendar = () => {
     const isSuperuser = !!user?.is_superuser
     const isStaff = !!user?.is_staff
 
-    if (userLoading) return <div className="calendar-loading">Verificando sesión...</div>
+    if (userLoading) {
+        return <div className="calendar-loading">Verificando sesión...</div>
+    }
 
     return (
         <div className="calendar-container">
@@ -62,33 +66,59 @@ const Calendar = () => {
                 )}
             </div>
 
+            {/* =======================
+                TOOLBAR
+                ======================= */}
             <div className="calendar-toolbar">
-                {/* Superuser: Añadir + Gestionar */}
+
+                {/* SUPERUSER */}
                 {isSuperuser && (
                     <>
-                        <button className="toggle-form-btn" onClick={() => setShowForm(true)}>
+                        <button
+                            className="toggle-form-btn"
+                            onClick={() => setShowForm(true)}
+                        >
                             Añadir Evento
                         </button>
-                        <button className="toggle-form-btn" onClick={() => navigate('/gestion-eventos')}>
+
+                        <button
+                            className="toggle-form-btn"
+                            onClick={() => navigate('/gestion-eventos')}
+                        >
                             Gestionar Eventos
                         </button>
                     </>
                 )}
 
-                {/* Staff (sin superuser): solo Gestionar */}
+                {/* STAFF */}
                 {!isSuperuser && isStaff && (
-                    <button className="toggle-form-btn" onClick={() => navigate('/gestion-eventos')}>
+                    <button
+                        className="toggle-form-btn"
+                        onClick={() => navigate('/gestion-eventos')}
+                    >
                         Gestionar Eventos
                     </button>
                 )}
 
-                {/* Todos pueden inscribirse */}
-                <button className="toggle-form-btn" onClick={() => navigate('/inscribirse-evento')}>
+                {/* TODOS */}
+                <button
+                    className="toggle-form-btn"
+                    onClick={() => navigate('/inscribirse-evento')}
+                >
                     Inscribirse
                 </button>
             </div>
 
-            {showForm && isSuperuser && <AddEventForm onClose={() => setShowForm(false)} />}
+            {/* =======================
+                MODAL ADD EVENT
+                ======================= */}
+            {showForm && isSuperuser && (
+                <div className="add-event-overlay visible" onClick={() => setShowForm(false)}>
+                    <div className="add-event-form" onClick={(e) => e.stopPropagation()}>
+                        <AddEventForm onClose={() => setShowForm(false)} />
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

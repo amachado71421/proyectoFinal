@@ -1,3 +1,9 @@
 .divPerfil{
-    margin-top: 20%;
+    margin-top: 12vw;
+}
+
+@media (max-width: 768px) {
+    .divPerfil{
+        margin-top: 20vw;
+    }
 }
