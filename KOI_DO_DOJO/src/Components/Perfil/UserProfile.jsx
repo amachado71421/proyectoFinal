@@ -11,7 +11,7 @@ const ME_ENDPOINT = `${API_URL}/api/auth/me/`
 
 function UserProfile() {
     const navigate = useNavigate()
-    const { user, userLoading, checkAuth } = useContext(AuthContext)
+    const { user, userLoading } = useContext(AuthContext)
 
     const [userData, setUserData] = useState(null)
     const [originalData, setOriginalData] = useState(null)
