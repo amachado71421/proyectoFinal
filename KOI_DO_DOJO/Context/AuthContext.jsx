@@ -6,18 +6,15 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [userLoading, setUserLoading] = useState(true)
-
     const checkAuth = useCallback(async () => {
         setUserLoading(true)
         setUser(null)
         setIsAuthenticated(false)
-
         try {
             const res = await fetch('http://localhost:8000/api/auth/me/', {
                 method: 'GET',
                 credentials: 'include',
             })
-
             if (res.ok) {
                 const data = await res.json()
                 setUser(data)

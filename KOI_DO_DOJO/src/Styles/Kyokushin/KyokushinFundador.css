@@ -1,0 +1,123 @@
+/* ======================================
+   FUNDADOR – MASUTATSU OYAMA
+====================================== */
+
+.fundador {
+  background-color: #f7f7f7;
+  padding: 90px clamp(30px, 10%, 150px);
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  text-align: justify;
+  overflow: hidden; /* evita scroll horizontal */
+}
+
+/* CONTENEDOR GLOBAL */
+.fundador-contenido {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  max-width: 1200px;
+  margin: auto;
+  opacity: 0;
+  transform: translateY(60px);
+  animation: aparecer 1.2s ease forwards;
+}
+
+/* ---- IMAGEN ---- */
+.fundador-img {
+  width: 360px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 6px solid #9c0000;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+  transition: transform 0.35s ease;
+}
+
+.fundador-img:hover {
+  transform: scale(1.04);
+}
+
+/* ---- TITULO ---- */
+.fundador-texto h2 {
+  font-size: clamp(2rem, 2.8vw, 2.7rem);
+  font-weight: 700;
+  color: #9c0000;
+  margin-bottom: 25px;
+  letter-spacing: -0.5px;
+}
+
+/* ---- TEXTO ---- */
+.fundador-texto p {
+  font-size: 1.12rem;
+  line-height: 1.85;
+  margin-bottom: 22px;
+  color: #333;
+}
+
+.fundador-texto strong {
+  color: #000;
+}
+
+/* ---- FRASE ---- */
+.cita {
+  margin-top: 30px;
+  padding: 18px 0;
+  font-size: 1.35rem;
+  color: #b80000;
+  font-weight: 600;
+  text-align: center;
+  border-top: 2px solid #b80000;
+  border-bottom: 2px solid #b80000;
+  letter-spacing: 0.4px;
+}
+
+
+/* ======================================
+   ANIMACIÓN SCROLL
+====================================== */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ======================================
+   RESPONSIVE
+====================================== */
+
+@media (max-width: 1024px) {
+  .fundador-contenido {
+    gap: 50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .fundador-contenido {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .fundador-img {
+    width: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .fundador {
+    padding: 60px 6%;
+  }
+
+  .fundador-texto h2 {
+    font-size: 1.9rem;
+  }
+
+  .cita {
+    font-size: 1.2rem;
+  }
+}

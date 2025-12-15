@@ -1,5 +1,4 @@
 import React from 'react';
-import '/src/Styles/KyokushinTexto.css';
 
 function KyokushinTexto() {
     return (

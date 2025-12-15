@@ -1,0 +1,110 @@
+/* ============================
+    SECCIÓN GENERAL
+============================ */
+.entrenamiento-section {
+    background: #0d0d0d;
+    color: #fff;
+    padding: 60px 20px; /* <-- margen lateral para evitar desbordes */
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden; /* <-- elimina cualquier overflow lateral */
+}
+
+/* ============================
+          TÍTULO
+============================ */
+.entrenamiento-title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: left;
+    max-width: 1300px;
+    margin: 0 auto 40px auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ============================
+       GRID PRINCIPAL
+============================ */
+.entrenamiento-grid {
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+
+    display: grid;
+
+    /* 55% + 45% rompe el layout → se cambió a fr */
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* ============================
+            TEXTO
+============================ */
+.entrenamiento-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 25px;
+    border-left: 3px solid #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* ============================
+            IMAGEN
+============================ */
+.entrenamiento-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.entrenamiento-img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* ============================
+      RESPONSIVE
+============================ */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .entrenamiento-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .entrenamiento-text p {
+        text-align: justify;
+    }
+
+    .entrenamiento-img {
+        max-width: 400px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    .entrenamiento-title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    .entrenamiento-text p {
+        font-size: 1rem;
+        padding: 20px;
+    }
+
+    .entrenamiento-img {
+        max-width: 320px;
+    }
+}

@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import '/src/Styles/LoginRegisterComp.css';
-
+import { useNavigate } from 'react-router-dom';
 function LoginRegisterComp() {
-    const [showLogin, setShowLogin] = useState(true);
-    const navigate = useNavigate();
-
+    const [showLogin, setShowLogin] = useState(true);   
+    const navigate = useNavigate()
     const toggleForm = () => setShowLogin(!showLogin);
 
     // 🔴 Función para navegar al perfil y recargar la página

@@ -1,0 +1,174 @@
+/* ============================== */
+/*      SECCIÓN PRINCIPAL         */
+/* ============================== */
+.intro-section {
+    background: #0d0d0d;
+    color: #fff;
+    padding: 70px 20px;
+    font-family: "Poppins", sans-serif;
+
+    width: 100%;
+    overflow-x: hidden; /* evita cualquier desbordamiento */
+    box-sizing: border-box;
+}
+
+/* CONTENEDOR CENTRAL */
+.intro-container {
+    max-width: 1300px;   /* tu ancho real */
+    width: 100%;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+
+/* ============================== */
+/*        COLUMNA IZQUIERDA       */
+/* ============================== */
+.intro-left {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.intro-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+
+/* DESCRIPCIÓN PRINCIPAL */
+.intro-description {
+    background: rgba(255, 255, 255, 0.07);
+    padding: 25px;
+    border-radius: 10px;
+    line-height: 1.7;
+    border-left: 5px solid #b80000;
+    box-sizing: border-box;
+}
+
+
+/* ============================== */
+/*            TARJETAS            */
+/* ============================== */
+.intro-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.intro-card {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 22px 25px;
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: 0.3s ease;
+    box-sizing: border-box;
+}
+
+.intro-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* NÚMERO */
+.circle {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+
+    background: #ffffff;
+    color: #0d0d0d;
+    font-weight: 700;
+    font-size: 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-card h3 {
+    margin-top: 10px;
+    font-size: 1.25rem;
+}
+
+.intro-card p {
+    margin-top: 6px;
+    opacity: 0.9;
+}
+
+
+/* ============================== */
+/*        COLUMNA DERECHA         */
+/* ============================== */
+.intro-right {
+    display: flex;
+    justify-content: center;
+}
+
+.intro-img {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+
+/* ============================== */
+/*       RESPONSIVE TABLET        */
+/* ============================== */
+@media (max-width: 992px) {
+    .intro-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .intro-right {
+        order: -1;
+    }
+
+    .intro-title {
+        font-size: 2.4rem;
+    }
+
+    .intro-description,
+    .intro-card {
+        text-align: left;
+    }
+}
+
+
+/* ============================== */
+/*        RESPONSIVE MÓVIL        */
+/* ============================== */
+@media (max-width: 600px) {
+    .intro-title {
+        font-size: 2rem;
+    }
+
+    .circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .intro-description,
+    .intro-card {
+        padding: 18px;
+    }
+
+    .intro-img {
+        max-width: 100%;
+    }
+}

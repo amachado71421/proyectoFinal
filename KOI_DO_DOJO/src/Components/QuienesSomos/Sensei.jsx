@@ -3,7 +3,7 @@ import '/src/Styles/QuienesSomos/Sensei.css';
 
 function Sensei() {
   return (
-    <div className='EspacioCarrusel'>
+    <div className='EspacioCarrusel1'>
       <div className='CarruselSensei'>
 
         {/* IZQUIERDA */}
