@@ -347,7 +347,7 @@ export default function AsignarLogro() {
                                                 className="delete-btn"
                                                 title="Eliminar asignación"
                                             >
-                                                {savingAssignmentId === `${asignacion.id_perfil}-${asignacion.id_logro}` ? '...' : '❌'}
+                                                {savingAssignmentId === `${asignacion.id_perfil}-${asignacion.id_logro}` ? '...' : 'Quitar'}
                                             </button>
                                         </td>
                                     </tr>

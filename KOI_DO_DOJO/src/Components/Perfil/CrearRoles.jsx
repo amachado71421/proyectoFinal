@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import '/src/Styles/CrearRoles.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const ENDPOINT = `${API_URL}/api/roles/`
@@ -125,37 +126,44 @@ export default function CrearRoles() {
     }
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <h2>Gestionar Roles</h2>
+        <div className="roles-container">
+            <h2 className="roles-title">Gestionar Roles</h2>
 
-            {error && <div style={{ color: 'red', marginBottom: '0.5rem', padding: '0.5rem', backgroundColor: '#fee', borderRadius: 4 }}>{error}</div>}
+            {error && <div className="roles-error">{error}</div>}
 
-            <div style={{ marginBottom: '1rem' }}>
+            <div className="roles-form">
                 <input
                     type="text"
                     placeholder="Nombre del rol"
                     value={nombre}
                     onChange={e => setNombre(e.target.value)}
-                    style={{ padding: '0.5rem', marginRight: '0.5rem' }}
+                    className="roles-input"
                 />
-                <button onClick={handleAdd} disabled={loading} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>
+                <button 
+                    onClick={handleAdd} 
+                    disabled={loading} 
+                    className="roles-button roles-button-create"
+                >
                     Crear
                 </button>
             </div>
 
-            {loading && <div style={{ color: '#666' }}>Cargando...</div>}
+            {loading && <div className="roles-loading">Cargando...</div>}
 
-            <ul style={{ listStyle: 'none', padding: 0 }}>
+            <ul className="roles-list">
                 {roles.map(r => (
-                    <li key={r.id} style={{ marginBottom: '0.5rem', padding: '0.5rem', backgroundColor: '#f5f5f5', borderRadius: 4 }}>
+                    <li key={r.id} className="roles-item">
                         {editId === r.id ? (
                             <>
                                 <input
                                     value={editNombre}
                                     onChange={e => setEditNombre(e.target.value)}
-                                    style={{ padding: '0.5rem', marginRight: '0.5rem' }}
+                                    className="roles-input"
                                 />
-                                <button onClick={saveEdit} style={{ padding: '0.5rem 1rem', marginRight: '0.5rem', cursor: 'pointer' }}>
+                                <button 
+                                    onClick={saveEdit} 
+                                    className="roles-button roles-button-save"
+                                >
                                     Guardar
                                 </button>
                                 <button
@@ -163,23 +171,23 @@ export default function CrearRoles() {
                                         setEditId(null)
                                         setEditNombre('')
                                     }}
-                                    style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}
+                                    className="roles-button roles-button-cancel"
                                 >
                                     Cancelar
                                 </button>
                             </>
                         ) : (
                             <>
-                                <span style={{ marginRight: 12, fontWeight: 'bold' }}>{r.nombre}</span>
+                                <span className="roles-name">{r.nombre}</span>
                                 <button
                                     onClick={() => startEdit(r)}
-                                    style={{ padding: '0.5rem 1rem', marginRight: '0.5rem', cursor: 'pointer' }}
+                                    className="roles-button roles-button-edit"
                                 >
                                     Editar
                                 </button>
                                 <button
                                     onClick={() => removeRole(r.id)}
-                                    style={{ padding: '0.5rem 1rem', color: 'white', backgroundColor: '#d9534f', border: 'none', borderRadius: 4, cursor: 'pointer' }}
+                                    className="roles-button roles-button-delete"
                                 >
                                     Eliminar
                                 </button>

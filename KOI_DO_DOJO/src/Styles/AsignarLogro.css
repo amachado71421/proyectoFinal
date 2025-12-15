@@ -1,33 +1,40 @@
+/* Contenedor principal de AsignarLogro */
 .asignar-logro-container {
-    padding: 1rem;
-    max-width: 900px;
+    margin-top: 20px;
+    /* quitamos fondo, borde y padding para que no parezca un card */
+    background: none;
+    border: none;
+    padding: 0;
 }
 
+/* Formulario */
 .asignar-logro-form {
-    background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 6px;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    /* quitamos fondo y borde */
+    background: none;
+    border: none;
+    padding: 0;
 }
 
+/* Grupos de campos */
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 12px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 6px;
     font-weight: bold;
     font-size: 14px;
+    color: #333;
 }
 
 .form-input,
 .form-select,
 .form-textarea {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
     font-family: inherit;
@@ -39,35 +46,36 @@
 }
 
 .form-select {
-    background: white;
+    background-color: #fff;
     cursor: pointer;
 }
 
+/* Botón submit */
 .submit-btn {
-    width: 100%;
-    padding: 0.75rem;
-    background: #5cb85c;
-    color: white;
+    background-color: #333;
+    color: #fff;
     border: none;
+    padding: 8px 14px;
     border-radius: 4px;
-    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s;
+    font-weight: bold;
 }
 
 .submit-btn:hover:not(:disabled) {
-    background: #4cae4c;
+    background-color: #222;
 }
 
 .submit-btn:disabled {
-    opacity: 0.6;
+    background-color: #999;
     cursor: not-allowed;
 }
 
+/* Lista de asignaciones */
 .asignaciones-list {
-    margin-top: 1.5rem;
+    margin-top: 20px;
 }
 
+/* Tabla */
 .asignaciones-table-container {
     overflow-x: auto;
     border: 1px solid #ddd;
@@ -77,47 +85,49 @@
 .asignaciones-table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background-color: #fff;
 }
 
 .asignaciones-table thead {
-    background: #f5f5f5;
+    background-color: #f5f5f5;
     border-bottom: 2px solid #ddd;
 }
 
 .asignaciones-table th {
-    padding: 0.75rem;
+    padding: 10px;
     text-align: left;
     font-weight: bold;
     font-size: 14px;
+    color: #333;
 }
 
 .asignaciones-table td {
-    padding: 0.75rem;
+    padding: 10px;
     border-bottom: 1px solid #eee;
     font-size: 14px;
+    color: #555;
 }
 
 .asignaciones-table tbody tr:hover {
-    background: #f9f9f9;
+    background-color: #f9f9f9;
 }
 
+/* Botón eliminar */
 .delete-btn {
-    padding: 0.4rem 0.6rem;
-    background: #d9534f;
-    color: white;
+    background-color: #c00;
+    color: #fff;
     border: none;
+    padding: 6px 10px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 12px;
-    transition: background 0.3s;
 }
 
 .delete-btn:hover:not(:disabled) {
-    background: #c9302c;
+    background-color: #900;
 }
 
 .delete-btn:disabled {
-    opacity: 0.6;
+    background-color: #999;
     cursor: not-allowed;
 }

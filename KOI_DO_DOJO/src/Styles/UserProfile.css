@@ -1,1 +1,179 @@
+/* CONTENEDOR PERFIL (ESPACIO PARA NAVBAR) */
+.div-perfil {
+    margin-top: 10%;
+    width: 100%;
+}
 
+/* TARJETA PRINCIPAL */
+.user-card {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 1.5rem;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* FOTO */
+.user-image {
+    text-align: center;
+    margin-bottom: 1.4rem;
+}
+
+.user-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* INFO */
+.user-info {
+    text-align: center;
+    margin-bottom: 1.4rem;
+}
+
+.user-info h2 {
+    font-size: 1.6rem;
+    color: #d62828;
+}
+
+/* INPUTS */
+.form-input,
+.user-extra input {
+    margin-top: 0.3rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* PESO Y ALTURA */
+.user-extra {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+/* LOGROS + PALMARÉS */
+.user-stats {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.user-logros,
+.user-palmares {
+    flex: 1 1 45%;
+}
+
+/* BOTÓN ADMIN */
+.admin-administrar {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-btn {
+    background: #d62828;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ===== POPUP IMAGEN (ÚNICO CAMBIO REAL) ===== */
+
+.image-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.image-edit-popup {
+    background: #fff;
+    padding: 1.6rem;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    animation: popupFade 0.25s ease;
+}
+
+.image-edit-popup h3 {
+    text-align: center;
+    color: #d62828;
+    margin-bottom: 1rem;
+}
+
+.image-edit-popup input {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.submit-btn {
+    flex: 1;
+    background: #d62828;
+    color: #fff;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.cancel-btn {
+    flex: 1;
+    background: #eee;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 8px;
+}
+
+@keyframes popupFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .user-card {
+        width: 95%;
+        padding-top: 5rem;
+    }
+
+    .user-stats {
+        flex-direction: column;
+    }
+}

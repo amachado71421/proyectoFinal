@@ -1,258 +1,189 @@
+/* ================================
+   CONTENEDOR PRINCIPAL
+================================ */
 .administrar-resultados {
-    padding: 30px 20px;
-    min-height: 100vh;
-}
-
-.contenedor-principal {
-    max-width: 900px;
+    padding: 20px 30px;
+    max-width: 1100px;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
-.administrar-resultados h1 {
-    text-align: center;
-    color: white;
-    margin-bottom: 40px;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.administrar-resultados h2 {
-    color: white;
+.contenedor-principal h1 {
+    font-size: 2rem;
     margin-bottom: 20px;
-    font-size: 1.5rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    color: #222;
+    font-weight: bold;
 }
 
-.administrar-resultados.loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top: 4px solid white;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 20px;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.administrar-resultados.loading p {
-    color: white;
-    font-size: 1.2rem;
-}
-
-/* Alertas */
+/* ================================
+   ALERTAS
+================================ */
 .alerta {
-    padding: 15px 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 500;
-    animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    position: relative;
+    font-size: 14px;
 }
 
 .alerta-error {
-    background-color: #ff6b6b;
-    color: white;
-    border-left: 4px solid #c92a2a;
+    background-color: #ffe3e3;
+    border: 1px solid #d33;
+    color: #a00;
 }
 
 .alerta-exito {
-    background-color: #51cf66;
-    color: white;
-    border-left: 4px solid #2f9e44;
-    justify-content: center;
+    background-color: #e3ffe7;
+    border: 1px solid #33a35b;
+    color: #1a7f3c;
 }
 
 .btn-cerrar-alerta {
+    position: absolute;
+    right: 10px;
+    top: 8px;
     background: none;
     border: none;
-    color: white;
-    font-size: 1.2rem;
     cursor: pointer;
-    padding: 0;
-    margin-left: 10px;
+    color: #444;
+    font-weight: bold;
 }
 
-.btn-cerrar-alerta:hover {
-    opacity: 0.8;
-}
-
-/* Formulario */
+/* ================================
+   FORMULARIO CREAR RESULTADO
+================================ */
 .formulario-contenedor {
-    background: white;
-    border-radius: 12px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: none;
+    padding: 15px 0;
+    border: none;
+}
+
+.formulario-contenedor h2 {
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 1.4rem;
 }
 
 .formulario {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 .input-grupo {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .input-resultado {
     flex: 1;
-    min-width: 200px;
-    padding: 12px 15px;
-    border: 2px solid #667eea;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
-.input-resultado:focus {
-    outline: none;
-    border-color: #764ba2;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
+/* Botón crear */
 .btn-crear {
-    padding: 12px 25px;
-    color: white;
+    background-color: #222;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
 }
 
 .btn-crear:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+    background-color: #111;
 }
 
-.btn-crear:active {
-    transform: translateY(0);
-}
-
-/* Lista de resultados */
+/* ================================
+   LISTA DE RESULTADOS
+================================ */
 .resultados-contenedor {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin-top: 25px;
+}
+
+.resultados-contenedor h2 {
+    margin-bottom: 14px;
+    font-size: 1.4rem;
+    color: #333;
 }
 
 .resultados-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
 }
 
+/* Tarjeta individual */
 .resultado-card {
-    background: white;
-    border: 2px solid #f0f0f0;
-    border-radius: 10px;
-    padding: 20px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: box-shadow 0.2s ease;
 }
 
 .resultado-card:hover {
-    box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
-    transform: translateY(-4px);
-}
-
-.resultado-contenido {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.09);
 }
 
 .resultado-info {
-    flex: 1;
+    margin-bottom: 10px;
 }
 
 .resultado-id {
-    display: inline-block;
-    background: #f5f5f5;
-    color: #667eea;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 12px;
+    color: #666;
 }
 
 .resultado-nombre {
-    margin: 0;
-    color: #333;
-    font-size: 1.3rem;
-    word-break: break-word;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 4px;
 }
 
+/* ================================
+   BOTONES DE ACCIONES
+================================ */
 .resultado-acciones {
     display: flex;
-    gap: 10px;
-    justify-content: flex-start;
+    gap: 8px;
 }
 
-.btn-editar,
-.btn-eliminar {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1.2rem;
+/* Editar */
+.btn-editar {
+    background-color: #e6e6e6;
+    border: 1px solid #bfbfbf;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 13px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: #f5f5f5;
 }
 
 .btn-editar:hover {
-    background: #fff3cd;
-    transform: scale(1.08);
+    background-color: #d6d6d6;
+}
+
+/* Eliminar */
+.btn-eliminar {
+    background-color: #f2c7c7;
+    color: #a00;
+    border: 1px solid #dd9b9b;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
 }
 
 .btn-eliminar:hover {
-    background: #f8d7da;
-    transform: scale(1.08);
+    background-color: #e8b2b2;
 }
 
-.btn-editar:active,
-.btn-eliminar:active {
-    transform: scale(0.98);
-}
-
-/* Edición inline */
+/* ================================
+   MODO EDICIÓN
+================================ */
 .edicion-contenedor {
     display: flex;
     flex-direction: column;
@@ -260,10 +191,10 @@
 }
 
 .input-edicion {
-    padding: 12px 15px;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #333;
+    padding: 8px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 .botones-edicion {
@@ -271,66 +202,60 @@
     gap: 10px;
 }
 
-.btn-guardar,
-.btn-cancelar {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
 .btn-guardar {
-    background: #51cf66;
+    background-color: #1d7f39;
     color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .btn-guardar:hover {
-    background: #40c057;
-    transform: translateY(-2px);
+    background-color: #15652e;
 }
 
 .btn-cancelar {
-    background: #ff6b6b;
-    color: white;
+    background-color: #ccc;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .btn-cancelar:hover {
-    background: #ff5252;
-    transform: translateY(-2px);
+    background-color: #b7b7b7;
 }
 
-/* Sin resultados */
+/* ================================
+   MENSAJE SIN RESULTADOS
+================================ */
 .sin-resultados {
+    padding: 30px;
     text-align: center;
-    padding: 40px 20px;
-    color: #999;
+    color: #555;
 }
 
-.sin-resultados p {
-    margin: 5px 0;
-    font-size: 1.1rem;
+.sin-resultados .hint {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #888;
 }
 
-.hint {
-    font-size: 0.95rem !important;
-    color: #ccc !important;
-    font-style: italic;
-}
-
-/* Responsive */
+/* ================================
+   RESPONSIVE
+================================ */
 @media (max-width: 768px) {
     .administrar-resultados {
         padding: 20px 10px;
     }
 
-    .administrar-resultados h1 {
-        font-size: 1.8rem;
+    .contenedor-principal h1 {
+        font-size: 1.6rem;
     }
 
-    .administrar-resultados h2 {
+    .formulario-contenedor h2,
+    .resultados-contenedor h2 {
         font-size: 1.2rem;
     }
 
@@ -339,15 +264,14 @@
     }
 
     .input-resultado {
-        min-width: 100%;
+        width: 100%;
     }
 
     .resultados-grid {
         grid-template-columns: 1fr;
     }
 
-    .formulario-contenedor,
-    .resultados-contenedor {
-        padding: 15px;
+    .resultado-card {
+        padding: 12px;
     }
 }

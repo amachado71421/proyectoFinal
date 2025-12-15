@@ -7,8 +7,7 @@
     background: #fff;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     font-family: "Poppins", sans-serif;
-    overflow-x: auto;
-    /* ✅ scroll horizontal */
+    overflow-x: auto; /* scroll horizontal en desktop si hay muchos */
 }
 
 .logros-card h2 {
@@ -20,26 +19,23 @@
 
 .logros-card ul {
     display: flex;
-    /* ✅ horizontal */
-    flex-direction: row;
+    flex-direction: row; /* horizontal en desktop */
     gap: 1rem;
     list-style: none;
     padding: 0;
     margin: 0;
-    min-width: max-content;
-    /* ✅ asegura scroll si no caben */
+    min-width: max-content; /* asegura scroll si no caben */
 }
 
 .logros-card li {
     flex: 0 0 auto;
-    /* ✅ no se encogen */
     background: #f8f9fa;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     min-width: 200px;
-    /* ✅ ancho fijo para scroll */
     transition: transform 0.2s ease;
+    text-align: center;
 }
 
 .logros-card li:hover {
@@ -53,10 +49,21 @@
     margin-top: 0.3rem;
 }
 
-/* Responsivo */
+/* 📱 RESPONSIVO */
 @media (max-width: 768px) {
+    .logros-card {
+        padding: 1rem;
+        overflow-x: hidden; /* ✅ en móvil evitamos scroll horizontal */
+    }
+
+    .logros-card ul {
+        flex-direction: column; /* ✅ se apilan en columna */
+        align-items: center;
+        min-width: 100%;
+    }
+
     .logros-card li {
-        min-width: 160px;
+        min-width: 90%; /* ✅ ocupa casi todo el ancho */
         padding: 0.8rem;
     }
 }
@@ -67,7 +74,7 @@
     }
 
     .logros-card li {
-        min-width: 140px;
+        min-width: 100%;
         font-size: 0.9rem;
     }
 }

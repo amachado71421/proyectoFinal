@@ -23,17 +23,16 @@ const AdministradorPalmares = () => {
             setCargando(true);
             setError(null);
 
-            // Cargar todos los usuarios
             const resUsuarios = await fetch('http://localhost:8000/api/perfiles/');
             if (!resUsuarios.ok) throw new Error('Error al cargar usuarios');
             const dataUsuarios = await resUsuarios.json();
             setUsuarios(dataUsuarios.results || dataUsuarios);
 
-            // Cargar palmares
             const resPalmares = await fetch('http://localhost:8000/api/palmares/');
             if (!resPalmares.ok) throw new Error('Error al cargar palmares');
             const dataPalmares = await resPalmares.json();
             procesarPalmares(dataPalmares.results || dataPalmares);
+
         } catch (err) {
             setError(err.message);
             console.error('Error:', err);
@@ -47,6 +46,7 @@ const AdministradorPalmares = () => {
 
         dataPalmares.forEach((palmar) => {
             const idPerfil = palmar.id_perfil;
+
             if (!palmaresObj[idPerfil]) {
                 palmaresObj[idPerfil] = {
                     victorias: 0,
@@ -67,16 +67,15 @@ const AdministradorPalmares = () => {
         setPalmares(palmaresObj);
     };
 
-    // Leer cookie CSRF
     const getCookie = (name) => {
-        const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'))
-        return match ? decodeURIComponent(match[2]) : null
-    }
+        const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'));
+        return match ? decodeURIComponent(match[2]) : null;
+    };
 
     const agregarResultado = async (idPerfil, tipoResultado) => {
         try {
             const idResultado = RESULTADOS[tipoResultado];
-            const csrf = getCookie('csrftoken')
+            const csrf = getCookie('csrftoken');
 
             const response = await fetch('http://localhost:8000/api/palmares/', {
                 method: 'POST',
@@ -92,39 +91,40 @@ const AdministradorPalmares = () => {
             });
 
             if (!response.ok) {
-                let errorBody = null
+                let errorBody = null;
                 try {
-                    errorBody = await response.json()
+                    errorBody = await response.json();
                 } catch {
-                    errorBody = await response.text()
+                    errorBody = await response.text();
                 }
-                console.error('Respuesta error /api/palmares/:', response.status, errorBody)
-                throw new Error(typeof errorBody === 'string' ? errorBody : JSON.stringify(errorBody))
+                console.error('Respuesta error /api/palmares/:', response.status, errorBody);
+                throw new Error(typeof errorBody === 'string' ? errorBody : JSON.stringify(errorBody));
             }
 
-            // Actualizar estado local con seguridad si no existe
             setPalmares((prev) => {
-                const prevStats = prev[idPerfil] || { victorias: 0, empates: 0, derrotas: 0 }
-                const key = tipoResultado.toLowerCase() + 's'
+                const prevStats = prev[idPerfil] || { victorias: 0, empates: 0, derrotas: 0 };
+                const key = tipoResultado.toLowerCase() + 's';
+
                 return {
                     ...prev,
                     [idPerfil]: {
                         ...prevStats,
                         [key]: (prevStats[key] || 0) + 1,
                     },
-                }
-            })
+                };
+            });
+
         } catch (err) {
-            setError(err.message)
-            console.error('Error al agregar resultado:', err)
+            setError(err.message);
+            console.error('Error al agregar resultado:', err);
         }
     };
 
     const eliminarResultado = async (idPerfil, tipoResultado) => {
         try {
-            // Obtener el palmares específico a eliminar
             const response = await fetch('http://localhost:8000/api/palmares/');
             const dataPalmares = await response.json();
+
             const palmarAEliminar = (dataPalmares.results || dataPalmares).find(
                 (p) =>
                     p.id_perfil === idPerfil &&
@@ -147,7 +147,6 @@ const AdministradorPalmares = () => {
                 throw new Error('Error al eliminar resultado');
             }
 
-            // Actualizar estado local
             setPalmares((prev) => ({
                 ...prev,
                 [idPerfil]: {
@@ -156,6 +155,7 @@ const AdministradorPalmares = () => {
                         Math.max(0, (prev[idPerfil][tipoResultado.toLowerCase() + 's'] || 1) - 1),
                 },
             }));
+
         } catch (err) {
             setError(err.message);
             console.error('Error al eliminar resultado:', err);
@@ -192,7 +192,7 @@ const AdministradorPalmares = () => {
                     className="filtro-input"
                 />
                 <button onClick={cargarDatos} className="btn-recargar">
-                    🔄 Recargar
+                    Recargar
                 </button>
             </div>
 
@@ -222,6 +222,7 @@ const AdministradorPalmares = () => {
                                 </div>
 
                                 <div className="resultados-contenedor">
+
                                     {/* Victorias */}
                                     <div className="resultado-grupo victoria">
                                         <div className="resultado-header">
@@ -232,17 +233,15 @@ const AdministradorPalmares = () => {
                                             <button
                                                 onClick={() => agregarResultado(usuario.id_perfil, 'VICTORIA')}
                                                 className="btn-agregar btn-victoria"
-                                                title="Agregar victoria"
                                             >
-                                                ➕
+                                                Agregar
                                             </button>
                                             <button
                                                 onClick={() => eliminarResultado(usuario.id_perfil, 'VICTORIA')}
                                                 className="btn-eliminar btn-victoria"
                                                 disabled={stats.victorias === 0}
-                                                title="Eliminar victoria"
                                             >
-                                                ➖
+                                                Quitar
                                             </button>
                                         </div>
                                     </div>
@@ -257,17 +256,15 @@ const AdministradorPalmares = () => {
                                             <button
                                                 onClick={() => agregarResultado(usuario.id_perfil, 'EMPATE')}
                                                 className="btn-agregar btn-empate"
-                                                title="Agregar empate"
                                             >
-                                                ➕
+                                                Agregar
                                             </button>
                                             <button
                                                 onClick={() => eliminarResultado(usuario.id_perfil, 'EMPATE')}
                                                 className="btn-eliminar btn-empate"
                                                 disabled={stats.empates === 0}
-                                                title="Eliminar empate"
                                             >
-                                                ➖
+                                                Quitar
                                             </button>
                                         </div>
                                     </div>
@@ -282,17 +279,15 @@ const AdministradorPalmares = () => {
                                             <button
                                                 onClick={() => agregarResultado(usuario.id_perfil, 'DERROTA')}
                                                 className="btn-agregar btn-derrota"
-                                                title="Agregar derrota"
                                             >
-                                                ➕
+                                                Agregar
                                             </button>
                                             <button
                                                 onClick={() => eliminarResultado(usuario.id_perfil, 'DERROTA')}
                                                 className="btn-eliminar btn-derrota"
                                                 disabled={stats.derrotas === 0}
-                                                title="Eliminar derrota"
                                             >
-                                                ➖
+                                                Quitar
                                             </button>
                                         </div>
                                     </div>
@@ -315,3 +310,4 @@ const AdministradorPalmares = () => {
 };
 
 export default AdministradorPalmares;
+    

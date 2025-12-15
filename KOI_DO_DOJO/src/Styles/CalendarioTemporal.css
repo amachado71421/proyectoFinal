@@ -8,9 +8,12 @@
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
     padding: 1rem;
     transition: transform 0.3s ease;
-    width: 100%;       /* ✅ menos ancho, no se desborda */
-    max-width: 100%;   /* ✅ límite */
-    margin: 0 auto;   /* ✅ centrado */
+    width: 90%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .fc:hover {
@@ -25,6 +28,9 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
 }
 
 .fc-toolbar-title {
@@ -33,25 +39,32 @@
     color: #d62828;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-align: center;
+    flex: 1 1 100%;
 }
 
-/* ============================= */
-/* 🌟 BOTONES DE FULLCALENDAR */
-/* ============================= */
-.fc-button {
+/* Botones principales FullCalendar */
+.fc-button,
+.fc-prev-button.fc-button.fc-button-primary,
+.fc-next-button.fc-button.fc-button-primary,
+.fc-today-button.fc-button.fc-button-primary {
     background: #673ab7;
     color: #fff;
     border: none;
     border-radius: 6px;
     padding: 1rem 2rem;
-    min-width: 216px; /* antes 180px → +20% ancho */
+    min-width: 216px;
     font-size: 1.05rem;
     font-weight: 600;
     transition: background 0.3s ease;
     text-align: center;
+    box-sizing: border-box;
 }
 
-.fc-button:hover {
+.fc-button:hover,
+.fc-prev-button.fc-button.fc-button-primary:hover,
+.fc-next-button.fc-button.fc-button-primary:hover,
+.fc-today-button.fc-button.fc-button-primary:hover {
     background: #5e35b1;
 }
 
@@ -99,6 +112,22 @@
     gap: 15px;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.calendar-toolbar-desktop {
+    display: flex;
+    gap: 15px;
+}
+
+.calendar-toolbar-mobile {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
 }
 
 /* Botones personalizados */
@@ -108,13 +137,14 @@
     border: none;
     border-radius: 6px;
     padding: 1rem 2rem;
-    min-width: 216px; /* antes 180px → +20% ancho */
+    min-width: 216px;
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     text-align: center;
+    box-sizing: border-box;
 }
 
 .calendar-btn:hover {
@@ -127,7 +157,6 @@
     transform: scale(0.95);
 }
 
-/* Botón activo en móvil */
 .calendar-btn-active-selected {
     width: 100%;
     font-size: 1.2rem;
@@ -140,58 +169,64 @@
 }
 
 /* ============================= */
+/* 🌟 SELECT RESPONSIVO PARA VISTAS */
+/* ============================= */
+.calendar-view-select {
+    display: none;
+    background: #d62828;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    min-width: 180px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 40px;
+    text-align: center;
+}
+
+.calendar-view-select:hover {
+    background: #ec1010;
+}
+
+.calendar-view-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(214, 40, 40, 0.3);
+}
+
+/* ============================= */
 /* 🌟 RESPONSIVE */
 /* ============================= */
+@media (max-width: 1024px), 
+       (max-width: 768px), 
+       (max-width: 480px) {
 
-/* Desktop: todos los botones visibles */
-.calendar-toolbar-desktop {
-    display: flex;
-    gap: 15px;
-}
-
-/* Mobile: solo botón actual */
-.calendar-toolbar-mobile {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-
-/* Menú desplegable en móvil */
-.calendar-menu {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-    animation: fadeInDown 0.3s ease;
-}
-
-/* Animación */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Breakpoint tablet/móvil */
-@media (max-width: 768px) {
+    /* FullCalendar responsive */
     .fc-toolbar-title {
-        font-size: 1.2rem;
+        font-size: clamp(0.9rem, 4vw, 1.5rem);
     }
 
-    .fc-button {
-        padding: 0.7rem 1.2rem;
-        min-width: 168px; /* antes 140px → +20% ancho */
-        font-size: 0.95rem;
+    .fc-button,
+    .fc-prev-button.fc-button.fc-button-primary,
+    .fc-next-button.fc-button.fc-button-primary,
+    .fc-today-button.fc-button.fc-button-primary {
+        width: auto;
+        max-width: 80px;
+        font-size: clamp(0.75rem, 3vw, 0.9rem);
+        padding: 0.4rem 0.6rem;
+        min-width: 60px;
     }
 
+    /* Toolbar móvil */
     .calendar-toolbar-desktop {
         display: none;
     }
@@ -200,24 +235,45 @@
         display: flex;
     }
 
+    /* Mostrar select siempre que haya toolbar móvil */
+    .calendar-view-select {
+        display: block;
+        width: 100%;
+        max-width: 220px;
+        margin: 0 auto;
+    }
+
+    /* Botones responsive */
     .calendar-btn {
         width: auto;
-        min-width: 180px; /* antes 150px → +20% ancho */
+        min-width: 180px;
         font-size: 1rem;
         padding: 0.9rem 1.4rem;
     }
-}
 
-/* Breakpoint móvil pequeño */
-@media (max-width: 480px) {
     .calendar-menu {
         flex-direction: column;
         align-items: center;
     }
+}
 
-    .calendar-btn {
-        width: 100%;
-        font-size: 1rem;
-        padding: 1rem;
-    }
+/* ============================= */
+/* 🌟 CONTENEDOR CALENDAR-MAIN */
+/* ============================= */
+.calendar-main {
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    min-height: 600px;
+    width: 90vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    overflow-x: hidden;
+    justify-items: center;
+    align-items: start;
 }

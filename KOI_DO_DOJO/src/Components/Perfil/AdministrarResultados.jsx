@@ -71,7 +71,7 @@ const AdministrarResultados = () => {
 
             setResultados([...resultados, responseData])
             setNuevoResultado('')
-            setExito('✓ Resultado creado correctamente')
+            setExito('Resultado creado correctamente')
             setTimeout(() => setExito(null), 2000)
         } catch (err) {
             setError(err.message)
@@ -120,7 +120,7 @@ const AdministrarResultados = () => {
 
             setEditandoId(null)
             setEditandoTexto('')
-            setExito('✓ Resultado actualizado correctamente')
+            setExito('Resultado actualizado correctamente')
             setTimeout(() => setExito(null), 2000)
         } catch (err) {
             setError(err.message)
@@ -150,7 +150,7 @@ const AdministrarResultados = () => {
             }
 
             setResultados(resultados.filter((r) => r.id_resultado !== id))
-            setExito('✓ Resultado eliminado correctamente')
+            setExito('Resultado eliminado correctamente')
             setTimeout(() => setExito(null), 2000)
         } catch (err) {
             setError(err.message)
@@ -180,16 +180,16 @@ const AdministrarResultados = () => {
     return (
         <div className="administrar-resultados">
             <div className="contenedor-principal">
-                <h1>⚔️ Administrador de Resultados</h1>
+                <h1>Administrador de Resultados</h1>
 
                 {error && (
                     <div className="alerta alerta-error">
-                        <strong>❌ Error:</strong> {error}
+                        <strong>Error:</strong> {error}
                         <button
                             className="btn-cerrar-alerta"
                             onClick={() => setError(null)}
                         >
-                            ✕
+                            Cerrar
                         </button>
                     </div>
                 )}
@@ -200,9 +200,9 @@ const AdministrarResultados = () => {
                     </div>
                 )}
 
-                {/* Formulario para crear resultado */}
+                {/* Crear Resultado */}
                 <div className="formulario-contenedor">
-                    <h2>➕ Crear Nuevo Resultado</h2>
+                    <h2>Crear Nuevo Resultado</h2>
                     <form onSubmit={crearResultado} className="formulario">
                         <div className="input-grupo">
                             <input
@@ -219,9 +219,9 @@ const AdministrarResultados = () => {
                     </form>
                 </div>
 
-                {/* Lista de resultados */}
+                {/* Lista */}
                 <div className="resultados-contenedor">
-                    <h2>📋 Resultados Existentes</h2>
+                    <h2>Resultados Existentes</h2>
 
                     {resultados.length > 0 ? (
                         <div className="resultados-grid">
@@ -247,13 +247,13 @@ const AdministrarResultados = () => {
                                                         }
                                                         className="btn-guardar"
                                                     >
-                                                        💾 Guardar
+                                                        Guardar
                                                     </button>
                                                     <button
                                                         onClick={cancelarEdicion}
                                                         className="btn-cancelar"
                                                     >
-                                                        ✕ Cancelar
+                                                        Cancelar
                                                     </button>
                                                 </div>
                                             </div>
@@ -273,7 +273,7 @@ const AdministrarResultados = () => {
                                                         className="btn-editar"
                                                         title="Editar"
                                                     >
-                                                        ✏️
+                                                        Editar
                                                     </button>
                                                     <button
                                                         onClick={() =>
@@ -282,7 +282,7 @@ const AdministrarResultados = () => {
                                                         className="btn-eliminar"
                                                         title="Eliminar"
                                                     >
-                                                        🗑️
+                                                        Eliminar
                                                     </button>
                                                 </div>
                                             </>

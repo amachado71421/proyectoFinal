@@ -16,13 +16,11 @@ export default function CrearLogros() {
     })
     const [submitting, setSubmitting] = useState(false)
 
-    // Leer cookie CSRF
     const getCookie = (name) => {
         const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'))
         return match ? decodeURIComponent(match[2]) : null
     }
 
-    // Headers con CSRF token
     const getAuthHeaders = (json = true) => {
         const headers = {}
         if (json) headers['Content-Type'] = 'application/json'
@@ -31,7 +29,6 @@ export default function CrearLogros() {
         return headers
     }
 
-    // Cargar logros al montar el componente
     useEffect(() => {
         const fetchLogros = async () => {
             setLoading(true)
@@ -104,7 +101,6 @@ export default function CrearLogros() {
                 return
             }
 
-            // Añadir nuevo logro a la lista
             setLogros(prev => [
                 ...prev,
                 {
@@ -115,7 +111,6 @@ export default function CrearLogros() {
                 }
             ])
 
-            // Limpiar formulario
             setFormData({
                 nombre_logro: '',
                 descripcion_logro: ''
@@ -160,13 +155,7 @@ export default function CrearLogros() {
             <h2>Gestionar Logros</h2>
 
             {error && (
-                <div style={{
-                    color: 'red',
-                    marginBottom: 12,
-                    padding: 8,
-                    backgroundColor: '#fee',
-                    borderRadius: 4
-                }}>
+                <div className="error-message">
                     {error}
                 </div>
             )}
@@ -214,9 +203,9 @@ export default function CrearLogros() {
                 <h3>Logros creados ({logros.length})</h3>
 
                 {loading ? (
-                    <div style={{ color: '#666' }}>Cargando logros...</div>
+                    <div className="loading-message">Cargando logros...</div>
                 ) : logros.length === 0 ? (
-                    <div style={{ color: '#666' }}>No hay logros creados aún.</div>
+                    <div className="empty-message">No hay logros creados aún.</div>
                 ) : (
                     <ul className="logros-ul">
                         {logros.map(logro => (
@@ -237,7 +226,7 @@ export default function CrearLogros() {
                                     className="delete-btn"
                                     title="Eliminar logro"
                                 >
-                                    {savingLogroId === logro.id ? '...' : '❌ Eliminar'}
+                                    {savingLogroId === logro.id ? '...' : 'Eliminar'}
                                 </button>
                             </li>
                         ))}

@@ -1,68 +1,121 @@
-/* ======================= */
-/* CONTENEDOR PRINCIPAL */
-/* ======================= */
+:root {
+  --font-size: clamp(12px, 1.8vw, 20px);     
+  --menu-font-size: clamp(12px, 1.5vw, 16px); 
+  --menu-hover-font-size: clamp(14px, 2vw, 20px); 
+  --icon-size: clamp(28px, 4vw, 45px);        
+  --logo-size: clamp(70px, 12vw, 130px);     
+  --icon-gap: 20px;             /* menos espacio entre íconos */
+  --line-width: clamp(2px, 0.5vw, 4px);      
+  --line-height: clamp(35px, 5vw, 50px);     
+  --hamburger-width: clamp(25px, 5vw, 35px);
+  --hamburger-height: clamp(20px, 4vw, 28px);
+  --hamburger-line: clamp(3px, 0.8vw, 5px);
+  --text-transition-speed: 0.4s; 
+}
+
+/* Body limpio */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Contenedor principal */
 .Menu {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  justify-content: space-between;
+  padding: 5px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100px;
   background: #ffffff;
   z-index: 1000;
   font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
 }
 
-/* LOGO */
+/* Logo */
 .Logo {
-  height: 110px;
+  height: var(--logo-size);
   flex-shrink: 0;
+  margin: 0;
+  padding: 0;
 }
 
-/* MENÚ EN DESKTOP */
+/* Bloque derecho */
 .Elementos {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 18px;
-  margin-left: 15px;
-}
-
-/* PARA ESCRITORIO → El menú SIEMPRE visible */
-.Inicio {
-  display: flex !important;
-  align-items: center;
-  gap: 18px;
-  list-style: none;
-  padding: 0;
-  margin-left: 50px;
+  gap: var(--icon-gap);
   flex-wrap: nowrap;
-  max-width: 70%;
 }
 
-/* ITEMS */
+/* Menú (desktop) */
+.Inicio {
+  display: flex;
+  align-items: center;
+  gap: var(--icon-gap);
+  padding-left: clamp(5px, 2vw, 15px);  
+  padding-right: clamp(15px, 4vw, 30px); 
+  margin-left: 0;
+  list-style-type: none;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Items del menú */
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;  /* más compacto */
   cursor: pointer;
   position: relative;
   transition: color 0.3s ease;
+  padding: 5px 5px;
+  font-size: var(--menu-font-size);
 }
 
 .menu-item:hover {
   color: #ec1010;
 }
 
+.menu-item .Titulo {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: max-width var(--text-transition-speed) ease, 
+              padding-left var(--text-transition-speed) ease, 
+              font-size var(--text-transition-speed) ease;
+  padding-left: 0;
+  font-size: var(--menu-font-size);
+}
+
+@media (min-width: 901px) {
+  .menu-item:hover .Titulo,
+  .menu-item:focus-within .Titulo,
+  .menu-item.active .Titulo {
+    max-width: 200px;
+    padding-left: 8px;  /* menos espacio */
+    font-size: var(--menu-hover-font-size);
+  }
+}
+
+/* Línea inferior del item */
 .menu-item::after {
   content: "";
   position: absolute;
-  width: 0%;
-  height: 2.5px;
   left: 0;
   bottom: -6px;
+  width: 0%;
+  height: 2px;
   background: #ec1010;
   transition: width 0.3s ease;
 }
@@ -71,111 +124,118 @@
   width: 100%;
 }
 
+/* Iconos */
 .Icono {
-  height: 40px;
+  height: var(--icon-size);
+  margin-left: 0;     
+  margin-right: 8px;  /* menos margen a la derecha */
 }
 
-/* Separadores */
+/* Separador vertical */
 .linea-vertical {
-  width: 3.5px;
-  min-width: 3.5px;
-  height: 45px;
+  width: var(--line-width);
+  height: var(--line-height);
   background: #000;
   flex-shrink: 0;
 }
 
-/* Texto */
-.Titulo {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-/* ======================= */
-/* HAMBURGUESA */
-/* ======================= */
+/* Hamburguesa */
 .hamburger {
-  display: none;
+  display: none; 
   flex-direction: column;
-  width: 35px;
-  height: 28px;
+  width: var(--hamburger-width);
+  height: var(--hamburger-height);
   justify-content: space-between;
-  margin-left: auto;
   cursor: pointer;
+  z-index: 1100; 
 }
 
 .hamburger span {
-  height: 5px;
+  height: var(--hamburger-line);
   width: 100%;
   background: #000;
   border-radius: 5px;
   transition: 0.3s;
 }
 
-/* Animación hamburguesa → X */
 .hamburger.open span:nth-child(1) {
-  transform: translateY(11px) rotate(45deg);
+  transform: translateY(calc(var(--hamburger-height)/2.5)) rotate(45deg);
 }
 .hamburger.open span:nth-child(2) {
   opacity: 0;
 }
 .hamburger.open span:nth-child(3) {
-  transform: translateY(-11px) rotate(-45deg);
+  transform: translateY(calc(-1*var(--hamburger-height)/2.5)) rotate(-45deg);
 }
 
-/* ======================= */
-/* RESPONSIVE */
-/* ======================= */
+/* Responsive */
 @media (max-width: 900px) {
-
-  /* Centrar hamburguesa */
-  .hamburger {
-    display: flex;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 35px;
+  .Logo {
+    height: var(--logo-size);
   }
 
-  /* MENÚ MOBILE OCULTO POR DEFECTO */
-  .Inicio {
-    flex-direction: column !important;
+  .hamburger {
+    display: flex !important; 
     position: absolute;
+    right: 16%;  
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .Inicio {
+    flex-direction: column;      
+    justify-content: space-between; 
+    align-items: stretch;        
+    position: fixed;          
     top: 120px;
     left: 0;
-    width: 100%;
-    max-height: calc(100vh - 120px); /* ← Scroll si la pantalla es corta */
-    overflow-y: auto;
+    width: 90%; 
+    height: calc(100vh - 120px); 
+    overflow-y: hidden; 
     background: white;
-    display: none !important;
-    padding: 15px 0;
+    padding: 0;
+    gap: 0;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    z-index: 999;
-    margin-left: 0; /* ← Full width mobile */
+    transition: all 0.5s ease;
+    z-index: 1050;
+    display: none;  
   }
 
-  /* Menú abierto */
   .Inicio.open {
-    display: flex !important;
+    display: flex;
+  }
+
+  .menu-item {
+    justify-content: flex-start;  
+    padding: 10px 15px; 
+    font-size: clamp(12px, 3vw, 16px);
+    width: 100%; 
+    flex: 1; 
+    display: flex;
+    align-items: center;
+    gap: 8px; /* icono más cerca del texto */
+  }
+
+  .menu-item .Titulo {
+    max-width: none; 
+    padding-left: 8px;
+    font-size: var(--menu-hover-font-size);
+    white-space: normal;
+  }
+
+  .Icono {
+    margin-left: 5px;   
+    margin-right: 10px;  
+    height: var(--icon-size);
   }
 
   .linea-vertical {
     display: none;
   }
-
-  .menu-item::after {
-    bottom: -3px;
-  }
-
-  .Logo {
-    height: 90px;
-  }
-
-  .Icono {
-    height: 35px;
-  }
-
-  .Titulo {
-    font-size: 18px;
-  }
 }
 
+@media (min-width: 901px) {
+  .hamburger {
+    display: none !important;
+  }
+}

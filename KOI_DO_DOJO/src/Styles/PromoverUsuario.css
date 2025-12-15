@@ -1,0 +1,163 @@
+/* ============================== */
+/* CONTENEDOR GENERAL             */
+/* ============================== */
+.promover-container {
+    padding: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.promover-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* ============================== */
+/* MENSAJES DE ESTADO             */
+/* ============================== */
+.promover-alert-error {
+    color: #b30000;
+    background-color: #ffe6e6;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    border: 1px solid #ffbcbc;
+}
+
+.promover-loading,
+.promover-no-users {
+    color: #666;
+    margin-top: 10px;
+}
+
+/* ============================== */
+/* TABLA                          */
+/* ============================== */
+.promover-table-wrapper {
+    overflow-x: auto;
+}
+
+.promover-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    min-width: 600px;
+    border-radius: 8px;
+}
+
+.promover-table thead {
+    background-color: #f2f2f2;
+}
+
+.promover-table th {
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+}
+
+.promover-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.center {
+    text-align: center;
+}
+
+.promover-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* ============================== */
+/* BOTONES                        */
+/* ============================== */
+.promover-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    margin-right: 6px;
+    pointer-events: auto;
+}
+
+.btn-green {
+    background-color: #28a745;
+}
+
+.btn-green:hover:not(.disabled) {
+    background-color: #218838;
+}
+
+.btn-red {
+    background-color: #dc3545;
+}
+
+.btn-red:hover:not(.disabled) {
+    background-color: #c82333;
+}
+
+.promover-btn.disabled {
+    background-color: #999;
+    cursor: not-allowed;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+/* ============================== */
+/* BLOQUE NO-AUTH                 */
+/* ============================== */
+.promover-no-auth {
+    padding: 1rem;
+    background-color: #ffe6e6;
+    border: 1px solid #ffbcbc;
+    color: #b30000;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.promover-no-auth button {
+    margin-top: 10px;
+    padding: 6px 14px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.promover-no-auth button:hover {
+    background-color: #0069d9;
+}
+
+/* ============================== */
+/* RESPONSIVE (MÓVILES)           */
+/* ============================== */
+@media (max-width: 768px) {
+    .promover-table-wrapper {
+        overflow-x: auto;
+    }
+
+    /* Reducimos ancho máximo de la tabla para que no ocupe todo el contenedor */
+    .promover-table {
+        min-width: 400px; /* menos ancho que el normal */
+    }
+
+    .promover-table th,
+    .promover-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .promover-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}

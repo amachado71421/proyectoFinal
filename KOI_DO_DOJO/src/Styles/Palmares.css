@@ -1,59 +1,93 @@
 /* ===== PALMARÉS ===== */
 .palmares-card {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    border-radius: 15px;
+    max-width: 600px; /* 🔽 contenedor más pequeño */
+    width: 100%;
+    margin: 1.5rem auto; /* 🔽 menos margen */
+    padding: 1rem;       /* 🔽 menos padding */
+    border-radius: 12px; /* 🔽 radios más compactos */
     background: #fff;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
     text-align: center;
     font-family: "Poppins", sans-serif;
 }
 
 .palmares-card h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem; /* 🔽 más pequeño */
     color: #d62828;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
+/* 📊 CONTENEDOR DE ESTADÍSTICAS */
 .stats {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1rem;
-    flex-wrap: wrap;
-    /* ✅ responsivo */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 🔽 más compacto */
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+    justify-items: center;
 }
 
 .stat-item {
-    flex: 1 1 120px;
-    margin: 0.5rem;
+    background: #f8f9fa;
+    padding: 0.6rem; /* 🔽 reducido */
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: 160px; /* 🔽 tarjetas más estrechas */
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
 }
 
 .stat-item .label {
     font-weight: 600;
     color: #444;
+    text-align: center;
+    font-size: 0.75rem; /* 🔽 más pequeño */
+    margin: 0;
 }
 
 .stat-item .value {
-    font-size: 1.4rem;
+    font-size: 1rem; /* 🔽 reducido */
     color: #d62828;
-    margin-top: 0.3rem;
+    margin-top: 0.2rem;
+    text-align: center;
 }
 
-/* Responsivo */
-@media (max-width: 480px) {
+/* 📱 RESPONSIVO */
+@media (max-width: 768px) {
     .palmares-card {
-        padding: 1rem;
+        max-width: 90%; /* 🔽 más compacto en tablet */
+        padding: 0.8rem;
     }
 
+    .stats {
+        grid-template-columns: 1fr; /* ✅ todos en columna */
+    }
+
+    .stat-item {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
     .palmares-card h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem; /* 🔽 más pequeño en móvil */
+    }
+
+    .stat-item {
+        padding: 0.5rem;
     }
 
     .stat-item .value {
-        font-size: 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .stat-item .label {
+        font-size: 0.7rem;
     }
 }

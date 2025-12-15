@@ -1,0 +1,166 @@
+/* ============================== */
+/* CONTENEDOR GENERAL */
+/* ============================== */
+.contact-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+/* Para pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+    .contact-container {
+        margin: 25px auto;
+        padding: 20px;
+        max-width: 100%;
+    }
+}
+
+/* Para pantallas medianas (tablets) */
+@media (max-width: 768px) {
+    .contact-container {
+        max-width: 500px;
+    }
+}
+
+/* ============================== */
+/* TÍTULO */
+/* ============================== */
+.contact-title {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    color: #d40000;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* Línea decorativa debajo del título */
+.contact-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #ec1010;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+@media (max-width: 480px) {
+    .contact-title {
+        font-size: 24px;
+    }
+}
+
+/* ============================== */
+/* FORMULARIO */
+/* ============================== */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================== */
+/* GRUPOS DE FORMULARIO */
+/* ============================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* ============================== */
+/* LABELS */
+/* ============================== */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #111;
+    font-size: 16px;
+}
+
+/* ============================== */
+/* INPUTS */
+/* ============================== */
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 2px solid #bfbfbf;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.form-input:focus {
+    border-color: #d40000;
+    background-color: #fff;
+}
+
+/* ============================== */
+/* TEXTAREA */
+/* ============================== */
+.form-textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 2px solid #bfbfbf;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-textarea:focus {
+    border-color: #d40000;
+    background-color: #fff;
+}
+
+/* Inputs más cómodos en pantallas muy pequeñas */
+@media (max-width: 480px) {
+
+    .form-input,
+    .form-textarea {
+        padding: 10px 13px;
+        font-size: 14px;
+    }
+}
+
+/* ============================== */
+/* BOTÓN ENVIAR */
+/* ============================== */
+.form-button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 2px solid #d40000;
+    background-color: #d40000;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.form-button:hover {
+    background-color: white;
+    color: #d40000;
+}
+
+@media (max-width: 480px) {
+    .form-button {
+        padding: 12px;
+        font-size: 15px;
+    }
+}

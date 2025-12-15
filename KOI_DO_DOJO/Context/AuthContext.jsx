@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react'
+
 export const AuthContext = createContext()
+
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -29,9 +31,11 @@ export const AuthProvider = ({ children }) => {
             setUserLoading(false)
         }
     }, [])
+
     useEffect(() => {
         checkAuth()
     }, [checkAuth])
+
     return (
         <AuthContext.Provider value={{ user, isAuthenticated, userLoading, checkAuth }}>
             {children}
