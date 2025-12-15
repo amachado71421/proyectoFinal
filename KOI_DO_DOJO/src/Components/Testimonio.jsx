@@ -1,30 +1,43 @@
 import React from 'react';
-import "../Styles/Testimonio.css";
+import '../Styles/Testimonio.css';
+import comillasImg from '../Images/comillas1.png';
 
 const Testimonio = ({ testimonio, imagen, nombre, puesto }) => {
-  return (
-    <>
+    return (
+        <div className="ContenedorTestimonio">
 
+            {/* ICONO COMILLAS */}
+            <img
+                className="comillas"
+                src={comillasImg}
+                alt="Comillas decorativas"
+            />
 
-      <div className="ContenedorTestimonio">
-        <img className='comillas' src="../src/Images/comillas1.png" alt="" />
+            {/* TEXTO DEL TESTIMONIO */}
+            <div className="ContenedorComentarios">
+                <p className="Comentario">
+                    {testimonio}
+                </p>
+            </div>
 
-        <div className="ContenedorComentarios">
-          <p className="Comentario">{testimonio}"El sensei Danilo Vega es una inspiración. Su dedicación y forma de enseñar me han ayudado a superar mis límites tanto dentro como fuera del dojo. ¡El KOI-DO DOJO es mi segundo hogar!"</p>
+            {/* AUTOR DEL TESTIMONIO */}
+            <div className="ContenedorSegmento2">
+                <div className="ContenedorImagen">
+
+                    <img
+                        className="TestimonioImg"
+                        src={imagen}
+                        alt={`Foto de ${nombre}`}
+                    />
+
+                    <h2 className="Nombre">{nombre}</h2>
+                    <h3 className="Puesto">{puesto}</h3>
+
+                </div>
+            </div>
+
         </div>
-
-        <div className='ContenedorSegmento2'>
-          <div className="ContenedorImagen">
-            <img className="TestimonioImg" src={imagen}  alt="Imagen Comentario"  src="../src/Images/Andrés Gómez.png"/>
-
-            <h2 className='Nombre'>{nombre}Andrés Gómez</h2>
-            <h3 className='Puesto'>{puesto} Cinturón Amarillo</h3>
-          </div>
-        </div>
-
-      </div>
-    </>
-  );
+    );
 };
 
 export default Testimonio;

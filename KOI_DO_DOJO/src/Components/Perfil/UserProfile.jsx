@@ -186,6 +186,7 @@ function UserProfile() {
                         <input type="text" name="first_name" value={userData.first_name ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} className="form-input" />
                         {savingField === 'first_name' && <small>Guardando...</small>}
                     </label>
+                    <br />
                     <label>
                         <strong>Apellido:</strong>
                         <input type="text" name="last_name" value={userData.last_name ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} className="form-input" />
