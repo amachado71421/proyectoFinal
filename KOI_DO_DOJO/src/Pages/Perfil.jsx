@@ -5,22 +5,34 @@ import '/src/Styles/Perfil.css';
 // Importamos el perfil del usuario
 import UserProfile from '../Components/Perfil/UserProfile';
 
-// Importamos las capas del perfil
-import Layer1 from '../Components/LayerProfile/Layer1';
-import Layer2 from '../Components/LayerProfile/Layer2';
-import Layer3 from '../Components/LayerProfile/Layer3';
-import Layer4 from '../Components/LayerProfile/Layer4';
-import Layer5 from '../Components/LayerProfile/Layer5';
+import Palmares from '../Components/Perfil/Palmares';
+import Logros from '../Components/Perfil/Logros';
+
 
 function Perfil() {
     return (
-        <div>
+        <div className="perfil-container">
             <BarraMenu />
-            <div className="divPerfil">
-                <UserProfile />
+
+            <div className="perfil-left">
+                <div className="perfil-user">
+                    <UserProfile />
+                </div>
             </div>
+
+            <div className="perfil-right">
+                <div className="user-palmares">
+                    <Palmares />
+                </div>
+
+                <div className="user-logros">
+                    <Logros />
+                </div>
+            </div>
+
         </div>
     );
 }
 
 export default Perfil;
+

@@ -169,121 +169,124 @@ function UserProfile() {
 
     const roleName = roleData?.nombre_rol || (userData.id_rol ? `Rol ID: ${userData.id_rol}` : 'Sin rol');
 
-    return (
-        <div className="user-card">
-            <div className="user-image">
-                <img
-                    src={
-                        userData.url_imagen ||
-                        '../../src/Images/Imagen_perfil_default.jpg'
-                    }
-                    alt="Foto de perfil"
-                    onClick={handleImageClick}
-                    style={{ cursor: 'pointer', maxWidth: 160, borderRadius: 8 }}
-                />
-                {imageEditing && (
-                    <div
-                        className="image-edit-popup"
-                        style={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: 8,
-                            background: '#fff',
-                            border: '1px solid #ddd',
-                            padding: 8,
-                            borderRadius: 6,
-                            width: 320,
-                        }}
-                    >
-                        <label style={{ fontSize: 12 }}>URL de la imagen:</label>
-                        <input
-                            type="text"
-                            value={newImageUrl}
-                            onChange={(e) => setNewImageUrl(e.target.value)}
-                            className="form-input"
-                            placeholder="https://..."
-                        />
-                        <div style={{ display: 'flex', gap: 8 }}>
-                            <button type="button" onClick={saveImage} className="submit-btn">
-                                Guardar
+return (
+    <div className="user-card">
+
+        {/* CONTENEDOR DE DOS COLUMNAS */}
+        <div className="user-columns">
+
+            {/* COLUMNA IZQUIERDA: PERFIL */}
+            <div className="user-left">
+
+                <div className="user-image">
+                    <img
+                        src={
+                            userData.url_imagen ||
+                            '../../src/Images/Imagen_perfil_default.jpg'
+                        }
+                        alt="Foto de perfil"
+                        onClick={handleImageClick}
+                        style={{ cursor: 'pointer', maxWidth: 160, borderRadius: 8 }}
+                    />
+                    {imageEditing && (
+                        <div
+                            className="image-edit-popup"
+                            style={{
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 8,
+                                background: '#fff',
+                                border: '1px solid #ddd',
+                                padding: 8,
+                                borderRadius: 6,
+                                width: 320,
+                            }}
+                        >
+                            <label style={{ fontSize: 12 }}>URL de la imagen:</label>
+                            <input
+                                type="text"
+                                value={newImageUrl}
+                                onChange={(e) => setNewImageUrl(e.target.value)}
+                                className="form-input"
+                                placeholder="https://..."
+                            />
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                <button type="button" onClick={saveImage} className="submit-btn">
+                                    Guardar
                                 </button>
-                            <button
-                                type="button"
-                                onClick={() => setImageEditing(false)}
-                                className="toggle-form-btn"
-                            >
-                                Cancelar
-                            </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setImageEditing(false)}
+                                    className="toggle-form-btn"
+                                >
+                                    Cancelar
+                                </button>
+                            </div>
+                            {savingField === 'url_imagen' && <small>Guardando...</small>}
                         </div>
-                        {savingField === 'url_imagen' && <small>Guardando...</small>}
-                    </div>
-                )}
-            </div>
-
-            <div className="user-info">
-                <h2>
-                    {userData.first_name} {userData.last_name}
-                </h2>
-                <p>
-                    <strong>Usuario:</strong> {userData.username}
-                </p>
-                <p>
-                    <strong>Correo:</strong> {userData.email}
-                </p>
-                <p>
-                    <strong>Rol:</strong> {roleName}
-                </p>
-
-                {userData.is_superuser ? (
-                    <p style={{ color: '#d9534f' }}>
-                        <strong>✓ Administrador</strong>
-                    </p>
-                ) : userData.is_staff ? (
-                    <p style={{ color: '#5cb85c' }}>
-                        <strong>✓ Usuario con privilegios</strong>
-                    </p>
-                ) : null}
-            </div>
-
-            <div className="user-extra">
-                <label>
-                    Peso (kg):
-                    <input
-                        type="number"
-                        name="peso_kg"
-                        value={userData.peso_kg ?? ''}
-                        onChange={handleFieldChange}
-                        onBlur={handleFieldBlur}
-                        className="form-input"
-                    />
-                    {savingField === 'peso_kg' && <small>Guardando...</small>}
-                </label>
-                <label>
-                    Altura (cm):
-                    <input
-                        type="number"
-                        name="altura"
-                        value={userData.altura ?? ''}
-                        onChange={handleFieldChange}
-                        onBlur={handleFieldBlur}
-                        className="form-input"
-                    />
-                    {savingField === 'altura' && <small>Guardando...</small>}
-                </label>
-            </div>
-
-            {/* Contenedor para logros y palmarés */}
-            <div className="user-stats">
-                <div className="user-logros">
-                    <Logros />
+                    )}
                 </div>
-                <div className="user-palmares">
-                    <Palmares />
+
+                <div className="user-info">
+                    <h2>
+                        {userData.first_name} {userData.last_name}
+                    </h2>
+                    <p>
+                        <strong>Usuario:</strong> {userData.username}
+                    </p>
+                    <p>
+                        <strong>Correo:</strong> {userData.email}
+                    </p>
+                    <p>
+                        <strong>Rol:</strong> {roleName}
+                    </p>
+
+                    {userData.is_superuser ? (
+                        <p style={{ color: '#d9534f' }}>
+                            <strong>✓ Administrador</strong>
+                        </p>
+                    ) : userData.is_staff ? (
+                        <p style={{ color: '#5cb85c' }}>
+                            <strong>✓ Usuario con privilegios</strong>
+                        </p>
+                    ) : null}
                 </div>
+
+                <div className="user-extra">
+                    <label>
+                        Peso (kg):
+                        <input
+                            type="number"
+                            name="peso_kg"
+                            value={userData.peso_kg ?? ''}
+                            onChange={handleFieldChange}
+                            onBlur={handleFieldBlur}
+                            className="form-input"
+                        />
+                        {savingField === 'peso_kg' && <small>Guardando...</small>}
+                    </label>
+                    <label>
+                        Altura (cm):
+                        <input
+                            type="number"
+                            name="altura"
+                            value={userData.altura ?? ''}
+                            onChange={handleFieldChange}
+                            onBlur={handleFieldBlur}
+                            className="form-input"
+                        />
+                        {savingField === 'altura' && <small>Guardando...</small>}
+                    </label>
+                </div>
+            </div>
+
+            
             </div>
         </div>
-    );
+
+);
+
 }
 
 export default UserProfile

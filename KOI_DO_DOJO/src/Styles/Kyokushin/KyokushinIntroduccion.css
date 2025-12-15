@@ -1,115 +1,137 @@
-/* SECCIÓN GENERAL */
+/* ============================== */
+/*      SECCIÓN PRINCIPAL         */
+/* ============================== */
 .intro-section {
     background: #0d0d0d;
-    padding: 60px 0;
     color: #fff;
+    padding: 70px 20px;
     font-family: "Poppins", sans-serif;
+
+    width: 100%;
+    overflow-x: hidden; /* evita cualquier desbordamiento */
+    box-sizing: border-box;
 }
 
-/* CONTENEDOR PRINCIPAL */
+/* CONTENEDOR CENTRAL */
 .intro-container {
-    max-width: 1300px;
+    max-width: 1300px;   /* tu ancho real */
+    width: 100%;
     margin: 0 auto;
+
     display: grid;
-    grid-template-columns: 55% 45%;
-    gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
     align-items: center;
+
+    box-sizing: border-box;
 }
 
-/* COLUMNA IZQUIERDA */
+
+/* ============================== */
+/*        COLUMNA IZQUIERDA       */
+/* ============================== */
 .intro-left {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
 }
 
 .intro-title {
-    font-size: 2.4rem;
+    font-size: 2.8rem;
     font-weight: 700;
+    line-height: 1.2;
 }
 
+
+/* DESCRIPCIÓN PRINCIPAL */
 .intro-description {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 20px;
-    border-radius: 8px;
-    line-height: 1.6;
-    border-left: 4px solid #b80000;
+    background: rgba(255, 255, 255, 0.07);
+    padding: 25px;
+    border-radius: 10px;
+    line-height: 1.7;
+    border-left: 5px solid #b80000;
+    box-sizing: border-box;
 }
 
 
-/* TARJETAS */
+/* ============================== */
+/*            TARJETAS            */
+/* ============================== */
 .intro-cards {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
 }
 
 .intro-card {
-    background: rgba(255, 255, 255, 0.06);
-    padding: 20px;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 22px 25px;
+    border-radius: 12px;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     transition: 0.3s ease;
+    box-sizing: border-box;
 }
 
 .intro-card:hover {
     transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.14);
 }
 
-/* NÚMERO CÍRCULO */
+/* NÚMERO */
 .circle {
     position: absolute;
-    top: -12px;
-    left: -12px;
-    width: 35px;
-    height: 35px;
-    background: #fff;
+    top: -15px;
+    left: -15px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+
+    background: #ffffff;
     color: #0d0d0d;
     font-weight: 700;
-    border-radius: 50%;
+    font-size: 1rem;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .intro-card h3 {
     margin-top: 10px;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }
 
 .intro-card p {
-    font-size: 0.95rem;
     margin-top: 6px;
     opacity: 0.9;
 }
 
-/* COLUMNA DERECHA */
+
+/* ============================== */
+/*        COLUMNA DERECHA         */
+/* ============================== */
 .intro-right {
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .intro-img {
-    width: 500px;
-    height:1000px;
+    width: 100%;
+    max-width: 450px;
+    height: auto;
     border-radius: 20px;
     object-fit: cover;
-    
 }
 
-/* RESPONSIVO */
+
+/* ============================== */
+/*       RESPONSIVE TABLET        */
+/* ============================== */
 @media (max-width: 992px) {
     .intro-container {
         grid-template-columns: 1fr;
         text-align: center;
-    }
-
-    .intro-description,
-    .intro-card {
-        text-align: left;
     }
 
     .intro-right {
@@ -117,18 +139,36 @@
     }
 
     .intro-title {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
+    }
+
+    .intro-description,
+    .intro-card {
+        text-align: left;
     }
 }
 
+
+/* ============================== */
+/*        RESPONSIVE MÓVIL        */
+/* ============================== */
 @media (max-width: 600px) {
     .intro-title {
-        font-size: 1.9rem;
+        font-size: 2rem;
     }
 
     .circle {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .intro-description,
+    .intro-card {
+        padding: 18px;
+    }
+
+    .intro-img {
+        max-width: 100%;
     }
 }

@@ -1,0 +1,75 @@
+/* SECCIÓN PRINCIPAL */
+.victoria-section {
+    background: #111;
+    padding: 70px 0;
+    color: #000000;
+    font-family: "Poppins", sans-serif;
+    background-image: url("/src/Images/KyokushinInicio/FondoConclusion.png"); /* opcional */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* CONTENEDOR */
+.victoria-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* TÍTULO */
+.victoria-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+    color: #f30303;
+}
+
+/* GRID DE TARJETAS */
+.victoria-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+/* TARJETAS */
+.victoria-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 25px;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+}
+
+.victoria-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.victoria-card p {
+    font-size: 1rem;
+    opacity: 0.9;
+    line-height: 1.7;
+}
+
+/* TEXTO FINAL */
+.victoria-final {
+    max-width: 900px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    opacity: 0.88;
+    color: #ffffff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .victoria-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .victoria-title {
+        font-size: 2.3rem;
+    }
+}

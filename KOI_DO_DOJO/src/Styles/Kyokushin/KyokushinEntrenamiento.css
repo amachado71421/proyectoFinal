@@ -4,8 +4,11 @@
 .entrenamiento-section {
     background: #0d0d0d;
     color: #fff;
-    padding: 60px 0;
+    padding: 60px 20px; /* <-- margen lateral para evitar desbordes */
     font-family: "Poppins", sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden; /* <-- elimina cualquier overflow lateral */
 }
 
 /* ============================
@@ -17,6 +20,8 @@
     text-align: left;
     max-width: 1300px;
     margin: 0 auto 40px auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* ============================
@@ -24,13 +29,17 @@
 ============================ */
 .entrenamiento-grid {
     max-width: 1300px;
+    width: 100%;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 55% 45%;
-    gap: 40px;
 
-    /* ✔ Alinea la imagen al nivel del texto */
+    display: grid;
+
+    /* 55% + 45% rompe el layout → se cambió a fr */
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
     align-items: center;
+    box-sizing: border-box;
 }
 
 /* ============================
@@ -43,6 +52,7 @@
     padding: 25px;
     border-left: 3px solid #fff;
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
 /* ============================
@@ -55,7 +65,7 @@
 }
 
 .entrenamiento-img {
-    width: 100%;       /* ✔ Se adapta al contenedor */
+    width: 100%;
     max-width: 500px;
     height: auto;
     border-radius: 6px;
@@ -98,4 +108,3 @@
         max-width: 320px;
     }
 }
-
