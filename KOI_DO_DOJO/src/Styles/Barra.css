@@ -4,16 +4,17 @@
   --menu-hover-font-size: clamp(14px, 2vw, 20px); 
   --icon-size: clamp(28px, 4vw, 45px);        
   --logo-size: clamp(70px, 12vw, 130px);     
-  --icon-gap: 20px;             /* menos espacio entre íconos */
+  --icon-gap: 20px;
   --line-width: clamp(2px, 0.5vw, 4px);      
   --line-height: clamp(35px, 5vw, 50px);     
   --hamburger-width: clamp(25px, 5vw, 35px);
   --hamburger-height: clamp(20px, 4vw, 28px);
   --hamburger-line: clamp(3px, 0.8vw, 5px);
-  --text-transition-speed: 0.4s; 
+  --text-transition-speed: 0.4s;
+  --accent-color: #ec1010;
 }
 
-/* Body limpio */
+/* ================= BODY ================= */
 body {
   margin: 0;
   padding: 0;
@@ -21,7 +22,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Contenedor principal */
+/* ================= CONTENEDOR PRINCIPAL ================= */
 .Menu {
   display: flex;
   align-items: center;
@@ -39,15 +40,15 @@ body {
   box-sizing: border-box;
 }
 
-/* Logo */
+/* ================= LOGO ================= */
 .Logo {
-  height: var(--logo-size);
+  height: 100px;
   flex-shrink: 0;
   margin: 0;
   padding: 0;
 }
 
-/* Bloque derecho */
+/* ================= BLOQUE DERECHO ================= */
 .Elementos {
   display: flex;
   align-items: center;
@@ -55,83 +56,95 @@ body {
   flex-wrap: nowrap;
 }
 
-/* Menú (desktop) */
+/* ================= MENÚ DESKTOP ================= */
 .Inicio {
   display: flex;
   align-items: center;
-  gap: var(--icon-gap);
+  justify-content: space-evenly; /* 🔥 distribuye todos los li */
   padding-left: clamp(5px, 2vw, 15px);  
   padding-right: clamp(15px, 4vw, 30px); 
   margin-left: 0;
   list-style-type: none;
   flex-wrap: nowrap;
-  overflow: hidden;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Items del menú */
+
+/* ================= ITEMS DEL MENÚ ================= */
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 6px;  /* más compacto */
+  gap: 6px;
   cursor: pointer;
   position: relative;
-  transition: color 0.3s ease;
-  padding: 5px 5px;
+  padding: 6px 5px;
   font-size: var(--menu-font-size);
+  color: #000;
+  outline: none;
 }
 
-.menu-item:hover {
-  color: #ec1010;
+/* TEXTO COLOR */
+.menu-item:hover,
+.menu-item:focus,
+.menu-item:focus-visible {
+  color: var(--accent-color);
 }
 
-.menu-item .Titulo {
-  max-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  transition: max-width var(--text-transition-speed) ease, 
-              padding-left var(--text-transition-speed) ease, 
-              font-size var(--text-transition-speed) ease;
-  padding-left: 0;
-  font-size: var(--menu-font-size);
-}
-
-@media (min-width: 901px) {
-  .menu-item:hover .Titulo,
-  .menu-item:focus-within .Titulo,
-  .menu-item.active .Titulo {
-    max-width: 200px;
-    padding-left: 8px;  /* menos espacio */
-    font-size: var(--menu-hover-font-size);
-  }
-}
-
-/* Línea inferior del item */
+/* ================= SUBRAYADO REAL (LI) ================= */
 .menu-item::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -6px;
-  width: 0%;
-  height: 2px;
-  background: #ec1010;
-  transition: width 0.3s ease;
-}
-
-.menu-item:hover::after {
   width: 100%;
+  height: 3px;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
 }
 
-/* Iconos */
+/* HOVER + FOCUS */
+.menu-item:hover::after,
+.menu-item:focus::after,
+.menu-item:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ================= TEXTO ================= */
+.menu-item .Titulo {
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 0;
+  font-size: var(--menu-font-size);
+  transition:
+    max-width var(--text-transition-speed) ease,
+    padding-left var(--text-transition-speed) ease,
+    font-size var(--text-transition-speed) ease;
+}
+
+/* EXPANSIÓN TEXTO DESKTOP */
+@media (min-width: 901px) {
+  .menu-item:hover .Titulo,
+  .menu-item:focus .Titulo,
+  .menu-item:focus-visible .Titulo {
+    max-width: 200px;
+    padding-left: 8px;
+    font-size: var(--menu-hover-font-size);
+  }
+}
+
+/* ================= ICONOS ================= */
 .Icono {
   height: var(--icon-size);
-  margin-left: 0;     
-  margin-right: 8px;  /* menos margen a la derecha */
+  margin-left: 0;
+  margin-right: 8px;
 }
 
-/* Separador vertical */
+/* ================= SEPARADOR VERTICAL ================= */
 .linea-vertical {
   width: var(--line-width);
   height: var(--line-height);
@@ -139,7 +152,7 @@ body {
   flex-shrink: 0;
 }
 
-/* Hamburguesa */
+/* ================= HAMBURGUESA ================= */
 .hamburger {
   display: none; 
   flex-direction: column;
@@ -147,7 +160,7 @@ body {
   height: var(--hamburger-height);
   justify-content: space-between;
   cursor: pointer;
-  z-index: 1100; 
+  z-index: 1100;
 }
 
 .hamburger span {
@@ -159,46 +172,45 @@ body {
 }
 
 .hamburger.open span:nth-child(1) {
-  transform: translateY(calc(var(--hamburger-height)/2.5)) rotate(45deg);
+  transform: translateY(calc(var(--hamburger-height) / 2.5)) rotate(45deg);
 }
 .hamburger.open span:nth-child(2) {
   opacity: 0;
 }
 .hamburger.open span:nth-child(3) {
-  transform: translateY(calc(-1*var(--hamburger-height)/2.5)) rotate(-45deg);
+  transform: translateY(calc(-1 * var(--hamburger-height) / 2.5)) rotate(-45deg);
 }
 
-/* Responsive */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 900px) {
   .Logo {
     height: var(--logo-size);
   }
 
   .hamburger {
-    display: flex !important; 
+    display: flex !important;
     position: absolute;
-    right: 16%;  
+    right: 16%;
     top: 50%;
     transform: translateY(-50%);
   }
 
   .Inicio {
-    flex-direction: column;      
-    justify-content: space-between; 
-    align-items: stretch;        
-    position: fixed;          
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    position: fixed;
     top: 120px;
     left: 0;
-    width: 90%; 
-    height: calc(100vh - 120px); 
-    overflow-y: hidden; 
+    width: 90%;
+    height: calc(100vh - 120px);
     background: white;
     padding: 0;
     gap: 0;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: all 0.5s ease;
     z-index: 1050;
-    display: none;  
+    display: none;
   }
 
   .Inicio.open {
@@ -206,27 +218,25 @@ body {
   }
 
   .menu-item {
-    justify-content: flex-start;  
-    padding: 10px 15px; 
-    font-size: clamp(12px, 3vw, 16px);
-    width: 100%; 
-    flex: 1; 
-    display: flex;
-    align-items: center;
-    gap: 8px; /* icono más cerca del texto */
+    width: 100%;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .menu-item::after {
+    bottom: 4px;
   }
 
   .menu-item .Titulo {
-    max-width: none; 
+    max-width: none;
     padding-left: 8px;
     font-size: var(--menu-hover-font-size);
     white-space: normal;
   }
 
   .Icono {
-    margin-left: 5px;   
-    margin-right: 10px;  
-    height: var(--icon-size);
+    margin-left: 5px;
+    margin-right: 10px;
   }
 
   .linea-vertical {
@@ -234,6 +244,7 @@ body {
   }
 }
 
+/* ================= OCULTAR HAMBURGER EN DESKTOP ================= */
 @media (min-width: 901px) {
   .hamburger {
     display: none !important;

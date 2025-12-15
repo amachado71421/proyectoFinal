@@ -1,4 +1,6 @@
 import BarraMenu from '../Components/BarraMenu';
+import Logros from '../Components/Perfil/Logros';
+import Palmares from '../Components/Perfil/Palmares';
 import UserProfile from '../Components/Perfil/UserProfile';
 import '/src/Styles/UserProfile.css';
 

@@ -7,6 +7,7 @@
     display: flex;
     align-items: center;
     font-family: 'Segoe UI', sans-serif;
+    margin-top: 100PX;
 }
 
 /* ===== IMAGEN DE FONDO ===== */
@@ -25,12 +26,17 @@
     z-index: 1;
 }
 
+.TituloLayer1{
+    color: white;
+    text-align: left;
+}
+
 /* ===== CONTENEDOR DEL TEXTO ===== */
 .TituloEncima {
     position: relative;
     z-index: 2; /* Encima de la imagen */
 
-    color: white;
+    color: rgb(255, 255, 255);
     width: 60%; /* Puedes modificarlo */
     padding-left: 60px; /* La SANGRÍA desde el borde izquierdo */
     text-align: left;
