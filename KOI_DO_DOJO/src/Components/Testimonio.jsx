@@ -9,7 +9,7 @@ const Testimonio = ({ testimonio, imagen, nombre, puesto }) => {
             {/* ICONO COMILLAS */}
             <img
                 className="comillas"
-                src={comillasImg}
+                src={comillasImg} 
                 alt="Comillas decorativas"
             />
 

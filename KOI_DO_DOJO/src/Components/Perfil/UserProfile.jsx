@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../Context/AuthContext'
 import '/src/Styles/UserProfile.css'
-import Palmares from './Palmares'
-import Logros from './Logros'
+
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const USERS_ENDPOINT = `${API_URL}/api/perfiles/`
@@ -250,12 +249,6 @@ function UserProfile() {
                         Altura (cm)
                         <input type="number" name="altura" value={userData.altura ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} />
                     </label>
-                </div>
-
-                {/* STATS */}
-                <div className="user-stats">
-                    <div className="user-logros"><Logros /></div>
-                    <div className="user-palmares"><Palmares /></div>
                 </div>
 
                 {(isSuperuser || isStaff) && (

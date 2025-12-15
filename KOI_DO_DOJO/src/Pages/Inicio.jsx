@@ -13,7 +13,7 @@ import KyokushinEntrenamiento from '../Components/LayerInicio/Kyokushin/Kyokushi
 import KyokushinInfluencia from '../Components/LayerInicio/Kyokushin/KyokushinInfluencia.jsx'
 import KyokushinConclusion from '../Components/LayerInicio/Kyokushin/KyokushinConclusion.jsx'
 
-import "../Styles/Inicio.css";
+import '/src/Styles/Inicio.css';
 
 function Home() {
   return (
