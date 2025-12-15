@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '/src/Styles/Barra.css';
 import TokenRefresher from '../Components/Perfil/TokenRefresher';
+import { AuthContext } from '../../Context/AuthContext';
 
 async function silentFetch(url, options) {
   try {
-    const res = await fetch(url, options);
-    return res;
+    return await fetch(url, options);
   } catch {
     return { ok: false, status: 0 };
   }
-}
-
-function hasAnyCookie() {
-  return Boolean(document.cookie && document.cookie.trim() !== '');
 }
 
 function getCookie(name) {
@@ -26,49 +22,61 @@ function getCookie(name) {
 function BarraMenu() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { checkAuth } = useContext(AuthContext);
+
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loggedOut, setLoggedOut] = useState(false);
 
+  // 🔹 Verificar autenticación al montar
   useEffect(() => {
     let mounted = true;
 
-    const checkAuth = async () => {
-      if (!hasAnyCookie()) {
+    const checkUser = async () => {
+      try {
+        const res = await silentFetch('http://localhost:8000/api/auth/me/', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (!mounted) return;
+        setIsAuthenticated(res.ok);
+      } catch {
         if (mounted) setIsAuthenticated(false);
-        return;
-      }
-
-      const res = await silentFetch('http://localhost:8000/api/auth/me/', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      if (!mounted) return;
-
-      if (res.ok) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
       }
     };
 
-    checkAuth();
+    checkUser();
     return () => { mounted = false; };
   }, []);
 
+  // 🔹 Manejar logout
   const handleLogout = async () => {
+    // Llamada logout al backend
     await silentFetch('http://localhost:8000/api/logout/', {
       method: 'POST',
       credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken') || '',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'X-CSRFToken': getCookie('csrftoken') || '' 
       },
     });
 
+    // Limpiar cookies de sesión y CSRF
+    document.cookie.split(';').forEach((c) => {
+      document.cookie = c
+        .replace(/^ +/, '')
+        .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+    });
+
+    // Limpiar sessionStorage para recarga de UserProfile
+    sessionStorage.removeItem('profileReloaded');
+
+    // Actualizar estados y AuthContext
     setIsAuthenticated(false);
     setLoggedOut(true);
+    checkAuth(); // fuerza refresco de AuthContext
+
+    // Redirigir al inicio
     navigate('/');
   };
 
@@ -122,10 +130,7 @@ function BarraMenu() {
       {isAuthenticated && !loggedOut && (
         <TokenRefresher
           onRefresh={() => setIsAuthenticated(true)}
-          onLogout={() => {
-            setIsAuthenticated(false);
-            setLoggedOut(true);
-          }}
+          onLogout={handleLogout}
           loggedOut={loggedOut}
         />
       )}

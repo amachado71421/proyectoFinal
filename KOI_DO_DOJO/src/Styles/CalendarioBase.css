@@ -1,42 +1,45 @@
 /* ============================= */
-/* 🌟 CONTENEDOR PRINCIPAL */
+/* CONTENEDOR PRINCIPAL          */
 /* ============================= */
 .calendar-container {
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-    width: 100%;
-    margin: 0 auto;
-    padding: 2rem clamp(1rem, 5vw, 2rem);
-    background: #fdfdfd;
+    width: 100%; /* ancho completo para centrar */
+    max-width: 1200px;
+    margin: 10vw auto 0 auto; /* margen superior reducido, centrado */
+    padding: 1rem;
+    background: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     text-align: center;
-
-    position: relative; /* ✅ mantiene compatibilidad */
+    position: relative;
 }
 
 /* ============================= */
-/* 🌟 TÍTULO */
+/* TÍTULO                        */
 /* ============================= */
 .calendar-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #444;
+    color: #222;
     margin-bottom: 0.5rem;
 }
 
 /* ============================= */
-/* 🌟 TOOLBAR */
+/* TOOLBAR                        */
 /* ============================= */
 .calendar-toolbar {
     display: flex;
-    justify-content: center; /* ✅ centrado */
+    justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 100%; /* ahora ajustable al contenedor */
+    max-width: 100%; /* nunca se sale de calendar-main */
+    gap: 0.5rem;
+    box-sizing: border-box;
 }
 
 .toggle-form-btn {
@@ -44,59 +47,81 @@
     color: #fff;
     border: none;
     border-radius: 6px;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.25s ease, transform 0.15s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-inline: auto; /* ✅ fuerza centrado */
+    margin-inline: auto;
 }
 
 .toggle-form-btn:hover {
     background: #5e35b1;
+    transform: translateY(-1px);
 }
 
 /* ============================= */
-/* 🌟 CALENDARIO PRINCIPAL */
+/* CALENDARIO PRINCIPAL           */
 /* ============================= */
 .calendar-main {
     box-sizing: border-box;
-    background: #fff;
+    background: #ffffff;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     min-height: 600px;
-    width: min(1000px, 100%);
+    width: 90vw; /* ancho adaptable */
+    max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-}
-
-/* ============================= */
-/* 🌟 FORMULARIO OVERLAY FIJO */
-/* ============================= */
-.add-event-overlay {
-    position: fixed; /* ✅ ocupa toda la pantalla */
-    inset: 0;
-    background: rgba(0,0,0,0.2);
-    z-index: 999;
 
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* ✅ aparece desde arriba */
+    align-items: center;
 
-    padding: 5vh 5%; /* ✅ espacio arriba y a los lados */
+    overflow-x: hidden;
+}
+
+/* ============================= */
+/* CONTENEDOR DE VISTAS DEL CALENDARIO */
+/* ============================= */
+.calendar-views-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ============================= */
+/* AJUSTE PARA FULL CALENDAR      */
+/* ============================= */
+.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+    width: 100%; /* ocupa todo el width de calendar-main */
+    max-width: 100%;
     box-sizing: border-box;
+}
 
-    overflow-y: auto; /* ✅ scroll interno */
-
+/* ============================= */
+/* FORMULARIO OVERLAY FIJO        */
+/* ============================= */
+.add-event-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5vh 5%;
+    box-sizing: border-box;
+    overflow-y: auto;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .add-event-overlay.visible {
@@ -105,13 +130,13 @@
 }
 
 .add-event-form {
-    border-radius: 20px;
+    border-radius: 16px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-    padding: 2rem;
-    max-width: 700px;
+    padding: 1.5rem;
+    max-width: 90%;
     width: 100%;
     text-align: center;
-
+    background: #fff;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -123,55 +148,134 @@
 }
 
 /* ============================= */
-/* 🌟 RESPONSIVE */
+/* BOTONES INTERIORES FORM        */
+/* ============================= */
+.add-event-form .submit-btn.add-event-btn {
+    background-color: #673ab7;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    min-width: 150px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    margin-top: 0.75rem;
+}
+
+.add-event-form .submit-btn.add-event-btn:hover {
+    background-color: #5e35b1;
+    transform: translateY(-1px);
+}
+
+.add-event-form .submit-btn:not(.add-event-btn) {
+    background-color: #e0e0e0;
+    color: #222;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.add-event-form .submit-btn:not(.add-event-btn):hover {
+    background-color: #d6d6d6;
+    transform: translateY(-1px);
+}
+
+/* ============================= */
+/* RESPONSIVE CALENDARIO         */
 /* ============================= */
 @media (max-width: 1080px) {
-    .calendar-toolbar {
-        justify-content: center;
-    }
-    .toggle-form-btn {
-        margin-inline: auto;
-        display: block;
-    }
-    .add-event-overlay {
-        padding: 8vh 8%; /* ✅ más espacio para salir */
-    }
-    .add-event-form {
-        width: 90%;
-    }
-}
-
-@media (max-width: 992px) {
-    .calendar-main {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 720px) {
-    .calendar-toolbar {
-        justify-content: center;
-    }
-    .toggle-form-btn {
-        margin-inline: auto;
-        display: block;
-    }
-    .add-event-overlay {
-        padding: 12vh 10%; /* ✅ espacio extra para cerrar */
-    }
-    .add-event-form {
+    .calendar-container {
         width: 95%;
-        border-radius: 12px;
-        padding: 1.5rem;
+        margin: 15vw auto 0 auto;
+        padding: 0.75rem;
+    }
+    .calendar-main {
+        width: 100%;
+        padding: 0.75rem;
+    }
+    .calendar-toolbar {
+        width: 100%;
+    }
+    .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+        width: 100%;
+    }
+    .toggle-form-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    .add-event-form {
+        max-width: 95%;
+        padding: 1.25rem;
     }
 }
 
 @media (max-width: 768px) {
+    .calendar-container {
+        width: 98%;
+        margin: 15vw auto 0 auto;
+        padding: 0.5rem;
+    }
     .calendar-main {
-        grid-template-columns: 1fr;
+        width: 100%;
+        padding: 0.5rem;
+        min-height: 500px;
+    }
+    .calendar-toolbar {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+    .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+        width: 100%;
     }
     .add-event-form {
-        border-radius: 12px;
-        padding: 1.5rem;
+        max-width: 95%;
+        padding: 1rem;
+    }
+    .toggle-form-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-container {
+        width: 100%;
+        margin: 25vw auto 0 auto;
+        padding: 0.25rem;
+        border-radius: 8px;
+    }
+    .calendar-main {
+        width: 100%;
+        padding: 0.25rem;
+        min-height: 400px;
+    }
+    .calendar-toolbar {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+        width: 100%;
+    }
+    .add-event-overlay {
+        padding: 10vh 5%;
+    }
+    .add-event-form {
         width: 95%;
+        border-radius: 12px;
+        padding: 0.75rem;
+    }
+    .toggle-form-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        width: 100%;
+        max-width: 200px;
     }
 }

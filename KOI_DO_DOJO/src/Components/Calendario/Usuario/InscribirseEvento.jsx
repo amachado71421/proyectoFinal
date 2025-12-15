@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdministrarEstados from '../AdministrarEstados.jsx';
+import { AuthContext } from '../../../../Context/AuthContext';
 import '/src/Styles/GestionEventos.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -10,6 +12,9 @@ const ME_ENDPOINT = `${API_URL}/api/auth/me/`;
 const ESTADO_ENDPOINT = `${API_URL}/api/estados/`;
 
 export default function InscribirseEvento() {
+    const navigate = useNavigate();
+    const { user: contextUser, userLoading } = useContext(AuthContext);
+
     const [user, setUser] = useState(null);
     const [eventos, setEventos] = useState([]);
     const [inscripciones, setInscripciones] = useState([]);
@@ -36,35 +41,50 @@ export default function InscribirseEvento() {
             setLoading(true);
             setError('');
             try {
-                // Obtener usuario
-                const meRes = await fetch(ME_ENDPOINT, { credentials: 'include', headers: getAuthHeaders(false) });
-                if (!meRes.ok) throw new Error('No autenticado');
-                const meData = await meRes.json();
+                // Usa AuthContext si ya tiene el usuario
+                const meData = contextUser || await fetch(ME_ENDPOINT, {
+                    credentials: 'include',
+                    headers: getAuthHeaders(false)
+                }).then(res => {
+                    if (!res.ok) throw new Error('No autenticado');
+                    return res.json();
+                });
+
                 if (!mounted) return;
                 setUser(meData);
 
-                // Obtener eventos
-                const evRes = await fetch(EVENTOS_ENDPOINT, { credentials: 'include', headers: getAuthHeaders(false) });
-                if (!evRes.ok) throw new Error('No se pudieron cargar eventos');
-                const evData = await evRes.json();
+                const evData = await fetch(EVENTOS_ENDPOINT, {
+                    credentials: 'include',
+                    headers: getAuthHeaders(false)
+                }).then(res => {
+                    if (!res.ok) throw new Error('No se pudieron cargar eventos');
+                    return res.json();
+                });
+
                 const evList = Array.isArray(evData) ? evData : evData.results || [];
                 if (!mounted) return;
                 setEventos(evList);
 
-                // Obtener inscripciones
-                const peRes = await fetch(PERFIL_EVENTO_ENDPOINT, { credentials: 'include', headers: getAuthHeaders(false) });
-                if (!peRes.ok) throw new Error('No se pudieron cargar inscripciones');
-                const peData = await peRes.json();
-                const peList = Array.isArray(peData) ? peData : peData.results || [];
+                const peData = await fetch(PERFIL_EVENTO_ENDPOINT, {
+                    credentials: 'include',
+                    headers: getAuthHeaders(false)
+                }).then(res => {
+                    if (!res.ok) throw new Error('No se pudieron cargar inscripciones');
+                    return res.json();
+                });
 
+                const peList = Array.isArray(peData) ? peData : peData.results || [];
                 const uid = meData.id_perfil ?? meData.id;
                 if (!mounted) return;
                 setInscripciones(peList.filter(i => i.id_perfil === uid));
 
             } catch (err) {
                 console.error(err);
-                if (err.message === 'No autenticado') setError('Debes iniciar sesión para inscribirte.');
-                else setError('Error cargando datos.');
+                setError(
+                    err.message === 'No autenticado'
+                        ? 'Debes iniciar sesión para inscribirte.'
+                        : 'Error cargando datos.'
+                );
             } finally {
                 if (mounted) setLoading(false);
             }
@@ -72,7 +92,7 @@ export default function InscribirseEvento() {
 
         init();
         return () => { mounted = false; };
-    }, []);
+    }, [contextUser]);
 
     const isInscrito = (evento) => {
         const eid = evento.id_evento ?? evento.id;
@@ -85,19 +105,17 @@ export default function InscribirseEvento() {
         setError('');
 
         try {
-            // Obtener estado "Inscrito"
             let estadoId = null;
-            try {
-                const esRes = await fetch(ESTADO_ENDPOINT, { credentials: 'include', headers: getAuthHeaders(false) });
-                if (esRes.ok) {
-                    const esData = await esRes.json();
-                    const list = Array.isArray(esData) ? esData : esData.results || [];
-                    const found = list.find(e => ['inscrito'].includes(e.nombre_estado.toLowerCase()));
-                    estadoId = found?.id_estado ?? found?.id ?? null;
-                }
-            } catch (e) { console.warn(e); }
+            const esData = await fetch(ESTADO_ENDPOINT, {
+                credentials: 'include',
+                headers: getAuthHeaders(false)
+            }).then(res => res.json());
 
-            if (!estadoId) throw new Error('No se pudo determinar el estado de inscripción');
+            const list = Array.isArray(esData) ? esData : esData.results || [];
+            const found = list.find(e => e.nombre_estado.toLowerCase() === 'inscrito');
+            estadoId = found?.id_estado ?? found?.id ?? null;
+
+            if (!estadoId) throw new Error('Estado no encontrado');
 
             const payload = {
                 id_perfil: user.id_perfil ?? user.id,
@@ -110,74 +128,67 @@ export default function InscribirseEvento() {
             const csrftoken = getCookie('csrftoken');
             if (csrftoken) headers['X-CSRFToken'] = csrftoken;
 
-            const res = await fetch(PERFIL_EVENTO_ENDPOINT, {
+            const created = await fetch(PERFIL_EVENTO_ENDPOINT, {
                 method: 'POST',
                 credentials: 'include',
                 headers,
                 body: JSON.stringify(payload)
+            }).then(res => {
+                if (!res.ok) throw new Error();
+                return res.json();
             });
 
-            if (!res.ok) {
-                const text = await res.text().catch(() => '');
-                throw new Error(text || `HTTP ${res.status}`);
-            }
+            setInscripciones(prev => [...prev, created]);
 
-            const created = await res.json();
-
-            setInscripciones(prev => [
-                ...prev,
-                {
-                    id_perfil: created.id_perfil,
-                    id_evento: created.id_evento,
-                    id_estado: created.id_estado,
-                    id_rol: created.id_rol ?? null
-                }
-            ]);
-
-        } catch (err) {
-            console.error(err);
-            setError('No se pudo inscribir al evento. Revisa los datos.');
+        } catch {
+            setError('No se pudo inscribir al evento.');
         } finally {
             setLoading(false);
         }
     };
 
     const handleCancelarInscripcion = async (evento) => {
-        if (!user) { setError('Debes iniciar sesión'); return; }
+        if (!user) return;
         setLoading(true);
-        setError('');
 
         try {
             const uid = user.id_perfil ?? user.id;
             const eid = evento.id_evento ?? evento.id;
 
-            const delRes = await fetch(`${PERFIL_EVENTO_CANCELAR}?id_perfil=${uid}&id_evento=${eid}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            });
+            const res = await fetch(
+                `${PERFIL_EVENTO_CANCELAR}?id_perfil=${uid}&id_evento=${eid}`,
+                { method: 'DELETE', credentials: 'include' }
+            );
 
-            if (!delRes.ok) {
-                const text = await delRes.text().catch(() => '');
-                throw new Error(text || `HTTP ${delRes.status}`);
-            }
-
+            if (!res.ok) throw new Error();
             setInscripciones(prev => prev.filter(i => i.id_evento !== eid));
 
-        } catch (err) {
-            console.error(err);
+        } catch {
             setError('No se pudo cancelar la inscripción.');
         } finally {
             setLoading(false);
         }
     };
 
+    if (userLoading || loading) return <div>Cargando...</div>;
+
+    const isAdmin = user?.is_superuser; // solo admins
+
     return (
         <div className="gestion-eventos-container">
+
+            {/* BOTÓN VOLVER */}
+            <button
+                className="btn-back"
+                onClick={() => navigate(-1)}
+                style={{ marginBottom: '20px' }}
+            >
+                Volver
+            </button>
+
             <h1 className="gestion-title">Inscribirse a Eventos</h1>
 
             {error && <div className="error-banner">{error}</div>}
-            {loading && <p className="loading-text">Cargando...</p>}
-            {!loading && eventos.length === 0 && <p className="no-events-text">No hay eventos disponibles.</p>}
 
             <div className="eventos-grid">
                 {eventos.map(ev => (
@@ -186,41 +197,21 @@ export default function InscribirseEvento() {
                             <h3 className="evento-title">{ev.nombre_evento ?? ev.title}</h3>
                             <div className="evento-actions">
                                 {isInscrito(ev)
-                                    ? <button className="btn-delete" onClick={() => handleCancelarInscripcion(ev)}>Cancelar</button>
+                                    ? <button className="btn-red" onClick={() => handleCancelarInscripcion(ev)}>Cancelar</button>
                                     : <button className="btn-submit" onClick={() => handleInscribirse(ev)}>Inscribirse</button>
                                 }
                             </div>
-                        </div>
-
-                        {ev.descripcion_evento && <p className="evento-description">{ev.descripcion_evento}</p>}
-
-                        <div className="evento-details">
-                            {ev.fecha_inicio && (
-                                <div className="detail-row">
-                                    <span className="detail-label">Inicio:</span>
-                                    <span className="detail-value">{ev.fecha_inicio}{ev.hora_inicio ? ` ${ev.hora_inicio}` : ''}</span>
-                                </div>
-                            )}
-                            {ev.fecha_final && (
-                                <div className="detail-row">
-                                    <span className="detail-label">Fin:</span>
-                                    <span className="detail-value">{ev.fecha_final}{ev.hora_final ? ` ${ev.hora_final}` : ''}</span>
-                                </div>
-                            )}
-                            {ev.lugar && (
-                                <div className="detail-row">
-                                    <span className="detail-label">Lugar:</span>
-                                    <span className="detail-value">{ev.lugar}</span>
-                                </div>
-                            )}
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div style={{ marginTop: '50px' }}>
-                <AdministrarEstados />
-            </div>
+            {/* SOLO ADMIN PUEDE VER AdministrarEstados */}
+            {isAdmin && (
+                <div style={{ marginTop: '50px' }}>
+                    <AdministrarEstados />
+                </div>
+            )}
         </div>
     );
 }

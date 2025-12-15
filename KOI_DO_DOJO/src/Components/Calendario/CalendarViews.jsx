@@ -28,7 +28,7 @@ const CalendarViews = ({ events }) => {
     }
 
     return (
-        <div>
+        <div className="calendar-views-container">
             {/* Barra de botones personalizada */}
             <div className="calendar-toolbar">
                 {/* Desktop: todos los botones visibles */}
@@ -44,28 +44,19 @@ const CalendarViews = ({ events }) => {
                     ))}
                 </div>
 
-                {/* Mobile: solo botón actual + menú desplegable */}
+                {/* Mobile: select dropdown */}
                 <div className="calendar-toolbar-mobile">
-                    <button
-                        className="calendar-btn calendar-btn-active-selected"
-                        onClick={() => setMenuOpen(!menuOpen)}
+                    <select
+                        className="calendar-view-select"
+                        value={currentView}
+                        onChange={(e) => changeView(e.target.value)}
                     >
-                        {viewLabels[currentView]}
-                    </button>
-
-                    {menuOpen && (
-                        <div className="calendar-menu">
-                            {Object.entries(viewLabels).map(([view, label]) => (
-                                <button
-                                    key={view}
-                                    className="calendar-btn"
-                                    onClick={() => changeView(view)}
-                                >
-                                    {label}
-                                </button>
-                            ))}
-                        </div>
-                    )}
+                        {Object.entries(viewLabels).map(([view, label]) => (
+                            <option key={view} value={view}>
+                                {label}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
 

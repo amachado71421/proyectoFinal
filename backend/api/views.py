@@ -32,6 +32,15 @@ class PerfilViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.PerfilSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if request.user != instance:
+            return Response(
+                {"detail": "No tienes permiso para actualizar este perfil."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        return super().update(request, *args, **kwargs)
+
 
 # ----------------------------------------------------
 # PALMARES

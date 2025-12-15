@@ -26,7 +26,6 @@ export default function VerInscripciones({ refreshTrigger }) {
         return headers
     }
 
-    // Cargar datos cuando cambia refreshTrigger
     useEffect(() => {
         loadData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +35,7 @@ export default function VerInscripciones({ refreshTrigger }) {
         setLoading(true)
         setError('')
         try {
-            // 1) Cargar eventos
+            // Cargar eventos
             const evRes = await fetch(EVENTOS_ENDPOINT, {
                 method: 'GET',
                 credentials: 'include',
@@ -47,7 +46,7 @@ export default function VerInscripciones({ refreshTrigger }) {
             const evList = Array.isArray(evData) ? evData : evData.results || []
             setEventos(evList)
 
-            // 2) Cargar inscripciones
+            // Cargar inscripciones
             const insRes = await fetch(PERFIL_EVENTO_ENDPOINT, {
                 method: 'GET',
                 credentials: 'include',
@@ -58,7 +57,7 @@ export default function VerInscripciones({ refreshTrigger }) {
             const insList = Array.isArray(insData) ? insData : insData.results || []
             setInscripciones(insList)
 
-            // 3) Cargar perfiles para mostrar nombres
+            // Cargar perfiles
             const pRes = await fetch(PERFILES_ENDPOINT, {
                 method: 'GET',
                 credentials: 'include',
@@ -104,7 +103,7 @@ export default function VerInscripciones({ refreshTrigger }) {
             })
 
             if (!res.ok) {
-                // Si el ID directo no funciona, intentar filtrar y eliminar
+                // Intento alternativo
                 const uid = inscripciones.find(i => i.id_perfil?.id_perfil ?? i.id_perfil)?.id_perfil
                 if (uid) {
                     const qRes = await fetch(`${PERFIL_EVENTO_ENDPOINT}?id_perfil=${uid}&id_evento=${eventoId}`, {
@@ -150,7 +149,7 @@ export default function VerInscripciones({ refreshTrigger }) {
     }
 
     return (
-        <div style={{ marginTop: 30 }}>
+        <div className="ver-inscripciones-container">
             <h2 className="section-title">Inscripciones por Evento</h2>
 
             {error && <div className="error-banner">{error}</div>}
@@ -160,51 +159,34 @@ export default function VerInscripciones({ refreshTrigger }) {
             {!loading && eventos.length === 0 && <p className="no-events-text">No hay eventos.</p>}
 
             {!loading && eventos.length > 0 && (
-                <div style={{ display: 'grid', gap: '20px' }}>
+                <div className="eventos-grid-inscripciones">
                     {eventos.map(ev => {
                         const participantes = getEventoInscripciones(ev.id_evento ?? ev.id)
                         return (
-                            <div key={ev.id_evento ?? ev.id} style={{
-                                border: '1px solid #ddd',
-                                borderRadius: '8px',
-                                padding: '15px',
-                                backgroundColor: '#f9f9f9'
-                            }}>
-                                <h3 style={{ marginTop: 0, color: '#333' }}>
-                                    {ev.nombre_evento}
-                                </h3>
-                                <p style={{ fontSize: '0.9rem', color: '#666', margin: '5px 0' }}>
+                            <div key={ev.id_evento ?? ev.id} className="evento-card-inscripcion">
+                                <div className="evento-header-inscripcion">
+                                    <h3 className="evento-title-inscripcion">{ev.nombre_evento}</h3>
+                                </div>
+
+                                <p>
                                     {participantes.length} participante{participantes.length !== 1 ? 's' : ''} inscrito{participantes.length !== 1 ? 's' : ''}
                                 </p>
 
                                 {participantes.length === 0 ? (
-                                    <p style={{ color: '#999', fontStyle: 'italic' }}>
-                                        Sin participantes
-                                    </p>
+                                    <p className="sin-participantes">Sin participantes</p>
                                 ) : (
-                                    <ul style={{
-                                        listStyle: 'none',
-                                        padding: 0,
-                                        margin: '10px 0 0 0'
-                                    }}>
+                                    <ul className="participantes-list">
                                         {participantes.map((ins, idx) => {
                                             const uid = ins.id_perfil?.id_perfil ?? ins.id_perfil
                                             return (
-                                                <li key={idx} style={{
-                                                    display: 'flex',
-                                                    justifyContent: 'space-between',
-                                                    alignItems: 'center',
-                                                    padding: '10px',
-                                                    borderBottom: idx < participantes.length - 1 ? '1px solid #eee' : 'none',
-                                                    backgroundColor: '#fff'
-                                                }}>
+                                                <li key={idx} className="participante-item">
                                                     <span>{getNombreParticipante(uid)}</span>
                                                     <button
                                                         className="btn-delete"
                                                         onClick={() => handleEliminarParticipante(ins.id || idx, ev.id_evento ?? ev.id)}
-                                                        style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }}
+                                                        title="Eliminar participante"
                                                     >
-                                                        🗑️
+                                                        Eliminar
                                                     </button>
                                                 </li>
                                             )

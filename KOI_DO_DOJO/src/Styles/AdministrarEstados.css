@@ -1,105 +1,196 @@
+/* ============================= */
+/* CONTENEDOR PRINCIPAL          */
+/* ============================= */
 .administrar-estados-container {
     width: 100%;
     max-width: 900px;
     margin: 4rem auto;
-    padding: 20px;
+    padding: 25px 30px;
+    background: linear-gradient(145deg, #f9f9f9, #ffffff);
+    border-radius: 20px;
     font-family: "Segoe UI", sans-serif;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    transition: all 0.3s ease-in-out;
 }
 
+/* ============================= */
+/* TITULO PRINCIPAL              */
+/* ============================= */
 h1 {
     text-align: center;
     color: #d40000;
+    font-size: 2rem;
+    font-weight: 700;
     margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
+/* ============================= */
+/* ERRORES Y ESTADOS DE CARGA    */
+/* ============================= */
 .error-banner {
     background-color: #f8d7da;
     color: #721c24;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #f5c6cb;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid #d40000;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .loading-text {
     color: #666;
-    margin-bottom: 15px;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+/* ============================= */
+/* CREAR ESTADO                  */
+/* ============================= */
 .crear-estado {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
 .crear-estado input {
     flex: 1;
-    padding: 8px;
-    border-radius: 6px;
+    padding: 10px 12px;
+    border-radius: 10px;
     border: 1px solid #ccc;
     font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
+.crear-estado input:focus {
+    outline: none;
+    border-color: #0b7dda;
+    box-shadow: 0 0 8px rgba(11,125,218,0.3);
+}
+
+/* ============================= */
+/* LISTA DE ESTADOS              */
+/* ============================= */
 .estados-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .estado-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 12px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 12px 15px;
+    background: linear-gradient(145deg, #ffffff, #f7f7f7);
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+.estado-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 }
 
 .estado-card input {
     flex: 1;
-    padding: 6px;
+    padding: 8px 10px;
     font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: all 0.2s ease;
+}
+
+.estado-card input:focus {
+    outline: none;
+    border-color: #0b7dda;
+    box-shadow: 0 0 8px rgba(11,125,218,0.3);
+}
+
+/* ============================= */
+/* ACCIONES / BOTONES            */
+/* ============================= */
+.estado-actions {
+    display: flex;
+    gap: 10px;
 }
 
 .estado-actions button {
-    margin-left: 8px;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
 }
 
-.btn-green {
-    background-color: #28a745;
+/* Botón verde: agregar / guardar */
+.btn-green,
+.btn-submit {
+    background: linear-gradient(145deg, #28a745, #218838);
+    border-color: transparent;
+    font-family: "Segoe UI", sans-serif;
+    font-size: large;
+    border-radius: 5px;
     color: #fff;
+    box-shadow: 0 5px 15px rgba(40,167,69,0.4);
 }
 
-.btn-green:hover {
-    background-color: #218838;
+.btn-green:hover,
+.btn-submit:hover {
+    background: linear-gradient(145deg, #218838, #28a745);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(40,167,69,0.6);
 }
 
+.btn-green:active,
+.btn-submit:active {
+    transform: scale(0.97);
+}
+
+/* Botón rojo: eliminar / cancelar */
 .btn-red {
-    background-color: #dc3545;
+    background: linear-gradient(145deg, #dc3545, #c82333);
     color: #fff;
+    box-shadow: 0 5px 15px rgba(220,53,69,0.4);
 }
 
 .btn-red:hover {
-    background-color: #c82333;
+    background: linear-gradient(145deg, #c82333, #dc3545);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220,53,69,0.6);
 }
 
+.btn-red:active {
+    transform: scale(0.97);
+}
+
+/* ============================= */
+/* RESPONSIVE                    */
+/* ============================= */
 @media (max-width: 768px) {
     .crear-estado {
         flex-direction: column;
     }
 
     .estado-actions {
-        display: flex;
         flex-direction: column;
+        width: 100%;
     }
 
     .estado-actions button {
         margin: 4px 0;
+        width: 100%;
+    }
+
+    .administrar-estados-container {
+        padding: 20px 15px;
+        margin: 2rem auto;
     }
 }

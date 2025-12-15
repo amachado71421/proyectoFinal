@@ -10,9 +10,18 @@ function LoginRegisterComp() {
 
     const toggleForm = () => setShowLogin(!showLogin);
 
+    // 🔴 Función para navegar al perfil y recargar la página
+    const goToProfileAndReload = () => {
+        navigate('/perfil-usuario');
+    }
+
     return (
         <div className="login-register-container">
-            {showLogin ? <Login /> : <Register />}
+            {showLogin ? 
+                <Login onSuccess={goToProfileAndReload} /> 
+                : 
+                <Register onSuccess={goToProfileAndReload} />
+            }
             <button className="BtnRegistro" onClick={toggleForm}>
                 {showLogin ? 'Registrarse' : 'Iniciar Sesión'}
             </button>
