@@ -4,6 +4,7 @@
 ============================ */
 .perfil-container {
     display: flex;
+    background-color: rgb(255, 255, 255);
 
 }
 
@@ -20,6 +21,7 @@
 ============================ */
 .perfil-right {
     margin-top: 100PX;
+     margin-right: 100PX;
     flex: 1;
     display: flex;
     flex-direction: column;

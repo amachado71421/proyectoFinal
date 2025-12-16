@@ -1,93 +1,94 @@
 /* ===== PALMARÉS ===== */
 .palmares-card {
-    max-width: 600px; /* 🔽 contenedor más pequeño */
+    max-width: 650px;
     width: 100%;
-    margin: 1.5rem auto; /* 🔽 menos margen */
-    padding: 1rem;       /* 🔽 menos padding */
-    border-radius: 12px; /* 🔽 radios más compactos */
-    background: #fff;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-    text-align: center;
+    margin: 1.5rem auto;
+    padding: 1.4rem;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 10px 10px 18px rgba(0, 0, 0, 0.12);
     font-family: "Poppins", sans-serif;
 }
 
+/* TÍTULO */
 .palmares-card h2 {
-    font-size: 1.4rem; /* 🔽 más pequeño */
-    color: #d62828;
-    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.2rem;
+    text-align: center;
 }
 
-/* 📊 CONTENEDOR DE ESTADÍSTICAS */
+/* CONTENEDOR HORIZONTAL */
 .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 🔽 más compacto */
-    gap: 0.8rem;
-    margin-top: 0.8rem;
-    justify-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1rem;
 }
 
+/* TARJETA INDIVIDUAL */
 .stat-item {
-    background: #f8f9fa;
-    padding: 0.6rem; /* 🔽 reducido */
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
+    flex: 1;
+    background: #f8f8f8;
+    border-radius: 14px;
+    padding: 0.9rem 0.6rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 160px; /* 🔽 tarjetas más estrechas */
+    justify-content: center;
 }
 
 .stat-item:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 14px rgba(0,0,0,0.12);
 }
 
+/* LABEL (ARRIBA) */
 .stat-item .label {
+    font-size: 0.7rem;
     font-weight: 600;
-    color: #444;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
     text-align: center;
-    font-size: 0.75rem; /* 🔽 más pequeño */
-    margin: 0;
 }
 
+/* VALUE (ABAJO) */
 .stat-item .value {
-    font-size: 1rem; /* 🔽 reducido */
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #d62828;
-    margin-top: 0.2rem;
+    line-height: 1;
     text-align: center;
 }
+.total-encuentros{
+    text-align: center;
+   font-family: 'Segoe UI', sans-serif;
+   margin: 10px;
+}
 
-/* 📱 RESPONSIVO */
+/* RESPONSIVO */
 @media (max-width: 768px) {
-    .palmares-card {
-        max-width: 90%; /* 🔽 más compacto en tablet */
-        padding: 0.8rem;
-    }
-
     .stats {
-        grid-template-columns: 1fr; /* ✅ todos en columna */
+        flex-wrap: wrap;
     }
 
     .stat-item {
-        max-width: 100%;
+        flex: 1 1 45%;
     }
 }
 
 @media (max-width: 480px) {
-    .palmares-card h2 {
-        font-size: 1.2rem; /* 🔽 más pequeño en móvil */
+    .stats {
+        flex-direction: column;
     }
 
     .stat-item {
-        padding: 0.5rem;
-    }
-
-    .stat-item .value {
-        font-size: 0.9rem;
-    }
-
-    .stat-item .label {
-        font-size: 0.7rem;
+        width: 100%;
     }
 }

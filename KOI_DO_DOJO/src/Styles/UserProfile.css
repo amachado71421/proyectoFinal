@@ -1,7 +1,8 @@
 /* CONTENEDOR PERFIL (ESPACIO PARA NAVBAR) */
 .div-perfil {
-    margin-top: 5%;
+    margin-top: 3%;
     width: 100%;
+    background: #ffffff;
 }
 
 /* CONTENEDOR GENERAL */
@@ -9,7 +10,6 @@
     display: flex;
     justify-content: center;
     padding: 40px 16px;
-    background: #f4f6fb;
     font-family: "Poppins", sans-serif;
 }
 
