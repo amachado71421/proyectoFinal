@@ -2,34 +2,52 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
-# 📂 Rutas base
+# --------------------------------------------------
+# Rutas base del proyecto
+# --------------------------------------------------
+# BASE_DIR apunta al directorio raíz del proyecto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 🔐 Seguridad
+# --------------------------------------------------
+# Seguridad
+# --------------------------------------------------
+# Clave secreta para el proyecto (mantener en privado en producción)
 SECRET_KEY = 'django-insecure-buob)7!r1huf$39v+2eq-c(k63z61v+k@*(^+_f=7ea-v7)7fo'
+
+# Activar/desactivar modo debug
 DEBUG = True
+
+# Hosts permitidos para la aplicación
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-# 📦 Aplicaciones instaladas
+# --------------------------------------------------
+# Aplicaciones instaladas
+# --------------------------------------------------
+# Incluye apps de Django, apps propias y librerías externas
 INSTALLED_APPS = [
-    "corsheaders",
+    "corsheaders",  # Soporte para CORS
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "api",
-    "rest_framework",
-    "rest_framework_simplejwt",
+    "api",  # App principal del proyecto
+    "rest_framework",  # DRF para APIs
+    "rest_framework_simplejwt",  # JWT para autenticación
 ]
 
-# 👤 Modelo de usuario personalizado
+# --------------------------------------------------
+# Modelo de usuario personalizado
+# --------------------------------------------------
 AUTH_USER_MODEL = "api.Perfil"
 
-# ⚙️ Middleware
+# --------------------------------------------------
+# Middleware
+# --------------------------------------------------
+# Define la cadena de middleware de Django
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",  # Soporte para CORS
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -39,30 +57,41 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# 🌐 Configuración CORS
+# --------------------------------------------------
+# Configuración CORS
+# --------------------------------------------------
+# Orígenes permitidos para peticiones cross-origin
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True  # Permitir envío de cookies
 
-# 🔐 CSRF confiable
+# --------------------------------------------------
+# CSRF
+# --------------------------------------------------
+# Orígenes confiables para CSRF
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+CSRF_COOKIE_HTTPONLY = False  # Permitir lectura desde frontend si es necesario
+CSRF_COOKIE_SAMESITE = "Lax"  # Política SameSite
+CSRF_COOKIE_SECURE = not DEBUG  # Cookies seguras solo en producción
 
-# 🧩 Templates
+# --------------------------------------------------
+# Templates
+# --------------------------------------------------
 ROOT_URLCONF = "backendKoiDo.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
+        "DIRS": [],  # Directorios adicionales de templates
+        "APP_DIRS": True,  # Buscar templates dentro de apps
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
@@ -74,20 +103,25 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = "backendKoiDo.wsgi.application"
 
-# 🗄️ Base de datos MySQL
+# --------------------------------------------------
+# Base de datos
+# --------------------------------------------------
+# Configuración para MySQL
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "koido_dojo",
         "USER": "root",
         "PASSWORD": "12345678",
-        "HOST": "localhost",  # usar 127.0.0.1 en Windows si da problemas
+        "HOST": "localhost",  # En Windows usar 127.0.0.1 si hay problemas
         "PORT": "3306",
-        "OPTIONS": {"charset": "utf8mb4"},
+        "OPTIONS": {"charset": "utf8mb4"},  # Soporte para emojis y caracteres especiales
     }
 }
 
-# 🔐 Validación de contraseñas
+# --------------------------------------------------
+# Validación de contraseñas
+# --------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -95,41 +129,45 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# 🌎 Internacionalización
+# --------------------------------------------------
+# Internacionalización
+# --------------------------------------------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# 📁 Archivos estáticos
+# --------------------------------------------------
+# Archivos estáticos
+# --------------------------------------------------
 STATIC_URL = "static/"
 
-# 🔑 Clave primaria por defecto
+# --------------------------------------------------
+# Clave primaria por defecto
+# --------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# 🔐 Configuración CSRF
-CSRF_COOKIE_HTTPONLY = False  # el frontend puede leerla si es necesario
-CSRF_COOKIE_SAMESITE = "Lax"
-CSRF_COOKIE_SECURE = not DEBUG
-
-# 🔐 REST Framework
+# --------------------------------------------------
+# REST Framework
+# --------------------------------------------------
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "api.authentication.CookieJWTAuthentication",
+        "api.authentication.CookieJWTAuthentication",  # Autenticación via JWT en cookies
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
 }
 
-# 🔐 JWT con cookies HttpOnly
+# --------------------------------------------------
+# Configuración JWT con cookies HttpOnly
+# --------------------------------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
-
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
@@ -140,8 +178,6 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
-
-    # 🔐 Cookies HttpOnly
     "AUTH_COOKIE": "access_token",
     "AUTH_COOKIE_SECURE": not DEBUG,
     "AUTH_COOKIE_HTTP_ONLY": True,

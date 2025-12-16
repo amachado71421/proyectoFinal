@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from . import models
 
+# Obtener el modelo de usuario personalizado
 Perfil = get_user_model()
 
 
@@ -9,6 +10,7 @@ Perfil = get_user_model()
 # RESULTADO
 # --------------------------------------------------
 class ResultadoSerializer(serializers.ModelSerializer):
+    # Serializador simple para el modelo Resultado
     class Meta:
         model = models.Resultado
         fields = ['id_resultado', 'estado_resultado']
@@ -18,6 +20,7 @@ class ResultadoSerializer(serializers.ModelSerializer):
 # ROL
 # --------------------------------------------------
 class RolSerializer(serializers.ModelSerializer):
+    # Serializador simple para el modelo Rol
     class Meta:
         model = models.Rol
         fields = ['id_rol', 'nombre_rol']
@@ -36,11 +39,12 @@ class PerfilSerializer(serializers.ModelSerializer):
             'url_imagen', 'peso_kg', 'altura', 'id_rol',
             'is_active', 'is_staff', 'is_superuser'
         ]
+        # Campos que no se pueden modificar desde este serializer
         read_only_fields = ['is_active', 'is_staff', 'is_superuser']
 
 
 # --------------------------------------------------
-# REGISTER
+# REGISTER (CREAR NUEVO USUARIO)
 # --------------------------------------------------
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
@@ -55,28 +59,33 @@ class RegisterSerializer(serializers.ModelSerializer):
         ]
 
     def validate_email(self, value):
+        # Validar que el email sea único
         if Perfil.objects.filter(email__iexact=value).exists():
             raise serializers.ValidationError("Este correo ya está registrado.")
         return value
 
     def validate(self, data):
+        # Validar que las contraseñas coincidan
         if data['password'] != data['password_confirm']:
             raise serializers.ValidationError({"password": "Las contraseñas no coinciden."})
         return data
 
     def create(self, validated_data):
+        # Eliminar password_confirm ya que no se necesita para crear el usuario
         validated_data.pop('password_confirm')
         password = validated_data.pop('password')
 
+        # Usar username si existe, si no usar email
         username = validated_data.get('username') or validated_data['email']
 
+        # Crear el usuario
         user = Perfil.objects.create_user(
             username=username,
             email=validated_data.get('email'),
             password=password
         )
 
-        # Asignar campos opcionales
+        # Asignar campos opcionales si existen
         for attr in ['first_name', 'last_name', 'url_imagen', 'peso_kg', 'altura', 'id_rol']:
             if attr in validated_data:
                 setattr(user, attr, validated_data[attr])
@@ -93,6 +102,7 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
+        # Autenticación básica usando email y contraseña
         email = data['email']
         password = data['password']
 
@@ -112,6 +122,7 @@ class LoginSerializer(serializers.Serializer):
 # PALMARES
 # --------------------------------------------------
 class PalmaresSerializer(serializers.ModelSerializer):
+    # Usar PrimaryKeyRelatedField para las relaciones
     id_perfil = serializers.PrimaryKeyRelatedField(queryset=models.Perfil.objects.all())
     id_resultado = serializers.PrimaryKeyRelatedField(queryset=models.Resultado.objects.all())
 
@@ -124,6 +135,7 @@ class PalmaresSerializer(serializers.ModelSerializer):
 # LOGRO
 # --------------------------------------------------
 class LogroUsuarioSerializer(serializers.ModelSerializer):
+    # Campo calculado para mostrar el nombre completo
     nombre = serializers.SerializerMethodField()
 
     class Meta:
@@ -131,9 +143,12 @@ class LogroUsuarioSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'nombre', 'email']
 
     def get_nombre(self, obj):
+        # Devuelve nombre completo si existe, sino username
         return f"{obj.first_name} {obj.last_name}".strip() or obj.username
 
+
 class LogroSerializer(serializers.ModelSerializer):
+    # Mostrar los usuarios asociados al logro
     usuarios = serializers.SerializerMethodField()
 
     class Meta:
@@ -141,6 +156,7 @@ class LogroSerializer(serializers.ModelSerializer):
         fields = ['id_logro', 'nombre_logro', 'descripcion_logro', 'fecha_creacion', 'usuarios']
 
     def get_usuarios(self, obj):
+        # Obtener todos los perfiles relacionados con este logro
         perfil_logros = models.PerfilLogro.objects.filter(id_logro=obj.id_logro).select_related('id_perfil')
         usuarios_data = []
         for pl in perfil_logros:
@@ -194,6 +210,7 @@ class EstadoSerializer(serializers.ModelSerializer):
 # EVENTO
 # --------------------------------------------------
 class EventoSerializer(serializers.ModelSerializer):
+    # Permite asignar categorías al crear o actualizar evento
     categorias = serializers.PrimaryKeyRelatedField(
         queryset=models.Categoria.objects.all(),
         many=True,
@@ -210,6 +227,7 @@ class EventoSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
+        # Crear evento y asignar categorías
         categorias = validated_data.pop('categorias', [])
         evento = models.Evento.objects.create(**validated_data)
 
@@ -222,12 +240,14 @@ class EventoSerializer(serializers.ModelSerializer):
         return evento
 
     def update(self, instance, validated_data):
+        # Actualizar campos del evento
         categorias = validated_data.pop('categorias', None)
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
+        # Actualizar categorías si se proporcionan
         if categorias is not None:
             models.EventoCategoria.objects.filter(id_evento=instance).delete()
             for categoria in categorias:

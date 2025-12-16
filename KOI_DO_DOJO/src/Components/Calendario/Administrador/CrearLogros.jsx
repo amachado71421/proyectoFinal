@@ -1,26 +1,60 @@
 // src/Components/Administrador/CrearLogros.jsx
+
 import React, { useState, useEffect } from 'react'
 
 function CrearLogros() {
+    /*
+     Estado para el formulario de creación de logros.
+     Cada campo corresponde a un input controlado.
+    */
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [fecha, setFecha] = useState('')
+
+    /*
+     Lista de logros mostrados en pantalla.
+     Cada logro tiene: nombre, descripcion y fecha.
+    */
     const [logros, setLogros] = useState([])
+
+    /*
+     Almacena el identificador del logro que está siendo editado.
+     En este caso se usa el nombre como referencia.
+     Si es null, no hay edición activa.
+    */
     const [editando, setEditando] = useState(null)
+
+    /*
+     Estado temporal para los inputs de edición.
+     Permite modificar un logro sin afectar la lista original
+     hasta que se confirme el guardado.
+    */
     const [editData, setEditData] = useState({
         nombre: '',
         descripcion: '',
         fecha: ''
     })
 
+    /*
+     useEffect que se ejecuta una sola vez al montar el componente.
+     Se encarga de cargar los logros iniciales.
+    */
     useEffect(() => {
         const fetchLogros = async () => {
             try {
-                // Aquí más adelante pondrás tu endpoint real
+                /*
+                 En este punto debería ir la llamada real al backend.
+                 El código comentado indica cómo sería la integración
+                 cuando exista el endpoint.
+                */
+
                 // const response = await fetch("http://localhost:8000/api/logros")
                 // const data = await response.json()
                 // setLogros(data)
 
+                /*
+                 Datos simulados usados mientras no exista el backend.
+                */
                 const data = [
                     {
                         nombre: 'Primer Torneo',
@@ -33,6 +67,7 @@ function CrearLogros() {
                         fecha: '2025-08-01'
                     }
                 ]
+
                 setLogros(data)
             } catch (error) {
                 console.error('Error cargando logros:', error)
@@ -42,8 +77,16 @@ function CrearLogros() {
         fetchLogros()
     }, [])
 
+    /*
+     Crea un nuevo logro y lo añade al estado local.
+     Valida que ningún campo esté vacío antes de continuar.
+    */
     const handleAddLogro = async () => {
-        if (nombre.trim() === '' || descripcion.trim() === '' || fecha === '') {
+        if (
+            nombre.trim() === '' ||
+            descripcion.trim() === '' ||
+            fecha === ''
+        ) {
             return
         }
 
@@ -53,21 +96,35 @@ function CrearLogros() {
             fecha
         }
 
-        // Aquí más adelante harías un POST a tu API
+        /*
+         Aquí se realizaría un POST al backend cuando exista el endpoint.
+        */
+
         // await fetch("http://localhost:8000/api/logros", { method: "POST", ... })
 
-        setLogros((prev) => [...prev, nuevoLogro])
+        setLogros(prev => [...prev, nuevoLogro])
+
+        /*
+         Limpia el formulario tras crear el logro.
+        */
         setNombre('')
         setDescripcion('')
         setFecha('')
     }
 
+    /*
+     Elimina un logro de la lista usando su nombre como identificador.
+    */
     const handleRemoveLogro = (nombreLogro) => {
-        setLogros((prev) => {
-            return prev.filter((logro) => logro.nombre !== nombreLogro)
-        })
+        setLogros(prev =>
+            prev.filter(logro => logro.nombre !== nombreLogro)
+        )
     }
 
+    /*
+     Inicia el modo edición para un logro específico.
+     Copia los datos del logro al estado de edición.
+    */
     const iniciarEdicion = (logro) => {
         setEditando(logro.nombre)
         setEditData({
@@ -77,14 +134,22 @@ function CrearLogros() {
         })
     }
 
+    /*
+     Maneja los cambios en los inputs del formulario de edición.
+     Actualiza dinámicamente el campo modificado.
+    */
     const handleEditChange = (e) => {
         const { name, value } = e.target
-        setEditData((prev) => ({
+        setEditData(prev => ({
             ...prev,
             [name]: value
         }))
     }
 
+    /*
+     Guarda los cambios realizados en un logro.
+     Reemplaza el logro editado dentro del estado local.
+    */
     const guardarEdicion = async () => {
         const actualizado = {
             nombre: editData.nombre.trim(),
@@ -92,14 +157,17 @@ function CrearLogros() {
             fecha: editData.fecha
         }
 
-        // Aquí más adelante harías un PATCH al API
+        /*
+         Aquí se realizaría un PATCH al backend cuando exista el endpoint.
+        */
+
         // await fetch(`http://localhost:8000/api/logros/${editando}`, {
-        //   method: "PATCH",
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify(actualizado)
+        //     method: "PATCH",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify(actualizado)
         // })
 
-        const nuevosLogros = logros.map((logro) => {
+        const nuevosLogros = logros.map(logro => {
             if (logro.nombre === editando) {
                 return actualizado
             }
@@ -107,6 +175,10 @@ function CrearLogros() {
         })
 
         setLogros(nuevosLogros)
+
+        /*
+         Sale del modo edición y limpia el estado temporal.
+        */
         setEditando(null)
         setEditData({ nombre: '', descripcion: '', fecha: '' })
     }
@@ -115,6 +187,7 @@ function CrearLogros() {
         <div>
             <h2>Logros del calendario</h2>
 
+            {/* Formulario de creación */}
             <input
                 type="text"
                 placeholder="Nombre del logro"
@@ -132,13 +205,21 @@ function CrearLogros() {
                 value={fecha}
                 onChange={(e) => setFecha(e.target.value)}
             />
-            <button onClick={handleAddLogro}>Añadir logro</button>
+            <button onClick={handleAddLogro}>
+                Añadir logro
+            </button>
 
+            {/* Lista de logros */}
             {logros.length > 0 && (
                 <div style={{ marginTop: '1rem' }}>
                     <h3>Logros creados</h3>
                     <ul>
                         {logros.map((logro, index) => {
+                            /*
+                             Renderizado condicional:
+                             si el logro está en edición, se muestran inputs;
+                             de lo contrario, se muestra en modo lectura.
+                            */
                             if (editando === logro.nombre) {
                                 return (
                                     <li key={index}>
@@ -160,8 +241,13 @@ function CrearLogros() {
                                             value={editData.fecha}
                                             onChange={handleEditChange}
                                         />
-                                        <button onClick={guardarEdicion}>Guardar</button>
-                                        <button onClick={() => setEditando(null)} style={{ marginLeft: '0.5rem' }}>
+                                        <button onClick={guardarEdicion}>
+                                            Guardar
+                                        </button>
+                                        <button
+                                            onClick={() => setEditando(null)}
+                                            style={{ marginLeft: '0.5rem' }}
+                                        >
                                             Cancelar
                                         </button>
                                     </li>
@@ -169,8 +255,12 @@ function CrearLogros() {
                             }
 
                             return (
-                                <li key={index} onClick={() => iniciarEdicion(logro)}>
-                                    <strong>{logro.nombre}</strong> — {logro.descripcion} ({logro.fecha}){' '}
+                                <li
+                                    key={index}
+                                    onClick={() => iniciarEdicion(logro)}
+                                >
+                                    <strong>{logro.nombre}</strong>
+                                    {' '}— {logro.descripcion} ({logro.fecha})
                                     <button
                                         type="button"
                                         onClick={(e) => {
@@ -179,7 +269,7 @@ function CrearLogros() {
                                         }}
                                         style={{ marginLeft: '0.5rem', color: 'red' }}
                                     >
-                                        ❌
+                                        Eliminar
                                     </button>
                                 </li>
                             )
