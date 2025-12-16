@@ -18,7 +18,7 @@ function Home() {
   return (
     <div>
       <BarraMenu />
-      <div className='EspacioCarrusel'>
+      <div className='EspacioCarrusel27'>
         <CarruselInicio />
       </div>
       <InicioLayer />

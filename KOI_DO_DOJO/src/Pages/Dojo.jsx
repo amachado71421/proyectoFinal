@@ -13,7 +13,7 @@ function Dojo() {
     return (
         <div>
             <BarraMenu />
-            <div className='EspacioCarrusel'></div>
+            <div className='EspacioCarrusel27'></div>
             <LayerDojo/>
             <LayerDojo1/>
             <LayerDojo4/>
