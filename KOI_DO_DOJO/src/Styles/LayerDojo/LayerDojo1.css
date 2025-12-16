@@ -92,28 +92,80 @@
     margin-right: 10px;
 }
 
-/* ================================ */
-/* RESPONSIVE */
-/* ================================ */
-
-@media (max-width: 1000px) {
+/* ================================
+   RESPONSIVE - TABLET
+================================ */
+@media (max-width: 1024px) {
     .MapaDojoSection {
-        max-width: 95%;
-        gap: 20px;
+        padding: 50px 24px;
+        gap: 25px;
+    }
+
+    .MapaSubtitulo {
+        font-size: 28px;
+    }
+
+    .MapaDescripcion {
+        font-size: 16px;
     }
 }
 
-@media (max-width: 900px) {
+/* ================================
+   RESPONSIVE - MOBILE
+================================ */
+@media (max-width: 768px) {
     .MapaDojoSection {
-        flex-direction: column;  /* Arriba/abajo */
+        flex-direction: column;    /* 🔽 Apila las cajas */
+        padding: 40px 20px;
     }
 
     .BoxItem {
-        width: 100%;
-        text-align: center;
+        min-height: auto;
+    }
+
+    .MapaTitulo {
+        font-size: 22px;
+    }
+
+    .MapaSubtitulo {
+        font-size: 24px;
+    }
+
+    .MapaDescripcion {
+        font-size: 15px;
     }
 
     .InfoDetalle p {
-        justify-content: center;
+        font-size: 16px;
+    }
+
+    .Icono {
+        font-size: 20px;
+    }
+}
+
+/* ================================
+   RESPONSIVE - MOBILE PEQUEÑO
+================================ */
+@media (max-width: 480px) {
+    .MapaDojoSection {
+        padding: 30px 16px;
+        gap: 20px;
+    }
+
+    .MapaTitulo {
+        font-size: 20px;
+    }
+
+    .MapaSubtitulo {
+        font-size: 21px;
+    }
+
+    .MapaDescripcion {
+        font-size: 14px;
+    }
+
+    .InfoDetalle p {
+        font-size: 15px;
     }
 }

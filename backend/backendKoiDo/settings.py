@@ -113,7 +113,7 @@ DATABASES = {
         "NAME": "koido_dojo",
         "USER": "root",
         "PASSWORD": "12345678",
-        "HOST": "localhost",  # En Windows usar 127.0.0.1 si hay problemas
+        "HOST": "localhost",  # usar 127.0.0.1 en Windows si da problemas
         "PORT": "3306",
         "OPTIONS": {"charset": "utf8mb4"},  # Soporte para emojis y caracteres especiales
     }

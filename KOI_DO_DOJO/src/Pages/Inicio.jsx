@@ -1,7 +1,6 @@
 import BarraMenu from '../Components/BarraMenu'
 import Marciales from '../Components/LayerInicio/Marciales.jsx'
 import CarruselInicio from '../Components/LayerInicio/CarruselInicio.jsx'
-import KyokushinTexto from '../Components/KyokushinTexto.jsx'
 import InicioLayer from '../Components/LayerInicio/InicioLayer.jsx'
 
 import KarateBanner from '../Components/LayerInicio/Kyokushin/KarateBanner.jsx'
@@ -19,7 +18,7 @@ function Home() {
   return (
     <div>
       <BarraMenu />
-      <div className='EspacioCarrusel'>
+      <div className='EspacioCarrusel27'>
         <CarruselInicio />
       </div>
       <InicioLayer />

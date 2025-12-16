@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../Context/AuthContext'
 import '/src/Styles/UserProfile.css'
 
+// COMPONENTES
+import Logros from './Logros'
+import Palmares from './Palmares'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 const USERS_ENDPOINT = `${API_URL}/api/perfiles/`
@@ -23,12 +26,8 @@ function UserProfile() {
     const [newImageUrl, setNewImageUrl] = useState('')
     const [imageError, setImageError] = useState(false)
 
-    // 🔐 nonce persistente por sesión → evita bloqueo de Google Drive
     const driveNonce = useRef(Date.now())
 
-    /* ============================
-       HELPERS
-    ============================ */
     const getCookie = (name) => {
         const match = document.cookie.match(new RegExp('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'))
         return match ? decodeURIComponent(match[2]) : null
@@ -50,18 +49,12 @@ function UserProfile() {
 
     const normalizeImageUrl = (url) => {
         if (!url) return DEFAULT_IMAGE
-
         const driveId = extractDriveId(url)
-        if (driveId) {
-            return `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000&v=${driveNonce.current}`
-        }
-
-        return url
+        return driveId
+            ? `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000&v=${driveNonce.current}`
+            : url
     }
 
-    /* ============================
-       CARGA INICIAL (una sola vez)
-    ============================ */
     useEffect(() => {
         const hasReloaded = sessionStorage.getItem('profileReloaded')
         if (!hasReloaded) {
@@ -70,9 +63,6 @@ function UserProfile() {
         }
     }, [])
 
-    /* ============================
-       CARGAR PERFIL
-    ============================ */
     useEffect(() => {
         if (userLoading) return
 
@@ -84,6 +74,7 @@ function UserProfile() {
                     headers: getAuthHeaders(false),
                 })
                 if (!res.ok) throw new Error()
+
                 const data = await res.json()
                 setUserData(data)
                 setOriginalData(data)
@@ -108,9 +99,6 @@ function UserProfile() {
         fetchUserData()
     }, [userLoading])
 
-    /* ============================
-       UPDATE PERFIL
-    ============================ */
     const updateProfile = async (patch) => {
         const id = userData?.id_perfil ?? userData?.id
         if (!id) return
@@ -150,8 +138,7 @@ function UserProfile() {
 
     const handleFieldBlur = async (e) => {
         const { name, value } = e.target
-        const originalValue = originalData?.[name] ?? ''
-        if (value === originalValue) return
+        if (value === originalData?.[name]) return
         await updateProfile({ [name]: value })
     }
 
@@ -169,26 +156,18 @@ function UserProfile() {
         setImageEditing(false)
     }
 
-    /* ============================
-       RENDER
-    ============================ */
     if (userLoading || loadingProfile) return <div>Cargando perfil...</div>
     if (error) return <div style={{ color: 'red' }}>{error}</div>
     if (!userData) return null
 
     const roleName = roleData?.nombre_rol || 'Sin rol'
-    const isSuperuser = !!user?.is_superuser
-    const isStaff = !!user?.is_staff
-
-    const imageSrc = imageError
-        ? DEFAULT_IMAGE
-        : normalizeImageUrl(userData.url_imagen)
+    const canManageUsers = user?.is_staff || user?.is_superuser
+    const imageSrc = imageError ? DEFAULT_IMAGE : normalizeImageUrl(userData.url_imagen)
 
     return (
         <div className="div-perfil">
+            {/* TARJETA DE USUARIO */}
             <div className="user-card">
-
-                {/* IMAGEN */}
                 <div className="user-image">
                     <img
                         src={imageSrc}
@@ -198,7 +177,6 @@ function UserProfile() {
                     />
                 </div>
 
-                {/* MODAL IMAGEN */}
                 {imageEditing && (
                     <div className="image-modal-overlay">
                         <div className="image-edit-popup">
@@ -218,7 +196,6 @@ function UserProfile() {
                     </div>
                 )}
 
-                {/* INFO */}
                 <div className="user-info">
                     <h2>{userData.first_name} {userData.last_name}</h2>
                     <p><strong>Usuario:</strong> {userData.username}</p>
@@ -237,28 +214,31 @@ function UserProfile() {
 
                     <p><strong>Correo:</strong> {userData.email}</p>
                     <p><strong>Rol:</strong> {roleName}</p>
-                </div>
 
-                {/* EXTRA */}
-                <div className="user-extra">
-                    <label>
-                        Peso (kg)
-                        <input type="number" name="peso_kg" value={userData.peso_kg ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} />
-                    </label>
-                    <label>
-                        Altura (cm)
-                        <input type="number" name="altura" value={userData.altura ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} />
-                    </label>
-                </div>
-
-                {(isSuperuser || isStaff) && (
-                    <div className="admin-administrar">
-                        <button className="admin-btn" onClick={() => navigate('/administrar-perfiles')}>
-                            Administrar Perfiles
-                        </button>
+                    <div className="user-extra">
+                        <label>
+                            Peso (kg)
+                            <input type="number" name="peso_kg" value={userData.peso_kg ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                        </label>
+                        <label>
+                            Altura (cm)
+                            <input type="number" name="altura" value={userData.altura ?? ''} onChange={handleFieldChange} onBlur={handleFieldBlur} />
+                        </label>
                     </div>
-                )}
+
+                    {canManageUsers && (
+                        <div className="admin-administrar">
+                            <button className="admin-btn" onClick={() => navigate('/administrar-perfiles')}>
+                                Administrar Perfiles
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
+
+            {/* COMPONENTES LINEALES */}
+            <Palmares userId={userData?.id_perfil ?? userData?.id} />
+            <Logros userId={userData?.id_perfil ?? userData?.id} />
         </div>
     )
 }

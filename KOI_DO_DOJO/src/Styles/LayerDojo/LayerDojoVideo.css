@@ -50,3 +50,26 @@
   background: #000;
 }
 
+/* ============================
+   RESPONSIVE - TABLET
+============================ */
+@media (max-width: 1024px) {
+  .layer-video-container {
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .layer-video-title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+
+  .dojo-video {
+    height: 50vh;
+  }
+}
+
+/* ============================
+   RESPONSIVE - MOBILE
+============================ */
+@media
